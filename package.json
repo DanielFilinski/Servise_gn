@@ -1,0 +1,20 @@
+{
+  "dependencies": {
+    "epubjs": "^0.3.93",
+    "express": "^4.18.2",
+    "fs": "^0.0.1-security",
+    "node-html-parser": "^6.1.5"
+  },
+  "name": "parser",
+  "type": "module",
+  "description": "1. ��������� html � ���� index.html \r 2. ��������� ��������� ����� node.js",
+  "version": "1.0.0",
+  "main": "Parser.js",
+  "scripts": {
+    "start": "node static-file-server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
