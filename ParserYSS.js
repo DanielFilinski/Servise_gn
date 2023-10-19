@@ -6,9 +6,6 @@ const parsePatternsSS = {
     weekNumber: "Headers_WEEK_NUM",
     weekName: "Headers_WEEK_Название-урока",
     end: "ParaOverride-9",
-    sectionsClass: "Headers_Subheading-1",
-
-    sectionStyleName: 'section',
 
     all: 'p',
 
@@ -19,6 +16,7 @@ const parsePatternsSS = {
         { pattern: "Lists_Bullet-List", style: "lists" },
         { pattern: "Lists_Bullet-List-L2", style: "lists" },
         { pattern: "основной-абзац", style: "mainText" },
+        { pattern: "Headers_Tasks-heading", style: "section" },
     ],
 
 }
@@ -246,22 +244,18 @@ function PARSE(htmlFile) {
 function analysisText(str) {
     let text = str
     let res = PARSE_BIBLE_REFERENCES(text)
+    // let res = text
 
     return creatArrParsText(res)
 }
 
 function analysisClass(p) {
 
-    let style
+    let style = 'mainText'
 
     parsePatternsSS.arrAnalisisClassList.some((item, index) => {
-
         if (p.classList.contains(item.pattern)) {
             style = item.style
-            return true
-        }
-        if (p.classList.contains(parsePatternsSS.sectionsClass)) {
-            style = parsePatternsSS.sectionStyleName
             return true
         }
     })
