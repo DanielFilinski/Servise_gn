@@ -3,9 +3,12 @@ import { parse } from 'node-html-parser';
 
 
 const parsePatternsSS = {
-    weekNumber: ".Headers_WEEK_NUM",
-    weekName: ".Headers_WEEK_Название-урока",
+    weekNumber: "Headers_WEEK_NUM",
+    weekName: "Headers_WEEK_Название-урока",
     end: "ParaOverride-9",
+    sectionsClass: "Headers_Subheading-1",
+
+    sectionStyleName: 'section',
 
     all: 'p',
 
@@ -17,6 +20,7 @@ const parsePatternsSS = {
         { pattern: "Lists_Bullet-List-L2", style: "lists" },
         { pattern: "основной-абзац", style: "mainText" },
     ],
+
 }
 
 const dateFirstWeek = '2023-09-30'
@@ -29,9 +33,7 @@ const datesArr = []
 
 
 const partition = {}
-const state = {
-
-}
+const state = {}
 
 const arrReg = parsePatternsSS.delete.map((item) => {
     return new RegExp(`${item}`, "gi");
@@ -79,7 +81,7 @@ const arrBiblebook = ["Быт.", "Исх.", "Лев.", "Числ.", "Втор.",
 
 const htmlFile = FILES_FOR_PARSE()
 PARSE(htmlFile)
-// writeResult()
+writeResult()
 
 
 
@@ -138,10 +140,10 @@ function PARSE(htmlFile) {
     const html = parse(htmlFile)
 
     // количество уроков
-    const amoutWeeks = html.querySelectorAll(parsePatternsSS.weekNumber).length
+    const amoutWeeks = html.querySelectorAll('.' + parsePatternsSS.weekNumber).length
 
 
-    // 1. Создание массива дат начала недели
+    //TODO 1. Создание массива дат начала недели
     for (let i = 0; i < amoutWeeks; i++) {
 
         if (i === 0) {
@@ -151,27 +153,26 @@ function PARSE(htmlFile) {
         }
     }
 
-    // 2. Cоздание шаблона объекта для заполения данными уроков
+    //TODO 2. Cоздание шаблона объекта для заполения данными уроков
     for (let i = 0; i < amoutWeeks; i++) {
         state[i + 1] = {
             dateStart: datesArr[i],
             dateEnd: getDatePlus(datesArr[i], 6),
             lessonName: '',
             lessonNumber: i + 1,
-            text: [],
+            arrEl: [],
         }
     }
 
+    console.log("state", state)
 
 
-
-    // 3. Удаление всех p до первого урока
+    //TODO 3. Удаление всех p до первого урока
     const delPreviousLessonText = (html) => {
         const p = html.querySelector(parsePatternsSS.all)
         // console.log('p', p)
-        const className = parsePatternsSS.weekNumber.replace(".", "")
 
-        if (p.classList.contains(className)) {
+        if (p.classList.contains(parsePatternsSS.weekNumber)) {
             console.log('inner', p.innerText)
             console.info('все объекты "p" до первого урока удалены')
             return 'все объекты удалены'
@@ -185,190 +186,87 @@ function PARSE(htmlFile) {
     delPreviousLessonText(html)
     console.log('weeksContentArr.lenght', html.querySelectorAll(parsePatternsSS.all).length)
 
-    // 4. Обработка уроков 
+    //TODO 4. Обработка уроков
     let curLessonNumber = 1
-    let curLessonName = ''
     const parsing = (html) => {
-        // 4.1 определение номера урока 
-        const p = html.querySelector(parsePatternsSS.all)
 
-        const weekNumber = parsePatternsSS.weekNumber.replace(".", "")
-        const weekName = parsePatternsSS.weekName.replace(".", "")
+        //TODO 4.1 обработка массива элементов и разбиение на уроки
 
-        // номер недели
-        if (p.classList.contains(weekNumber)) {
-            curLessonNumber = p.innerText.match(/\d{1,2}/)[0]
-        }
+        // получение массива всех элементов "p"
+        const elementsArr = html.querySelectorAll(parsePatternsSS.all)
 
-        // название недели
-        if (p.classList.contains(weekName)) {
-            curLessonName = delArtefacts(p.innerText)
-        }
+        //перебор массива элементов
+        elementsArr.forEach((p, pIndex) => {
 
-        // обработка остальных текстов
+            let islessonNumber = false
+            let islessonName = false
+
+            // СОХРАНЯЕМ номер недели для дальнейшего доступа к объекту по номеру урока
+            if (p.classList.contains(parsePatternsSS.weekNumber)) {
+                curLessonNumber = p.innerText.match(/\d{1,2}/)[0]
+                islessonNumber = true
+
+            }
+
+            // СОХРАНИЯЕМ название недели
+            if (p.classList.contains(parsePatternsSS.weekName)) {
+                console.log('curLessonNumber', curLessonNumber)
+                console.log('state[curLessonNumber]', state[curLessonNumber])
+                state[curLessonNumber].lessonName = delArtefacts(p.innerText)
+                islessonName = true
+            }
+
+            //TODO 4.2 АНАЛИЗ
+            if (!islessonNumber && !islessonName) {
+
+                let str = delArtefacts(p.innerText)
+                const reg = /[a-zA-Zа-яА-Я0-9]+/gi
+
+                // проверка содержит ли строка текст если нет не пушить ее в массив
+                const isContainText = reg.test(str)
+
+                if (isContainText) {
+                    // АНАЛИЗ стилей и текста
+                    const strObj = { style: analysisClass(p), text: analysisText(str) }
+                    state[curLessonNumber].arrEl.push(strObj)
+                }
+
+            }
 
 
+        })
 
     }
 
     parsing(html)
 
+}
 
 
-    // for (let i = 0; i < amoutWeeks; i++) {
+function analysisText(str) {
+    let text = str
+    let res = PARSE_BIBLE_REFERENCES(text)
 
-    // }
+    return creatArrParsText(res)
+}
 
-    // // const weekNumber = html.
+function analysisClass(p) {
 
-    // // название урочника 
+    let style
 
-    // const nameBook = html.querySelector(parsePatternsSS.nameBook)
+    parsePatternsSS.arrAnalisisClassList.some((item, index) => {
 
-    // // раздетить html на недели []    
+        if (p.classList.contains(item.pattern)) {
+            style = item.style
+            return true
+        }
+        if (p.classList.contains(parsePatternsSS.sectionsClass)) {
+            style = parsePatternsSS.sectionStyleName
+            return true
+        }
+    })
 
-    // const arrWeeks = html.querySelectorAll(parsePatternsSS.week)
-
-    // // разделить недели на уроки  []
-
-
-    // let i = 0 //счетчик для даты 
-
-
-    // arrWeeks.forEach((item, index) => {
-
-    //     i = 0
-    //     store.indexContent = 0
-
-    //     // <h1 class="toc-hidden">Урок 13. 17–23 июня. В сиянии славы Божьей</h1>
-    //     const nameWeek = item.querySelector(parsePatternsSS.nameWeek).innerText
-
-    //     // 'В сиянии славы Божьей'
-    //     let nameFirstLesson = item.querySelector(parsePatternsSS.firstLessonName).innerText
-
-    //     nameFirstLesson = delArtefacts(nameFirstLesson)
-
-    //     // <div id="_idContainer075" class="_idGenObjectStyleOverride-1">
-    //     const weekContent = item.querySelector(parsePatternsSS.weekContent)
-
-    //     // находит абсолютно все "p" и вложенные тоже
-    //     const arrWeekAll = weekContent.querySelectorAll(parsePatternsSS.weekAll)
-
-    //     // ['17–23 июня', index: 9, input: 'Урок 13. 17–23 июня. В сиянии славы Божьей', groups: undefined]
-    //     // ['26 августа — 1 сентября', index: 9, input: 'Урок 13. 26 августа — 1 сентября. В сиянии славы Божьей', groups: undefined]
-    //     let strRangeDateArr = nameWeek.match(/\d{1,2}–\d{1,2}\s[а-я]{1,8}/)
-
-    //     // 
-    //     let strDate = null
-
-    //     // вытягивает из 17–23 июня дату первого урока 17 июня
-    //     if (strRangeDateArr) {
-    //         strDate = strRangeDateArr[0].replace(/–\d{1,2}/, '')
-    //     } else {
-    //         strDate = nameWeek.match(/\d{1,2}\s[а-я]{1,8}/)[0]
-    //         console.log('strDate', strDate)
-    //     }
-
-    //     // возвращает дату первого урока => "2023-06-17"
-    //     let dateFirstLesson = getDataFirstLesson(strDate, i)
-
-    //     // возвращает номер урока => 13
-    //     let curLessonNumber = nameWeek.match(/Урок\s\d{1,2}/)[0].replace('Урок ', '')
-
-    //     // создаёт новый раздел под названием 13 в partition
-    //     partition[curLessonNumber] = {}
-
-
-    //     console.log('arrWeekAll', arrWeekAll.length)
-
-    //     let wasLesson = false
-
-    //     // удаляет точку из класса 
-    //     const classFirstLesson = parsePatternsSS.selectFirstLesson.replace(".", "")
-    //     const classOtherLesson = parsePatternsSS.selectOtherLesson.replace(".", "")
-    //     const otherLessonName = parsePatternsSS.otherLessonName.replace(".", "")
-
-    //     // console.log('arrWeekAll', arrWeekAll)
-
-    //     arrWeekAll.forEach((itemContent, indexContent) => {
-
-    //         const isFirstLesson = itemContent.classList.contains(classFirstLesson)
-    //         const isOtherLesson = itemContent.classList.contains(classOtherLesson)
-    //         const isOtherLessonName = itemContent.classList.contains(otherLessonName)
-
-    //         // определеяет начало первого урока в неделе и создаёт соответствующий раздел 
-    //         if (isFirstLesson) {
-    //             partition[curLessonNumber][dateFirstLesson] = {
-    //                 lessonNumber: curLessonNumber,
-    //                 lessonName: nameFirstLesson,
-    //                 isFirstLesson: true,
-    //                 arrEl: [],
-    //             }
-    //             // console.log('partition', partition)
-    //             wasLesson = true
-    //         }
-
-    //         // определеяет начало последующих уроков в неделе и создаёт соответствующий раздел 
-    //         if (isOtherLesson) {
-    //             i++
-    //             dateFirstLesson = getDataFirstLesson(strDate, i)
-    //             partition[curLessonNumber][dateFirstLesson] = {
-    //                 lessonNumber: curLessonNumber,
-    //                 lessonName: null,
-    //                 isFirstLesson: false,
-    //                 arrEl: [],
-    //             }
-
-    //             wasLesson = true
-    //         }
-
-    //         if (isOtherLessonName) {
-    //             let text = itemContent.innerText
-
-    //             text = delArtefacts(text)
-
-    //             // arrReg.forEach((itemReg, index) => {
-    //             //     if (index < 1) {
-    //             //         text = text.replace(itemReg, ' ')
-    //             //     } else {
-    //             //         text = text.replace(itemReg, '')
-    //             //     }
-    //             // })
-    //             partition[curLessonNumber][dateFirstLesson].lessonName = text
-    //         }
-
-    //         // обрабатывает сам контент каждого дня  
-    //         if (!isFirstLesson && !isOtherLesson && wasLesson) {
-    //             let str = itemContent.innerText
-
-    //             const reg = /[a-zA-Zа-яА-Я0-9]+/gi
-
-    //             // проверка содержит ли строка текст если нет не пушить ее в массив
-    //             const isContainText = reg.test(str)
-
-
-    //             if (isContainText) {
-    //                 const classList = itemContent.getAttribute("class")
-
-    //                 str = delArtefacts(str)
-    //                 // arrReg.forEach((itemReg, index) => {
-    //                 //     if (index < 1) {
-    //                 //         str = str.replace(itemReg, ' ')
-    //                 //     } else {
-    //                 //         str = str.replace(itemReg, '')
-    //                 //     }
-    //                 // })
-
-    //                 let strObj = transformStr(str, classList, indexContent)
-    //                 if (strObj) {
-    //                     partition[curLessonNumber][dateFirstLesson].arrEl.push(strObj)
-    //                 }
-
-
-    //             }
-    //         }
-    //     })
-    // })
+    return style
 }
 
 function getDatePlus(date, i) {
@@ -383,249 +281,6 @@ function getDatePlus(date, i) {
     return `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`
 }
 
-function transformStr(str, classList, indexContent) {
-
-    let s = { style: null, text: null }
-
-    let isMemoryVerse = false
-    // при прохождении заголовка памятного стиха назначает следующий элемент как сам стих
-    if (store.indexContent === indexContent) {
-        isMemoryVerse = true
-        s = { style: "memoryVerse", text: analysisText(str) }
-    }
-
-    if (classList.indexOf(parsePatternsSS.intro) >= 0) {
-
-        let isIntroLink = true
-
-        arrStrPatterns.forEach((item, index) => {
-
-            if (str.indexOf(item.pattern) >= 0) {
-                s = { style: item.style, text: analysisText(str) }
-
-                isIntroLink = false
-
-                if (index === arrStrPatterns.length - 1) {
-                    store.indexContent = indexContent + 1
-                }
-            }
-        })
-
-        if (isIntroLink && !isMemoryVerse) {
-            s = { style: analysisClass(classList, str), text: analysisText(str) }
-        }
-
-    } else {
-        let isHaveWithoutStyle = true
-        parsePatternsSS.arrWithoutClassList.forEach((item, index) => {
-            if (classList.indexOf(item) >= 0) {
-                isHaveWithoutStyle = false
-                s = undefined
-            }
-        })
-        if (isHaveWithoutStyle) {
-            s = { style: analysisClass(classList, str), text: analysisText(str) }
-        }
-
-    }
-
-    return s
-}
-
-function analysisClass(classList) {
-    let style = classList
-    let isHaveStyle = true
-
-    // анализирует приходящий стиль  
-    parsePatternsSS.arrAnalisisClassList.forEach((item, index) => {
-        if (classList.indexOf(item.pattern) >= 0) {
-            style = item.style
-            isHaveStyle = false
-        }
-    })
-
-    // если нету стиля который находится в объекте присваиваит Basic
-    if (isHaveStyle) {
-        style = 'mainText'
-    }
-
-    return style
-}
-
-function analysisText(str) {
-    let text = str
-    let res = PARSE_BIBLE_REFERENCES(text)
-
-    return creatArrParsText(res)
-}
-
-
-function delUnnecessary(html) {
-    let arr = html.querySelectorAll(parsePatternsSS.delUnnecessaryEl)
-    arr.forEach((item) => {
-        item.remove()
-    })
-}
-
-
-function getDataFirstLesson(strDate, i) {
-
-    return getDate(strDate, i)
-}
-
-
-// принимает 2023-09-20
-// возвращает 2023-09-20+i
-
-
-// function getDate(dayMonth, i) {
-
-//     const monthNames = [
-//         "января",
-//         "февраля",
-//         "марта",
-//         "апреля",
-//         "мая",
-//         "июня",
-//         "июля",
-//         "августа",
-//         "сентября",
-//         "октября",
-//         "ноября",
-//         "декабря"
-//     ];
-
-//     console.log('dayMonth', dayMonth)
-
-//     const day = dayMonth.split(" ")[0];
-//     console.log('day', day)
-//     const monthIndex = monthNames.indexOf(dayMonth.split(" ")[1]);
-//     let str = `${monthIndex + 1}`
-//     const m = str.padStart(2, '0')
-//     const currentYear = new Date().getFullYear();
-//     console.log('currentYear}-${m}-${+day + i}', `${currentYear}-${m}-${+day + i}`)
-//     const date = new Date(`${currentYear}-${m}-${+day}`);
-//     date.setDate(date.getDate() + i);
-//     const formattedDate = date.toISOString().split("T")[0];
-
-//     return formattedDate
-
-// }
-
-
-function getMeinText(html, el) {
-
-    const arr = []
-    getAllMainText(html, arr)
-
-    const text = arr.join('')
-
-    el.remove()
-    return text
-}
-
-function getAllMainText(html, arr) {
-    let el = html.querySelector(`${parsePatternsSS.memoryVerseTitle} + p + p`)
-    // console.log('el', el)  
-    let text = el.innerText
-
-    //    console.log('el.classList', el.classList)
-    if (el) {
-        if (!el.classList.contains(parsePatternsSS.lessonDay)) {
-
-            text = delArtefacts(text)
-
-            // arrReg.forEach((item) => {
-            //     text = text.replace(item, ' ')
-            // })
-
-            arr.push(text + "\n")
-
-            el.remove()
-
-            return getAllMainText(html, arr)
-        } else {
-            return "finish"
-        }
-    } else {
-        console.log("finish")
-        return "finish"
-    }
-
-}
-
-
-function getLessonDayDate(html) {
-    let el = html.querySelector(`.${parsePatternsSS.lessonDay}`)
-    let text = el.innerText.replace(/^\s+/, "");
-
-    el.remove()
-    console.log('text', text)
-    let date = getDate(`${text}`)
-    console.log('date', date)
-    return date
-}
-
-function getMainTextLessonDay(html, el) {
-    const arr = []
-    getAllMainTextLessonDay(html, arr)
-
-    const text = arr.join('')
-
-    el.remove()
-    return text
-}
-
-function getAllMainTextLessonDay(html, arr) {
-    let el = html.querySelector(`${parsePatternsSS.lessonDayTitle} + p`)
-    // console.log('el', el)  
-    let text = el.innerText
-    // console.log('el.classList', el.classList)
-
-    if (el) {
-        if (!el.classList.contains(parsePatternsSS.lessonDay)) {
-
-            text = delArtefacts(text)
-            // arrReg.forEach((item) => {
-            //     text = text.replace(item, ' ')
-            // })
-
-            // the string to check
-            let regex = /[A-Za-zА-Яа-я0-9]/; // the regular expression to match a letter or digit
-            let containsLetterOrDigit = regex.test(el.innerText);
-            // console.log('el.innerText', el.innerText)
-            // console.log("containsLetterOrDigit", containsLetterOrDigit); // output: true
-
-            if (containsLetterOrDigit) {
-                console.log("[A-Za-zА-Яа-я]")
-                arr.push(text + "\n")
-            }
-
-            el.remove()
-
-            return getAllMainTextLessonDay(html, arr)
-        } else {
-            return "finish"
-        }
-    } else {
-        console.log("finish")
-        return "finish"
-    }
-
-}
-
-function writeResult() {
-    const jsonString = JSON.stringify(store, null, 2);
-    fs.writeFileSync('./ResultParse/YSS/YSS.json', jsonString, 'utf-8');
-}
-
-
-
-//? ====================================================================================
-//? ====================================================================================
-//? ====================================================================================
-//? ====================================================================================
-//? ====================================================================================
 
 
 
@@ -705,13 +360,17 @@ function PARSE_BIBLE_REFERENCES(string) {
                     let bookWithoutNumber = text.at(resStr + length + i + 4)
                     console.log('resStr + length + n', resStr + length + i + 4)
 
+                    if (!bookWithNumber || !bookWithoutNumber) {
+                        debugger
+                    }
+
                     console.log('bookWithNumber', bookWithNumber)
                     console.log('bookWithoutNumber', bookWithoutNumber)
 
 
                     let reg = /[а-яА-Я]/i
 
-                    if (reg.test(bookWithNumber) || reg.test(bookWithoutNumber) || bookWithNumber.includes("#")) {
+                    if (reg.test(bookWithNumber) || reg.test(bookWithoutNumber)) {
 
                         console.log('arr', arr)
                         BOOK_ARR.push([item, ...arr.slice(0, -1)])
@@ -869,6 +528,9 @@ function PARSE_BIBLE_REFERENCES(string) {
     return text
 }
 
+
+
+
 function creatArrParsText(text) {
     // "Проявление Его любви в нашей личной жизни открывает миру Его славу — Его\n\t\t\tхарактер. Последнее послание, которое несут три ангела и которое должно быть провозглашено миру,\n\t\t\tпогруженному в духовную тьму, звучит так: «Убойтесь Бога и воздайте Ему славу» (#]}\"7\":\"sesrev\",\"41\":\"retpahc\",\"рктО\":\"emaNkoob\"{,\"7:41 .рктО\"[#)."
 
@@ -912,4 +574,155 @@ function creatArrParsText(text) {
     }
 
     return arr
+}
+
+
+
+
+
+function writeResult() {
+    console.log("================================")
+    console.log("start testing")
+    console.log("================================")
+    testingParseBibleVerse(state)
+    const jsonString = JSON.stringify(state, null, 2);
+    fs.writeFileSync('./ResultParse/YSS/YSS.json', jsonString, 'utf-8');
+    console.log("================================")
+    console.log("finish")
+    console.log("================================")
+}
+
+
+
+
+
+function testingParseBibleVerse(OBJECT) {
+    // consts 
+    let i = 0
+    //? {
+    //? "1": {
+    //    dateStart: datesArr[i],
+    //    dateEnd: getDatePlus(datesArr[i], 6),
+    //    lessonName: '',
+    //    lessonNumber: i + 1,
+    //     "arrEl": [
+    //                         {
+    //                             "style": "bibleVersesTitle",
+    //                             "text": [
+    //                                 {
+    //                                     "isLink": false,
+    //                                     "text": "Библейские отрывки для исследования:"
+    //                                 }
+    //                             ]
+    //                         },
+    //                         {
+    //                             "style": "mainText",
+    //                             "text": [
+    //                                 {
+    //                                     "isLink": false,
+    //                                     "text": ""
+    //                                 },
+    //                                 {
+    //                                     "isLink": true,
+    //                                     "text": "[\"Быт. 3:9–15; 28:15;\",{\"bookName\":\"Быт\",\"chapter\":[\"3\"],\"verses\":\"9–15\"},{\"bookName\":\"Быт\",\"chapter\":[\"28\"],\"verses\":\"15\"}]"
+    //                                 },
+    //                                 {
+    //                                     "isLink": false,
+    //                                     "text": " "
+    //                                 },
+    //                                 {
+    //                                     "isLink": true,
+    //                                     "text": "[\"Исх. 29:43, 45;\",{\"bookName\":\"Исх\",\"chapter\":[\"29\"],\"verses\":\"43, 45\"}]"
+    //                                 },
+    //                                 {
+    //                                     "isLink": false,
+    //                                     "text": " "
+    //                                 },
+    //                                 {
+    //                                     "isLink": true,
+    //                                     "text": "[\"Мф. 1:18–23;\",{\"bookName\":\"Мф\",\"chapter\":[\"1\"],\"verses\":\"18–23\"}]"
+    //                                 },
+    //                                 {
+    //                                     "isLink": false,
+    //                                     "text": " "
+    //                                 },
+    //                                 {
+    //                                     "isLink": true,
+    //                                     "text": "[\"Ин. 1:14–18; 3:16; 14:1–3.\",{\"bookName\":\"Ин\",\"chapter\":[\"1\"],\"verses\":\"14–18\"},{\"bookName\":\"Ин\",\"chapter\":[\"3\"],\"verses\":\"16\"},{\"bookName\":\"Ин\",\"chapter\":[\"14\"],\"verses\":\"1–3\"}]"
+    //                                 }
+    //                             ]
+    //                         },
+    //                         
+    //     },
+    //? }
+    const keysNumbersLessonArr = Object.keys(OBJECT)
+
+    keysNumbersLessonArr.forEach((key, index) => {
+        const itemObj = OBJECT[key]
+
+        const lessonNumber = itemObj.lessonNumber
+
+        // перебирает все элементы текстов в одном уроке
+        itemObj.arrEl.forEach((item, index) => {
+
+            //? item =
+            //? {
+            //?     "style": "mainText",
+            //?         "text": [
+            //?             {
+            //?                 "isLink": false,
+            //?                 "text": "Бог, Который стал одним из нас"
+            //?             }
+            //?         ]
+            //? },
+
+            item.text.forEach((itemT, indexT) => {
+
+                //? itemT =
+                //? {
+                //?     "isLink": false,
+                //?     "text": "Бог, Который стал одним из нас"
+                //?  }
+
+                if (itemT.isLink) {
+                    try {
+                        // ["Откр. 21:1–4",{bookName: "Откр" ,chapter:[21],verses:"1–4"}]
+                        JSON.parse(itemT.text)
+                    } catch (error) {
+                        console.log('ошибка № ', i)
+                        i++
+                        console.log('номер урока ', lessonNumber, 'индекс в массиве', indexT)
+                        console.log('сообщение ошибки ССЫЛКИ ', error.message)
+                        console.log('===== до исправления', itemT.isLink, ' ', itemT.text)
+
+                        delDontParseItem(itemT, indexT, item.text)
+
+                        console.log('===== после исправления', itemT.isLink, ' ', itemT.text)
+                    }
+                } else {
+                    // if (itemT.text.includes("\\")) {
+                    //     console.log('ошибка № ', i)
+                    //     i++
+                    //     console.log('номер урока ', lessonNumber, 'дата урока ', date, 'индекс в массиве', indexT)
+                    //     console.log('сообщение ошибки TEКСТА ')
+                    //     console.log('===== до исправления', itemT.isLink, ' ', itemT.text)
+
+                    //     delDontParseItem(itemT, indexT, item.text)
+
+                    //     console.log('===== после исправления', itemT.isLink, ' ', itemT.text)
+                    // }
+
+                }
+            })
+
+        })
+
+    })
+
+}
+
+
+function delDontParseItem(itemT, indexT, itemTextArr) {
+    itemT.isLink = false
+    itemT.text = ''
 }

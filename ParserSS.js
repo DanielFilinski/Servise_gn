@@ -64,7 +64,7 @@ const parsePatternsSS = {
 
     all: 'p',
     delUnnecessaryEl: ".Lesson-header_Day_bold",
-    delete: ['&#160;', '\n', '\t', '#', '&'], // массив элементов которые необходимо удалить из текста , '\t', '\n'
+    delete: ['&#160;', '\n', '\t', '&#9;', '#', '&'], // массив элементов которые необходимо удалить из текста , '\t', '\n'
     date: '.toc-hidden', // дата урока ...далее преобразовывается из например 17 июня => 2023-06-17
     lessonNumber: '.Header_Lesson.CharOverride-5',
 
@@ -125,6 +125,9 @@ function delArtefacts(str) {
                 strWithOut = strWithOut.replace(itemReg, '')
                 break;
             case 4: // когда &
+                strWithOut = strWithOut.replace(itemReg, '')
+                break;
+            case 5: // когда &#9;
                 strWithOut = strWithOut.replace(itemReg, '')
                 break;
             default:
@@ -355,6 +358,7 @@ function PARSE(htmlFile) {
                 }
                 // console.log('partition', partition)
                 wasLesson = true
+
             }
 
             // определеяет начало последующих уроков в неделе и создаёт соответствующий раздел 
@@ -850,6 +854,10 @@ function getAllMainTextLessonDay(html, arr) {
 }
 
 function writeResult() {
+    console.log("================================")
+    console.log("start testing")
+    console.log("================================")
+    testingParseBibleVerse(partition)
     const jsonString = JSON.stringify(partition, null, 2);
     fs.writeFileSync('./ResultParse/SS/SS.json', jsonString, 'utf-8');
     console.log("================================")
@@ -861,6 +869,151 @@ function writeResult() {
 
 
 
+
+
+
+//? ====================================================================================
+//? ====================================================================================
+//? ====================================================================================
+//? ====================================================================================
+//? ====================================================================================
+
+
+function testingParseBibleVerse(OBJECT) {
+    // consts 
+    let i = 0
+    //? {
+    //? "1": {
+    //     "2023-09-30": {
+    //         "lessonNumber": "1",
+    //             "lessonName": "Божья миссия и мы (часть 1)",
+    //                 "isFirstLesson": true,
+    //                     "arrEl": [
+    //                         {
+    //                             "style": "bibleVersesTitle",
+    //                             "text": [
+    //                                 {
+    //                                     "isLink": false,
+    //                                     "text": "Библейские отрывки для исследования:"
+    //                                 }
+    //                             ]
+    //                         },
+    //                         {
+    //                             "style": "mainText",
+    //                             "text": [
+    //                                 {
+    //                                     "isLink": false,
+    //                                     "text": ""
+    //                                 },
+    //                                 {
+    //                                     "isLink": true,
+    //                                     "text": "[\"Быт. 3:9–15; 28:15;\",{\"bookName\":\"Быт\",\"chapter\":[\"3\"],\"verses\":\"9–15\"},{\"bookName\":\"Быт\",\"chapter\":[\"28\"],\"verses\":\"15\"}]"
+    //                                 },
+    //                                 {
+    //                                     "isLink": false,
+    //                                     "text": " "
+    //                                 },
+    //                                 {
+    //                                     "isLink": true,
+    //                                     "text": "[\"Исх. 29:43, 45;\",{\"bookName\":\"Исх\",\"chapter\":[\"29\"],\"verses\":\"43, 45\"}]"
+    //                                 },
+    //                                 {
+    //                                     "isLink": false,
+    //                                     "text": " "
+    //                                 },
+    //                                 {
+    //                                     "isLink": true,
+    //                                     "text": "[\"Мф. 1:18–23;\",{\"bookName\":\"Мф\",\"chapter\":[\"1\"],\"verses\":\"18–23\"}]"
+    //                                 },
+    //                                 {
+    //                                     "isLink": false,
+    //                                     "text": " "
+    //                                 },
+    //                                 {
+    //                                     "isLink": true,
+    //                                     "text": "[\"Ин. 1:14–18; 3:16; 14:1–3.\",{\"bookName\":\"Ин\",\"chapter\":[\"1\"],\"verses\":\"14–18\"},{\"bookName\":\"Ин\",\"chapter\":[\"3\"],\"verses\":\"16\"},{\"bookName\":\"Ин\",\"chapter\":[\"14\"],\"verses\":\"1–3\"}]"
+    //                                 }
+    //                             ]
+    //                         },
+    //                         
+    //     },
+    //? }
+    const keysNumbersLessonArr = Object.keys(OBJECT)
+
+    keysNumbersLessonArr.forEach((key, index) => {
+        const itemObj = OBJECT[key]
+
+        // keys даты уроков 
+        const keysDateLessonArr = Object.keys(itemObj)
+
+        keysDateLessonArr.forEach((key, index) => {
+            const date = key
+            const lessonNumber = itemObj[key].lessonNumber
+
+            // перебирает все элементы текстов в одном уроке
+            itemObj[key].arrEl.forEach((item, index) => {
+
+                //? item =
+                //? {
+                //?     "style": "mainText",
+                //?         "text": [
+                //?             {
+                //?                 "isLink": false,
+                //?                 "text": "Бог, Который стал одним из нас"
+                //?             }
+                //?         ]
+                //? },
+
+                item.text.forEach((itemT, indexT) => {
+
+                    //? itemT =
+                    //? {
+                    //?     "isLink": false,
+                    //?     "text": "Бог, Который стал одним из нас"
+                    //?  }
+
+                    if (itemT.isLink) {
+                        try {
+                            // ["Откр. 21:1–4",{bookName: "Откр" ,chapter:[21],verses:"1–4"}]
+                            JSON.parse(itemT.text)
+                        } catch (error) {
+                            console.log('ошибка № ', i)
+                            i++
+                            console.log('номер урока ', lessonNumber, 'дата урока ', date, 'индекс в массиве', indexT)
+                            console.log('сообщение ошибки ССЫЛКИ ', error.message)
+                            console.log('===== до исправления', itemT.isLink, ' ', itemT.text)
+
+                            delDontParseItem(itemT, indexT, item.text)
+
+                            console.log('===== после исправления', itemT.isLink, ' ', itemT.text)
+                        }
+                    } else {
+                        // if (itemT.text.includes("\\")) {
+                        //     console.log('ошибка № ', i)
+                        //     i++
+                        //     console.log('номер урока ', lessonNumber, 'дата урока ', date, 'индекс в массиве', indexT)
+                        //     console.log('сообщение ошибки TEКСТА ')
+                        //     console.log('===== до исправления', itemT.isLink, ' ', itemT.text)
+
+                        //     delDontParseItem(itemT, indexT, item.text)
+
+                        //     console.log('===== после исправления', itemT.isLink, ' ', itemT.text)
+                        // }
+
+                    }
+                })
+
+            })
+        })
+    })
+
+}
+
+
+function delDontParseItem(itemT, indexT, itemTextArr) {
+    itemT.isLink = false
+    itemT.text = ''
+}
 
 
 
