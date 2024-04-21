@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="e4c6f127-d2bc-42c3-8762-2d561e088d55" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/ParserER.js" beforeDir="false" afterPath="$PROJECT_DIR$/ParserER.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ParserMR.js" beforeDir="false" afterPath="$PROJECT_DIR$/ParserMR.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ParserSS.js" beforeDir="false" afterPath="$PROJECT_DIR$/ParserSS.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ParserYSS.js" beforeDir="false" afterPath="$PROJECT_DIR$/ParserYSS.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Parser — копия.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ResultParse/ER/ER.json" beforeDir="false" afterPath="$PROJECT_DIR$/ResultParse/ER/ER.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ResultParse/MR/MR.json" beforeDir="false" afterPath="$PROJECT_DIR$/ResultParse/MR/MR.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ResultParse/SS/SS.json" beforeDir="false" afterPath="$PROJECT_DIR$/ResultParse/SS/SS.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ResultParse/YSS/YSS.json" beforeDir="false" afterPath="$PROJECT_DIR$/ResultParse/YSS/YSS.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fileForParse/MR/2023.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/fileForParse/MR/2023.xhtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fileForParse/SS/L01.html" beforeDir="false" afterPath="$PROJECT_DIR$/fileForParse/SS/L01.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fileForParse/SS/L02.html" beforeDir="false" afterPath="$PROJECT_DIR$/fileForParse/SS/L02.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fileForParse/SS/L03.html" beforeDir="false" afterPath="$PROJECT_DIR$/fileForParse/SS/L03.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fileForParse/SS/L04.html" beforeDir="false" afterPath="$PROJECT_DIR$/fileForParse/SS/L04.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fileForParse/SS/L05.html" beforeDir="false" afterPath="$PROJECT_DIR$/fileForParse/SS/L05.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fileForParse/SS/L06.html" beforeDir="false" afterPath="$PROJECT_DIR$/fileForParse/SS/L06.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fileForParse/SS/L07.html" beforeDir="false" afterPath="$PROJECT_DIR$/fileForParse/SS/L07.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fileForParse/SS/L08.html" beforeDir="false" afterPath="$PROJECT_DIR$/fileForParse/SS/L08.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fileForParse/SS/L09.html" beforeDir="false" afterPath="$PROJECT_DIR$/fileForParse/SS/L09.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fileForParse/SS/L11.html" beforeDir="false" afterPath="$PROJECT_DIR$/fileForParse/SS/L11.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fileForParse/SS/L12.html" beforeDir="false" afterPath="$PROJECT_DIR$/fileForParse/SS/L12.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fileForParse/SS/L13.html" beforeDir="false" afterPath="$PROJECT_DIR$/fileForParse/SS/L13.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fileForParse/SS/debuger/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/old.js" beforeDir="false" afterPath="$PROJECT_DIR$/old.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 5
+}]]></component>
+  <component name="ProjectId" id="2Zroj2hDl6ZRw8cStFgwlGo6JkU" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "/Users/filinsky/Documents/PROJECTS/Golosnadejdy/Servise/Parser",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="ParserMR.js" type="NodeJSConfigurationType" temporary="true" path-to-node="node" nameIsGenerated="true" path-to-js-file="ParserMR.js" working-dir="$PROJECT_DIR$">
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Node.js.ParserMR.js" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e4c6f127-d2bc-42c3-8762-2d561e088d55" name="Changes" comment="" />
+      <created>1703189690811</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1703189690811</updated>
+      <workItem from="1703189691848" duration="11424000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

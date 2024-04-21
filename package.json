@@ -1,8 +1,10 @@
 {
   "dependencies": {
+    "date-fns": "^3.6.0",
     "epubjs": "^0.3.93",
     "express": "^4.18.2",
     "fs": "^0.0.1-security",
+    "lodash": "^4.17.21",
     "node-html-parser": "^6.1.5"
   },
   "name": "parser",

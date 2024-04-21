@@ -6,7 +6,7 @@ import { parse } from 'node-html-parser';
 const parsePatterns = {
     all: "p",
     delete: ['&#160;', '\n', '\t'], // массив элементов которые необходимо удалить из текста
-    delUnnecessaryEl: ".Basic-Paragraph", // удаление пустых елементов которые мешают парсерингу
+    delUnnecessaryEl: "", // удаление пустых елементов которые мешают парсерингу
     date: ['дата_-right', 'дата_-left'], // дата урока ...далее преобразовывается из например 17 июня => 2023-06-17
     lessonName: ".заголовок",
     memoryVerse: "._стих", //
@@ -14,7 +14,7 @@ const parsePatterns = {
 }
 
 const htmlFilePaths = [
-    './fileForParse/ER/2023.xhtml',
+    './fileForParse/ER/2024.html',
 
     // Add more file paths as needed
 ];
@@ -176,7 +176,7 @@ function getDate(dayMonth) {
     const monthIndex = monthNames.indexOf(dayMonth.split(" ")[1]);
     let str = `${monthIndex + 1}`
     const m = str.padStart(2, '0')
-    const currentYear = new Date().getFullYear();
+    const currentYear = 2024                                          //! ТЕКУЩИЙ ГОД
     const date = new Date(`${currentYear}-${m}-${day}`);
     const formattedDate = date.toISOString().split("T")[0];
 

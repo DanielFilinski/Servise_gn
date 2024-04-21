@@ -215,7 +215,7 @@ function PARSE(htmlFile) {
             }
 
             // АНАЛИЗ текстов
-            
+
 
             parsePatternsSS.arrAnalisisClassList.some((item, index) => {
 
@@ -537,6 +537,101 @@ function creatArrParsText(text) {
 
 
 
+
+
+
+
+
+
+
+
+function getLessonName(html) {
+    let el = html.querySelector(parsePatternsSS.lessonName)
+    let name = el.innerText
+    el.remove()
+
+    return name
+}
+
+function getBibleVersesTitle(html) {
+    let el = html.querySelector(parsePatternsSS.bibleVersesTitle)
+    let name = el.innerText
+
+    return { name, el }
+}
+
+function getMainVerses(html, el) {
+
+    let obj = {}
+
+    let arr = []
+    arr[0] = html.querySelector(`${parsePatternsSS.bibleVersesTitle} + p `)
+    arr[1] = html.querySelector(`${parsePatternsSS.bibleVersesTitle} + p + p `)
+
+    const isFind = arr[1].innerText.indexOf('Памятн')
+
+    if (isFind >= 0) {
+        let AdditionalVerses
+
+        AdditionalVerses = delArtefacts(arr[0].innerText)
+        // arrReg.forEach((item) => {
+        //     AdditionalVerses = arr[0].innerText.replace(item, ' ')
+        // })
+
+        obj = { mainVerses: null, AdditionalVerses }
+
+    } else {
+
+        let mainVerses
+        let AdditionalVerses
+
+        mainVerses = delArtefacts(arr[0].innerText)
+        AdditionalVerses = delArtefacts(arr[1].innerText)
+
+        // arrReg.forEach((item) => {
+
+        //     mainVerses = arr[0].innerText.replace(item, ' ')
+        //     AdditionalVerses = arr[1].innerText.replace(item, ' ')
+        // })
+
+        obj = { mainVerses, AdditionalVerses }
+    }
+
+    el.remove()
+    arr.forEach((item) => {
+        item.remove()
+    })
+
+    return obj
+}
+
+
+function getMemoryVerseTitle(html) {
+    let el = html.querySelector(parsePatternsSS.memoryVerseTitle)
+    let name = el.innerText
+
+    return { name, el }
+}
+
+function getMemoryVerse(html, el) {
+    const elVerses = html.querySelector(`${parsePatternsSS.memoryVerseTitle} + p `)
+    let text = elVerses.innerText
+
+
+
+    arrReg.forEach((item) => {
+        text = text.replace(item, ' ')
+    })
+
+    elVerses.remove()
+
+    return text
+}
+
+
+function getMeinText(html) {
+    let el = html.querySelector(parsePatternsSS.meinText)
+}
 
 
 
@@ -1116,4 +1211,90 @@ function creatArrParsText(text) {
     }
 
     return arr
+}
+
+
+
+
+function getAllMainTextLessonDay(html, arr) {
+    let el = html.querySelector(`${parsePatternsSS.lessonDayTitle} + p`)
+    // console.log('el', el)  
+    let text = el.innerText
+    // console.log('el.classList', el.classList)
+
+    if (el) {
+        if (!el.classList.contains(parsePatternsSS.lessonDay)) {
+
+            text = delArtefacts(text)
+            // arrReg.forEach((item) => {
+            //     text = text.replace(item, ' ')
+            // })
+
+            // the string to check
+            let regex = /[A-Za-zА-Яа-я0-9]/; // the regular expression to match a letter or digit
+            let containsLetterOrDigit = regex.test(el.innerText);
+            // console.log('el.innerText', el.innerText)
+            // console.log("containsLetterOrDigit", containsLetterOrDigit); // output: true
+
+            if (containsLetterOrDigit) {
+                console.log("[A-Za-zА-Яа-я]")
+                arr.push(text + "\n")
+            }
+
+            el.remove()
+
+            return getAllMainTextLessonDay(html, arr)
+        } else {
+
+            return "finish"
+
+        }
+    } else {
+
+        return "finish"
+    }
+
+}
+
+
+
+
+
+function getDataFirstLesson(html, lessonNumber) {
+    let el = html.querySelector(parsePatternsSS.date)
+    let text = el.innerText
+
+    let dayMonth = null
+
+    arrReg.forEach((item) => {
+        text = text.replace(item, ' ')
+    })
+    console.log('text', text)
+
+    // выбор метода обработки даты 27 мая - 2 июня или 17-22 мая   
+    let reg = /\d{2}–\d{2}\s[а-я]+/; // 17-22 мая  
+    let matchArr = text.match(reg);
+    console.log('matchArr', matchArr)
+
+    if (matchArr !== null) {
+        const str = matchArr[0]
+        const regNum = /\d{2}–/;
+        const regMonth = /\s[а-я]+/;
+
+        let num = str.match(regNum)
+        let month = str.match(regMonth)
+
+        num = num[0].replace('–', '')
+
+        dayMonth = `${num}${month[0]}`
+    } else {
+        const reg = /\d{2}\s[а-я]+/
+        dayMonth = matchArr[0].match(reg);
+    }
+
+    let date = getDate(dayMonth)
+
+
+    el.remove()
+    return date
 }

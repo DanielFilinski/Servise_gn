@@ -5,16 +5,19 @@ import { parse } from 'node-html-parser';
 
 const parsePatterns = {
     delete: ['&#160;', '\n', '\t'], // массив элементов которые необходимо удалить из текста
-    date: '.Headers_Date', // дата урока ...далее преобразовывается из например 17 июня => 2023-06-17
-    lessonName: ".Headers_DAYName",
-    memoryVerse: ".Headers_BibleText", //
-    meinText: ".Basic-Paragraph",
-    prayTitle: ".Молитва-заголовок",
-    prayText: ".Молитва-текст"
+    date: 'Headers_Date', // дата урока ...далее преобразовывается из например 17 июня => 2023-06-17
+    lessonName: "Headers_DAYName",
+    memoryVerse: "Headers_BibleText", //
+    meinText: "основной-абзац",
+    prayTitle: "Молитва-заголовок",
+    prayText: "Молитва-текст",
+    endDay: "OriginalPages",
+    delElementsArr: ["_idGenObjectLayout-1"],
+    all: "p"
 }
 
 const htmlFilePaths = [
-    './fileForParse/MR/2023.xhtml',
+    './fileForParse/MR/2024.html',
 
     // Add more file paths as needed
 ];
@@ -105,31 +108,48 @@ async function PARSE() {
     const amountDays = getAmountDays(html)
     console.log('amountDays', amountDays)
 
-    for (let i = 0; i < amountDays; i++) {
-        const date = getDateReading(html)
-        console.log('date', date)
+    // получаем все элементы
+    const allArr = html.querySelectorAll(parsePatterns.all)
 
-        const lessonName = getLessonName(html)
+    let date, lessonName, memoryVerse, meinText = ''
 
+    allArr.forEach((p, index) => {
+        const className = p.classList
 
-        const memoryVerseObj = getMemoryVerse(html)
-        const memoryVerse = memoryVerseObj.text
+        if (className.contains(parsePatterns.date)) {
+            date = getDate(p.innerText)
+        }
 
+        if (date === "2024-01-31") {
+            console.log('date', date)
+        }
 
-        const meinText = getMeinText(html, memoryVerseObj.el)
+        if (className.contains(parsePatterns.lessonName)) {
+            lessonName = delArtefacts(p.innerText)
+        }
 
+        if (className.contains(parsePatterns.memoryVerse)) {
+            memoryVerse = delArtefacts(p.innerText)
+        }
 
-        const prayTitle = getPrayTitle(html)
+        if (className.contains(parsePatterns.meinText)) {
+            meinText += delArtefacts(p.innerText)
+        }
 
+        if (className.contains(parsePatterns.endDay) || index === allArr.length - 1) {
+            console.log(date)
+            mainJSON[date] = { date, lessonName, memoryVerse, meinText, prayTitle: '', prayText: '' }
+            meinText = ''
+        }
+    })
 
-        const prayText = getPrayText(html)
+}
 
-
-        const obj = { date, lessonName, memoryVerse, meinText, prayTitle, prayText }
-        mainJSON[date] = obj
-    }
-
-
+function delElements(html) {
+    parsePatterns.delElementsArr.forEach(item => {
+        const elArr = html.querySelectorAll(item)
+        elArr.forEach(el => el.remove())
+    })
 }
 
 function getAmountDays(html) {
@@ -167,7 +187,7 @@ function getDate(dayMonth) {
     const monthIndex = monthNames.indexOf(dayMonth.split(" ")[1]);
     let str = `${monthIndex + 1}`
     const m = str.padStart(2, '0')
-    const currentYear = new Date().getFullYear();
+    const currentYear = 2024;
     const date = new Date(`${currentYear}-${m}-${day}`);
     const formattedDate = date.toISOString().split("T")[0];
 
@@ -207,10 +227,12 @@ function getMeinText(html, el) {
 
 function getAllMainText(html, arr) {
     let el = html.querySelector(`${parsePatterns.memoryVerse} + p`)
-    // console.log('el', el)  
+    // console.log('el', el)
     let text = null
 
-    const className = parsePatterns.prayTitle.replace(".", "")
+    // определяем конец основных обзацев
+    const className = parsePatterns.date.replace(".", "")
+    console.log('el.classList', el.classList)
 
     if (!el.classList.contains(className)) {
 
@@ -228,16 +250,18 @@ function getAllMainText(html, arr) {
 
 function getPrayTitle(html) {
     let el = html.querySelector(parsePatterns.prayTitle)
-
     const text = delArtefacts(el.innerText)
+
+    el.remove()
 
     return text
 }
 
 function getPrayText(html) {
     let el = html.querySelector(parsePatterns.prayText)
-
     const text = delArtefacts(el.innerText)
+
+    el.remove()
 
     return text
 }
@@ -254,8 +278,8 @@ function PARSE_BIBLE_REFERENCES(string) {
     let text = string
     // Быт. 1
     // Быт. 1:2
-    // Быт. 1:2-3  
-    // Быт. 1:2, 3   
+    // Быт. 1:2-3
+    // Быт. 1:2, 3
     // знак ; - конец ссылки главы
     // знак ) - конец вставки ссылки в тексте
     // знак . - конец группы ссылок
@@ -411,7 +435,7 @@ function PARSE_BIBLE_REFERENCES(string) {
                 // удаляет точку в конце названия книги если она есть
                 arrName[0] = arrName[0].replace('.', '')
 
-                //переворачивает название книги 
+                //переворачивает название книги
                 const bookName = arrName[0]
                 // .split("").reverse().join("")
 
