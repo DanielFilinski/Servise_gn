@@ -9,14 +9,22 @@
   },
   "name": "parser",
   "type": "module",
-  "description": "1. ��������� html � ���� index.html \r 2. ��������� ��������� ����� node.js",
+  "description": "node.js",
   "version": "1.0.0",
   "main": "Parser.js",
   "scripts": {
-    "start": "node static-file-server.js",
+    "build": "npx tsc",
+    "ss": "node dist/ParserSS.js",
+    "mr": "node dist/ParserMR.js",
+    "er": "node dist/ParserER.js",
+    "yss": "node dist/ParserYSS.js",
+    "all": "npm run ss & npm run mr & npm run er & npm run yss",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^5.6.2"
+  }
 }
