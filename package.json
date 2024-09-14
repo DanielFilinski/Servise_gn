@@ -14,6 +14,7 @@
   "main": "Parser.js",
   "scripts": {
     "build": "npx tsc",
+    "index": "node dist/index.js",
     "ss": "node dist/ParserSS.js",
     "mr": "node dist/ParserMR.js",
     "er": "node dist/ParserER.js",

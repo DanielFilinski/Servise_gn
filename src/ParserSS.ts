@@ -3,6 +3,7 @@ import { parse } from 'node-html-parser';
 import { compareAsc, format } from "date-fns";
 import { testingParseBibleVerseSS, testingEmptyStringsSS } from './Tests.js';
 import { PARSE_BIBLE_REFERENCES, creatArrParsText, findsBibleLink } from './Service.js';
+import { convertResultSS } from './Convert.js';
 
 
 
@@ -560,8 +561,10 @@ function writeResult() {
     console.log("================================")
     testingParseBibleVerseSS(partition)
     // testingEmptyStringsSS(partition)
+    const RESULT = JSON.stringify(convertResultSS(partition), null, 2)
     const jsonString = JSON.stringify(partition, null, 2);
     fs.writeFileSync('./ResultParse/SS/SS.json', jsonString, 'utf-8');
+    fs.writeFileSync('./ResultParse/SS/SS+.json', RESULT, 'utf-8');
     console.log("================================")
     console.log("finish")
     console.log("================================")
