@@ -6,7 +6,7 @@ export const convertResultSS = (data: TOldParseResult): TParseResult[] => {
     let i = 1
     const arr = Object.values(data) as TOldParse[]
     const result: TParseResult[] = []
-    
+
     arr.forEach((lesson: TOldParse) => {
         Object.keys(lesson).forEach(key => {
             const day = lesson[key]
@@ -16,7 +16,7 @@ export const convertResultSS = (data: TOldParseResult): TParseResult[] => {
                 date: getDate(key),
                 lessonName: day.lessonName,
                 lessonNumber: day.lessonNumber,
-                isFirstLesson: day.isFirstLesson,
+                isFirstLesson: day.isFirstLesson ? day.isFirstLesson : undefined,
                 content: convertContentSS(day.arrEl)
             }
 
@@ -34,8 +34,8 @@ function convertContentSS(data: TOldContent[]): TContent[] {
 
     data.forEach(item => {
         const type = item.style
-        const links: TLink[]  = []
-        const textArr: string[] = [] 
+        const links: TLink[] = []
+        const textArr: string[] = []
         item.text.forEach(text => {
 
             if (text.isLink) {
@@ -51,11 +51,11 @@ function convertContentSS(data: TOldContent[]): TContent[] {
         result.push({
             type: type,
             text: textArr.join(''),
-            links: (links.length > 0) ? links : undefined 
+            links: (links.length > 0) ? links : undefined
 
         })
     })
-    
+
     return result
 }
 
@@ -94,7 +94,7 @@ function getBookNumber(data: string) {
     return null
 }
 
-function getVerses(data: string | null): number[]  | null {
+function getVerses(data: string | null): number[] | null {
     // "10"
     // "15–20"
     // "17, 18"
@@ -105,7 +105,7 @@ function getVerses(data: string | null): number[]  | null {
     }
 
     const verses: number[] = [];
-    
+
     // Split the input by commas
     const parts = data.split(',');
 
