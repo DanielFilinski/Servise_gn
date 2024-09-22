@@ -190,7 +190,7 @@ function PARSE(htmlFile) {
     // раздетить html на недели []    
 
     const arrWeeks = html.querySelectorAll(parsePatternsSS.week)
-    console.log('arrWeeks', arrWeeks)
+    console.log('arrWeeks', arrWeeks.length)
 
     // разделить недели на уроки  []
 
