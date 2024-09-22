@@ -566,6 +566,6 @@ function writeResult() {
     fs.writeFileSync('./ResultParse/SS/SS.json', jsonString, 'utf-8');
     fs.writeFileSync('./ResultParse/SS/SS+.json', RESULT, 'utf-8');
     console.log("================================")
-    console.log("finish")
+    console.log("finish 2.0")
     console.log("================================")
 }
