@@ -3,7 +3,7 @@ import { parse } from 'node-html-parser';
 import { compareAsc, format } from "date-fns";
 import { testingParseBibleVerseSS, testingEmptyStringsSS } from './Tests.js';
 import { PARSE_BIBLE_REFERENCES, creatArrParsText, findsBibleLink } from './Service.js';
-import { convertResultSS } from './Convert.js';
+import { convertResultSS } from './convertors/ConvertSS.js';
 
 
 
@@ -14,6 +14,7 @@ const parsePatternsSS = {
     weekContent: "div",
     weekAll: "p",
     selectFirstLesson: ".СШ_Lesson-Number",
+    selectFirstLessonDate: ".СШ_Lesson-Number-DATE",
     selectOtherLesson: ".СШ_DAY_Lesson-Day",
     firstLessonName: ".СШ_Lesson-Name",
     firstLessonNumber: ".Header_Lesson",
@@ -21,6 +22,7 @@ const parsePatternsSS = {
     intro: "СШ_Lesson-intro",
     arrAnalisisClassList: [
         { pattern: "СШ_Question", style: "question" },
+        { pattern: "questions", style: "question" },
         { pattern: "основной-абзац", style: "mainText" },
     ],
     arrWithoutClassList: [
@@ -204,7 +206,7 @@ function PARSE(htmlFile) {
         store.indexContent = 0
 
         //! номер типа описан ниже в switch
-        const typeLessonName = 1
+        const typeLessonName: number = 3
         let nameWeek = null
         let strRangeDateArr = null
         // возвращает номер урока => 13
@@ -212,31 +214,46 @@ function PARSE(htmlFile) {
         let weekContent = null
 
         switch (typeLessonName) {
-            case 0:
+            case 1:
                 //? при полной строке названия
                 // <h1 class="toc-hidden">Урок 13. 17–23 июня. В сиянии славы Божьей</h1>
-                nameWeek = item.querySelector(parsePatternsSS.nameWeek).innerText
+                nameWeek = item.querySelector(parsePatternsSS.nameWeek).innerText;
                 // возвращает номер урока => 13
-                curLessonNumber = nameWeek.match(/Урок\s\d{1,2}/)[0].replace('Урок ', '')
+                curLessonNumber = nameWeek.match(/Урок\s\d{1,2}/)[0].replace('Урок ', '');
                 // <div id="_idContainer075" class="_idGenObjectStyleOverride-1">
-                weekContent = item.querySelector(parsePatternsSS.weekContent)
-                console.log('nameWeek', nameWeek)
+                weekContent = item.querySelector(parsePatternsSS.weekContent);
+                // console.log('nameWeek', nameWeek);
                 break;
-            case 1:
+            case 2:
                 //? при кратком названии (псле innerText = Урок 130 сентября —6 октября)
                 //<p class="СШ_Lesson-Number" lang="ru-RU"><a id="_idTextAnchor000"></a><span
                 // class="Header_Lesson" > Урок 1</span > <br />30 сентября —<br />6 октября</p >
-                const nameHTML = item.querySelector(parsePatternsSS.selectFirstLesson)
-                curLessonNumber = nameHTML.querySelector('span').innerText.match(/\d{1,2}/)[0]
-                console.log('nameHTML', nameHTML)
-
-                nameHTML.querySelector(parsePatternsSS.firstLessonNumber).remove()
-
-                nameWeek = nameHTML.innerText
-                weekContent = item
-                console.log('nameWeek', nameWeek)
+                const nameHTML = item.querySelector(parsePatternsSS.selectFirstLesson);
+                curLessonNumber = nameHTML.querySelector('span').innerText.match(/\d{1,2}/)[0];
+                // console.log('nameHTML', nameHTML);
+                nameHTML.querySelector(parsePatternsSS.firstLessonNumber).remove();
+                nameWeek = nameHTML.innerText;
+                weekContent = item;
+                // console.log('nameWeek', nameWeek);
                 break;
-            case 2:
+            case 3:
+                //? при кратком названии разделённом на два элемента
+                //<p class="СШ_Lesson-Number"><span class="bold">Урок 1</span></span></p>
+                //<p class="СШ_Lesson-Number-DATE"><a id="_idTextAnchor001"></a>28 сентября— 4&#160;октября</p>
+
+                const lessonNumber = delArtefacts(item.querySelector(parsePatternsSS.selectFirstLesson).innerText)
+                const lessonDate = delArtefacts(item.querySelector(parsePatternsSS.selectFirstLessonDate).innerText)
+
+                console.log('lessonNumber', lessonNumber)
+                console.log('lessonDate', lessonDate)
+
+
+                curLessonNumber = lessonNumber.match(/\d{1,2}/)[0];
+                nameWeek = lessonDate;
+                weekContent = item;
+                // console.log('nameWeek', nameWeek);
+                // item.querySelector(parsePatternsSS.selectFirstLesson).remove()
+                // item.querySelector(parsePatternsSS.selectFirstLessonDate).remove()
 
                 break;
             default:
@@ -251,28 +268,34 @@ function PARSE(htmlFile) {
         nameFirstLesson = delArtefacts(nameFirstLesson)
 
 
+        console.log('strRangeDateArr', strRangeDateArr)
+
+        debugger
 
         // находит абсолютно все "p" и вложенные тоже
         const arrWeekAll = weekContent.querySelectorAll(parsePatternsSS.weekAll)
-        console.log('arrWeekAll', arrWeekAll)
+        // console.log('arrWeekAll', arrWeekAll)
 
         // ['17–23 июня', index: 9, input: 'Урок 13. 17–23 июня. В сиянии славы Божьей', groups: undefined]
         // ['26 августа — 1 сентября', index: 9, input: 'Урок 13. 26 августа — 1 сентября. В сиянии славы Божьей', groups: undefined]
-        strRangeDateArr = nameWeek.match(/\d{1,2}–\d{1,2}\s[а-я]{1,8}/)
+        strRangeDateArr = nameWeek.match(/\d{1,2}\s?–\s?\d{1,2}\s[а-я]{1,8}/)
 
+        console.log('strRangeDateArr', strRangeDateArr)
         // 
         let strDate = null
 
         // вытягивает из 17–23 июня дату первого урока 17 июня
         if (strRangeDateArr) {
-            strDate = strRangeDateArr[0].replace(/–\d{1,2}/, '')
+            strDate = strRangeDateArr[0].replace(/–\s?\d{1,2}/, '')
         } else {
-            strDate = nameWeek.match(/\d{1,2}\s[а-я]{1,8}/)[0]
+            strDate = nameWeek.match(/\d{1,2}\s?[а-я]{1,8}/)[0]
             console.log('strDate', strDate)
         }
 
+        console.log('strDate', strDate)
         // возвращает дату первого урока => "2023-06-17"
         let dateFirstLesson = getDataFirstLesson(strDate, i)
+        console.log('dateFirstLesson', dateFirstLesson)
 
 
         // создаёт новый раздел под названием 13 в partition
@@ -284,11 +307,14 @@ function PARSE(htmlFile) {
         let wasLesson = false
 
         // удаляет точку из класса 
-        const classFirstLesson = parsePatternsSS.selectFirstLesson.replace(".", "")
+        const classFirstLesson = parsePatternsSS.selectFirstLessonDate.replace(".", "")
         const classOtherLesson = parsePatternsSS.selectOtherLesson.replace(".", "")
         const otherLessonName = parsePatternsSS.otherLessonName.replace(".", "")
 
         // console.log('arrWeekAll', arrWeekAll)
+        // if (!nameWeek || !strRangeDateArr || !curLessonNumber || !weekContent) {
+        //     console.warn("nameWeek || strRangeDateArr || curLessonNumber || weekContent", nameWeek, strRangeDateArr, curLessonNumber, weekContent)
+        // }
 
         arrWeekAll.forEach((itemContent, indexContent) => {
 
@@ -298,6 +324,8 @@ function PARSE(htmlFile) {
 
             // определеяет начало первого урока в неделе и создаёт соответствующий раздел 
             if (isFirstLesson) {
+                console.log('dateFirstLesson 1', dateFirstLesson)
+
                 partition[curLessonNumber][dateFirstLesson] = {
                     lessonNumber: curLessonNumber,
                     lessonName: nameFirstLesson,
@@ -313,6 +341,8 @@ function PARSE(htmlFile) {
             if (isOtherLesson) {
                 i++
                 // dateFirstLesson = getDataFirstLesson(strDate, i)
+                console.log('dateFirstLesson 2', dateFirstLesson)
+
                 dateFirstLesson = convertDate(itemContent.innerText)
                 partition[curLessonNumber][dateFirstLesson] = {
                     lessonNumber: curLessonNumber,
@@ -336,6 +366,7 @@ function PARSE(htmlFile) {
                 //         text = text.replace(itemReg, '')
                 //     }
                 // })
+
                 partition[curLessonNumber][dateFirstLesson].lessonName = text
             }
 
@@ -568,4 +599,4 @@ function writeResult() {
     console.log("================================")
     console.log("finish 2.0")
     console.log("================================")
-}
+} 1

@@ -48,8 +48,8 @@ export function PARSE_BIBLE_REFERENCES(string) {
         // reg = new RegExp(item);
         // resReg = text.match(reg)
         // console.log('resReg', resReg)
-        console.log('text', text)
-        console.log('item = ', item)
+        // console.log('text', text)
+        // console.log('item = ', item)
 
         let resStr = text.indexOf(item)
         let length = item.length
@@ -405,7 +405,7 @@ function execLink(string) {
         // 11: 3–6, 15–18, 20
         (() => {
 
-            console.log('item', item)
+            // console.log('item', item)
 
             // если строка ПУСТАЯ выходим из функции
             if (_.isEmpty(_.trim(item))) {

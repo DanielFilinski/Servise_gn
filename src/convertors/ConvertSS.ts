@@ -1,5 +1,5 @@
 
-import { TContent, TLink, TOldContent, TOldLinkArr, TOldParse, TOldParseResult, TParseResult } from "./types/parseResult.type"
+import { TContent, TLink, TOldContent, TOldLinkArr, TOldParse, TOldParseResult, TParseResult } from "../types/parseResult.type"
 import { parseISO, startOfDay, formatISO } from 'date-fns';
 
 export const convertResultSS = (data: TOldParseResult): TParseResult[] => {
@@ -15,7 +15,7 @@ export const convertResultSS = (data: TOldParseResult): TParseResult[] => {
                 id: i,
                 date: getDate(key),
                 lessonName: day.lessonName,
-                lessonNumber: day.lessonNumber,
+                lessonNumber: +day.lessonNumber,
                 isFirstLesson: day.isFirstLesson ? day.isFirstLesson : undefined,
                 content: convertContentSS(day.arrEl)
             }
@@ -32,7 +32,7 @@ export const convertResultSS = (data: TOldParseResult): TParseResult[] => {
 function convertContentSS(data: TOldContent[]): TContent[] {
     const result: TContent[] = []
 
-    data.forEach(item => {
+    data.forEach((item, index) => {
         const type = item.style
         const links: TLink[] = []
         const textArr: string[] = []
@@ -49,6 +49,7 @@ function convertContentSS(data: TOldContent[]): TContent[] {
         })
 
         result.push({
+            id: index + 1,
             type: type,
             text: textArr.join(''),
             links: (links.length > 0) ? links : undefined
@@ -60,27 +61,34 @@ function convertContentSS(data: TOldContent[]): TContent[] {
 }
 
 function getDate(dateString: string) {
-    // Разбор строки в объект Date
-    const parsedDate = parseISO(dateString);
+    // // Разбор строки в объект Date
+    // const parsedDate = parseISO(dateString);
+    // console.log('parsedDate', parsedDate)
     // Сброс времени на начало дня (00:00:00)
-    const dateAtStartOfDay = startOfDay(parsedDate);
+    const dateAtStartOfDay: Date = startOfDay(new Date(dateString));
+    console.log('dateAtStartOfDay', dateAtStartOfDay)
     // Форматирование в ISO строку
-    return formatISO(dateAtStartOfDay);
+    return dateAtStartOfDay.toString();
 }
 
 function convertLink(data: TOldLinkArr): TLink {
 
-    const text = data[0]
+    const [firstElement, ...restElements] = data;
 
-    const bookName = data[1].bookName
-    const chapter = data[1].chapter
-    const verses = data[1].verses
+    const text = firstElement
+
+    const result = restElements.map(item => {
+        const { bookName, chapter, verses } = item
+        return {
+            bookNumber: getBookNumber(bookName),
+            chapter: chapter.map(item => +item),
+            verses: getVerses(verses)
+        }
+    })
 
     return {
         text: text,
-        bookNumber: getBookNumber(bookName),
-        chapter: chapter,
-        verses: getVerses(verses)
+        data: result
     }
 }
 

@@ -645,3 +645,24 @@ export function testingEmptyStringsYSS(OBJECT) {
 
     })
 }
+
+export function testDateLines(date1Str: string, date2Str: string) {
+    // Преобразуем строковые даты в объекты Date
+    const date1 = new Date(date1Str);
+    const date2 = new Date(date2Str);
+
+    // Вычисляем разницу в миллисекундах между двумя датами
+    const differenceInMilliseconds = Math.abs(date2.getTime() - date1.getTime());
+
+
+    // Переводим разницу в миллисекундах в дни
+    const differenceInDays = differenceInMilliseconds / (1000 * 60 * 60 * 24);
+
+    // Проверяем, больше ли разница одного дня
+    if (differenceInDays > 1) {
+        console.log(`Разница между датами больше одного дня: ${differenceInDays} дн.`);
+        return false
+    } else {
+        return true
+    }
+}

@@ -1,0 +1,12 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "mr",
+			"problemMatcher": [],
+			"label": "npm: mr",
+			"detail": "node dist/ParserMR.js"
+		}
+	]
+}

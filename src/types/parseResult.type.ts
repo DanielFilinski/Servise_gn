@@ -10,6 +10,7 @@ export type TParseResult = {
 }
 
 export type TContent = {
+    id: number
     type: TContentType,
     text: string,
     links?: TLink[]
@@ -21,9 +22,11 @@ export type TContentType =
 
 export type TLink = {
     text: string,
-    bookNumber: number | null,
-    chapter: number[] | null,
-    verses: number[] | null
+    data: {
+        bookNumber: number | null,
+        chapter: number[] | null,
+        verses: number[] | null
+    }[]
 }
 
 
@@ -61,4 +64,4 @@ export type TOldLink = {
     verses: string;
 }
 
-export type TOldLinkArr = [string, TOldLink];
+export type TOldLinkArr = [string, ...TOldLink[]];
