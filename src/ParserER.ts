@@ -2,7 +2,10 @@ import { text } from 'express';
 import fs from 'fs';
 import { parse } from 'node-html-parser';
 import { convertResultER } from './convertors/ConvertER.js';
-
+import { format, parse as dateParser } from 'date-fns';
+import { ru } from 'date-fns/locale';
+import { TParseResultER } from './types/parseResultER.type.js';
+import { testDateLines } from './Tests.js';
 
 const parsePatterns = {
     all: "p",
@@ -150,8 +153,12 @@ function delUnnecessary(html) {
 function getDateReading(html) {
     let el = html.querySelector(`.${parsePatterns.date[0]}, .${parsePatterns.date[1]}`)
     let text = el.innerText
+    //! Парсим строку в объект Date, добавляя год "2024"
+    const parsedDate = dateParser(`${text} 2024`, 'd MMMM yyyy', new Date(), { locale: ru });
+
     el.remove()
-    let date = getDate(text)
+    // Форматируем объект Date в строку "yyyy-MM-dd"
+    let date = format(parsedDate, 'yyyy-MM-dd');
 
     return date
 }
@@ -268,7 +275,30 @@ function getAllMainText(html, arr) {
 function writeResult() {
     const jsonString = JSON.stringify(mainJSON, null, 2);
     fs.writeFileSync('./ResultParse/ER/ER.json', jsonString, 'utf-8');
-    const RESULT = JSON.stringify(convertResultER(mainJSON), null, 2)
+    const data = convertResultER(mainJSON)
+    const RESULT = JSON.stringify(data, null, 2)
     fs.writeFileSync('./ResultParse/ER/ER+.json', RESULT, 'utf-8');
+    testNewMR(data)
 }
 
+
+function testNewMR(data: TParseResultER[]) {
+    data.forEach((item, index) => {
+        try {
+            if (index > 0) {
+                const isCorrectSequenceDates = testDateLines(item.date, data[index - 1].date)
+
+                if (!isCorrectSequenceDates) {
+
+                    console.warn('Последовательность дат нарушена:', { data: item.date, id: item.id }, "index:", index)
+
+
+                }
+            }
+
+        } catch (e) {
+            console.log('e', e)
+        }
+    })
+
+}
