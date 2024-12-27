@@ -14,18 +14,12 @@ const parsePatterns = {
     date: ['Headers_Date'], // дата урока ...далее преобразовывается из например 17 июня => 2023-06-17
     lessonName: ".Headers_DAYName",
     memoryVerse: ".Headers_BibleText", //
-    meinText: ".основной-абзац",
+    meinText: [".основной-абзац", ".Headers_DropCap"],
 }
 
 const htmlFilePaths = [
-    './fileForParse/ER/2024.html',
-
-    // Add more file paths as needed
+    './fileForParse/ER/2025.html',
 ];
-
-
-const arrBiblebook = ["Быт.", "Исх.", "Лев.", "Числ.", "Втор.", "Нав.", "Суд.", "Руф.", "1 Цар.", "2 Цар.", "3 Цар.", "4 Цар.", "1 Пар.", "2 Пар.", "Ездр.", "Неем.", "Есф.", "Иов", "Пс.", "Притч.", "Еккл.", "Песн.", "Ис.", "Иер.", "Плач.", "Иез.", "Дан.", "Ос.", "Иоил.", "Амос.", "Авд.", "Ион.", "Мих.", "Наум.", "Авв.", "Соф.", "Агг.", "Зах.", "Мал.", "Мф.", "Мк.", "Лк.", "Ин.", "Деян.", "Иак.", "1 Петр.", "2 Петр.", "1 Ин.", "2 Ин.", "3 Ин.", "Иуд.", "Рим.", "1 Кор.", "2 Кор.", "Гал.", "Еф.", "Флп.", "Кол.", "1 Фес.", "2 Фес.", "1 Тим.", "2 Тим.", "Тит.", "Флм.", "Евр.", "Откр."]
-
 
 
 
@@ -57,18 +51,8 @@ const outputFilePath = './index.html';
 mergeHtmlFiles(htmlFilePaths, outputFilePath);
 
 
-
-
 //Прочитём файл HTML и проанализируем его, используя cheerio:
 const htmlFile = fs.readFileSync('./index.html', 'utf-8');
-
-
-
-const parseResults = {
-
-}
-
-
 
 
 
@@ -151,10 +135,10 @@ function delUnnecessary(html) {
 }
 
 function getDateReading(html) {
-    let el = html.querySelector(`.${parsePatterns.date[0]}, .${parsePatterns.date[1]}`)
+    let el = html.querySelector(`.${parsePatterns.date[0]}`)
     let text = el.innerText
     //! Парсим строку в объект Date, добавляя год "2024"
-    const parsedDate = dateParser(`${text} 2024`, 'd MMMM yyyy', new Date(), { locale: ru });
+    const parsedDate = dateParser(`${text} 2025`, 'd MMMM yyyy', new Date(), { locale: ru });
 
     el.remove()
     // Форматируем объект Date в строку "yyyy-MM-dd"
@@ -202,7 +186,7 @@ function getAllMainText(html, arr) {
 
     //    console.log('el.classList', el.classList)
     if (el) {
-        if (!el.classList.contains(parsePatterns.date[0]) && !el.classList.contains(parsePatterns.date[1])) {
+        if (!el.classList.contains(parsePatterns.date[0])) {
 
             text = delArtefacts(el.innerText)
 
