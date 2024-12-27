@@ -5,7 +5,8 @@
     "express": "^4.18.2",
     "fs": "^0.0.1-security",
     "lodash": "^4.17.21",
-    "node-html-parser": "^6.1.5"
+    "node-html-parser": "^6.1.5",
+    "path": "^0.12.7"
   },
   "name": "parser",
   "type": "module",
@@ -19,6 +20,8 @@
     "mr": "node dist/ParserMR.js",
     "er": "node dist/ParserER.js",
     "yss": "node dist/ParserYSS.js",
+    "db": "node dist/db/SQLite.js",
+    "hm": "node dist/hymn/hymn.js",
     "all": "npm run ss & npm run mr & npm run er & npm run yss",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

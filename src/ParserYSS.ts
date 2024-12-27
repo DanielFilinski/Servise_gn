@@ -2,6 +2,8 @@ import fs from 'fs';
 import { parse } from 'node-html-parser';
 import { testingParseBibleVerseYSS, testingEmptyStringsYSS } from './Tests.js';
 import { PARSE_BIBLE_REFERENCES, creatArrParsText, findsBibleLink } from './Service.js';
+import { convertResultSS } from './convertors/ConvertSS.js';
+import { convertResultYSS } from './convertors/ConvertYSS.js';
 
 // const parsePatternsSS = {
 //     weekNumber: "Headers_WEEK_NUM",
@@ -50,7 +52,7 @@ const parsePatternsSS = {
 
 }
 
-const dateFirstWeek = '2023-03-30' //! дата первого урока
+const dateFirstWeek = '2024-12-28' //! дата первого урока
 const datesArr = []
 
 
@@ -108,7 +110,7 @@ writeResult()
 function FILES_FOR_PARSE() {
 
     const htmlFilePaths = [
-        './fileForParse/YSS/24-02.html', //! имя файла
+        './fileForParse/YSS/24-04.html', //! имя файла
 
         // Add more file paths as needed
     ];
@@ -313,8 +315,11 @@ function writeResult() {
     console.log("================================")
     testingParseBibleVerseYSS(state)
     // testingEmptyStringsYSS(state)
+    const RESULT = JSON.stringify(convertResultYSS(state), null, 2)
+
     const jsonString = JSON.stringify(state, null, 2);
     fs.writeFileSync('./ResultParse/YSS/YSS.json', jsonString, 'utf-8');
+    fs.writeFileSync('./ResultParse/YSS/YSS+.json', RESULT, 'utf-8');
     console.log("================================")
     console.log("finish")
     console.log("================================")

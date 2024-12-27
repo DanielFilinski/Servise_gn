@@ -5,7 +5,7 @@ export type TParseResult = {
     date: string,
     isFirstLesson?: boolean,
     lessonNumber: number,
-    lessonName: string,
+    name: string,
     content: TContent[]
 }
 

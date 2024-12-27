@@ -14,7 +14,7 @@ export const convertResultER = (data: TOldContentER): TParseResultER[] => {
         const data: TParseResultER = {
             id: index + 1,
             date: getDate(date),
-            title: lessonName,
+            name: lessonName,
             content: convertContentSS(content)
         }
 
@@ -51,8 +51,9 @@ function getDate(dateString: string) {
     // const parsedDate = parseISO(dateString);
     // console.log('parsedDate', parsedDate)
     // Сброс времени на начало дня (00:00:00)
-    const dateAtStartOfDay: Date = startOfDay(new Date(dateString));
-    // console.log('dateAtStartOfDay', dateAtStartOfDay)
-    // Форматирование в ISO строку
-    return dateAtStartOfDay.toString();
+    // const dateAtStartOfDay: Date = startOfDay(new Date(dateString));
+    // // console.log('dateAtStartOfDay', dateAtStartOfDay)
+    // // Форматирование в ISO строку
+    // return dateAtStartOfDay.toString();
+    return `${dateString} 00:00:00.000`
 }

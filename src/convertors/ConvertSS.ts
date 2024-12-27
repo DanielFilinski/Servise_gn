@@ -9,12 +9,14 @@ export const convertResultSS = (data: TOldParseResult): TParseResult[] => {
 
     arr.forEach((lesson: TOldParse) => {
         Object.keys(lesson).forEach(key => {
+            console.log('key', key)
             const day = lesson[key]
+            console.log('day.', day.lessonName)
 
             const data: TParseResult = {
                 id: i,
                 date: getDate(key),
-                lessonName: day.lessonName,
+                name: day.lessonName,
                 lessonNumber: +day.lessonNumber,
                 isFirstLesson: day.isFirstLesson ? day.isFirstLesson : undefined,
                 content: convertContentSS(day.arrEl)
@@ -61,14 +63,16 @@ function convertContentSS(data: TOldContent[]): TContent[] {
 }
 
 function getDate(dateString: string) {
+    console.log('dateString', dateString)
     // // Разбор строки в объект Date
     // const parsedDate = parseISO(dateString);
     // console.log('parsedDate', parsedDate)
     // Сброс времени на начало дня (00:00:00)
-    const dateAtStartOfDay: Date = startOfDay(new Date(dateString));
-    console.log('dateAtStartOfDay', dateAtStartOfDay)
+    // const dateAtStartOfDay: Date = startOfDay(new Date(dateString));
+    // console.log('dateAtStartOfDay', dateAtStartOfDay)
     // Форматирование в ISO строку
-    return dateAtStartOfDay.toString();
+    // return dateAtStartOfDay.toString();
+    return `${dateString} 00:00:00.000`
 }
 
 function convertLink(data: TOldLinkArr): TLink {

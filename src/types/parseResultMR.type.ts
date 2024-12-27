@@ -4,7 +4,7 @@ import { TLink } from "./parseResult.type"
 export type TParseResultMR = {
     id: number
     date: string,
-    title: string,
+    name: string,
     content: TContentMR[]
 }
 

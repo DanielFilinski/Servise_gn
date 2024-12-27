@@ -11,10 +11,10 @@ const parsePatterns = {
     all: "p",
     delete: ['&#160;', '\n', '\t'], // массив элементов которые необходимо удалить из текста
     delUnnecessaryEl: "", // удаление пустых елементов которые мешают парсерингу
-    date: ['дата_-right', 'дата_-left'], // дата урока ...далее преобразовывается из например 17 июня => 2023-06-17
-    lessonName: ".заголовок",
-    memoryVerse: "._стих", //
-    meinText: ".ОСНОВНОЙ",
+    date: ['Headers_Date'], // дата урока ...далее преобразовывается из например 17 июня => 2023-06-17
+    lessonName: ".Headers_DAYName",
+    memoryVerse: ".Headers_BibleText", //
+    meinText: ".основной-абзац",
 }
 
 const htmlFilePaths = [
@@ -163,34 +163,6 @@ function getDateReading(html) {
     return date
 }
 
-function getDate(dayMonth) {
-
-    const monthNames = [
-        "января",
-        "февраля",
-        "марта",
-        "апреля",
-        "мая",
-        "июня",
-        "июля",
-        "августа",
-        "сентября",
-        "октября",
-        "ноября",
-        "декабря"
-    ];
-
-    const day = dayMonth.split(" ")[0];
-    const monthIndex = monthNames.indexOf(dayMonth.split(" ")[1]);
-    let str = `${monthIndex + 1}`
-    const m = str.padStart(2, '0')
-    const currentYear = 2024                                          //! ТЕКУЩИЙ ГОД
-    const date = new Date(`${currentYear}-${m}-${day}`);
-    const formattedDate = date.toISOString().split("T")[0];
-
-    return formattedDate
-
-}
 
 function getLessonName(html) {
     let el = html.querySelector(parsePatterns.lessonName)
@@ -249,27 +221,6 @@ function getAllMainText(html, arr) {
 
 }
 
-// function getPrayTitle(html){
-//     let el = html.querySelector(parsePatterns.prayTitle)
-//     let text = null
-
-//     arrReg.forEach((item) => {
-//         text = el.innerText.replace(item, ' ')        
-//     })
-
-//     return text
-// }
-
-// function getPrayText(html){
-//     let el = html.querySelector(parsePatterns.prayText)
-//     let text = null
-
-//     arrReg.forEach((item) => {
-//         text = el.innerText.replace(item, ' ')        
-//     })
-
-//     return text
-// }
 
 
 function writeResult() {
