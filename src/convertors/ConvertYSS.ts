@@ -16,6 +16,7 @@ export const convertResultYSS = (data: TOldParseResult): TParseResult[] => {
             id: i,
             date: lesson.dateStart,
             name: lesson.lessonName,
+            bookNumber: 1,
             lessonNumber: +lesson.lessonNumber,
             isFirstLesson: lesson.isFirstLesson ? lesson.isFirstLesson : undefined,
             text: convertContentYSS(lesson.arrEl)

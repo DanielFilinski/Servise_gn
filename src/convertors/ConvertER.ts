@@ -15,6 +15,7 @@ export const convertResultER = (data: TOldContentER): TParseResultER[] => {
             id: index + 1,
             date: getDate(date),
             name: lessonName,
+            bookNumber: 1,
             content: convertContentSS(content)
         }
 
@@ -32,13 +33,19 @@ function convertContentSS(data: Omit<TOldItemER, 'date' | 'lessonName'>): TConte
 
     keys.forEach((key: string, index) => {
         const part = data[key]
-        if (part.trim().length > 0) {
-            result.push({
-                id: index + 1,
-                type: key,
-                text: part
-            })
-        }
+        const id = index * 100
+
+        const splited = part.split('\n\n')
+        // console.log('splited', splited)
+        splited.forEach((item, indexItem) => {
+            if (item && item.trim().length > 0) {
+                result.push({
+                    id: id + indexItem,
+                    type: key,
+                    text: item
+                })
+            }
+        })
 
     })
 

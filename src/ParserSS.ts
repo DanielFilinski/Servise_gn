@@ -539,7 +539,7 @@ function convertDate(string) {
     }
 
     // Создадим и вернем отформатированную строку даты "YYYY-MM-DD"
-    return `2024-${monthNumber}-${day.padStart(2, '0')}`;
+    return `2025-${monthNumber}-${day.padStart(2, '0')}`;
 }
 
 
@@ -568,7 +568,7 @@ function getDate(dayMonth, i) {
     const monthIndex = monthNames.indexOf(dayMonth.split(" ")[1]);
     let str = `${monthIndex + 1}`
     const m = str.padStart(2, '0')
-    const currentYear = 2024
+    const currentYear = 2025
     console.log('currentYear}-${m}-${+day + i}', `${currentYear}-${m}-${+day + i}`)
     const date = new Date(`${currentYear}-${m}-${+day}`);
     date.setDate(date.getDate() + i);

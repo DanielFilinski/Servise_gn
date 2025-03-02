@@ -30,9 +30,8 @@ import { convertResultYSS } from './convertors/ConvertYSS.js';
 // }
 
 const parsePatternsSS = {
-    weekNumber: "Неделя",
-    weekName: "Название-урока",
-    end: "ParaOverride-6",
+    weekNumber: "Headers_WEEK_NUM",
+    weekName: "Headers_WEEK_Название-урока",
     endBlock: "Текстовый-фрейм",
 
 
@@ -42,12 +41,12 @@ const parsePatternsSS = {
     delete: ['&#160;', '\n', '\t', '&#9;', '#', '&', '•'], // массив элементов которые необходимо удалить из текста , '\t', '\n'
 
     arrAnalisisClassList: [
-        { pattern: "Подзаголовок", style: "subTitle" },
-        { pattern: "Пункт", style: "lists" },
+        { pattern: "Headers_Subheading-1", style: "subTitle" },
+        { pattern: "Lists_Bullet-List", style: "lists" },
         { pattern: "основной-абзац", style: "mainText" },
-        { pattern: "РАЗДЕЛ_прав", style: "section" },
+        { pattern: "Headers_Tasks-heading", style: "section" },
         { pattern: "РАЗДЕЛ_лев", style: "section" },
-        { pattern: "Библейский-текст", style: "verseBible" },
+        { pattern: "Headers_WEEK_Библейский-текст", style: "verseBible" },
     ],
 
 }
@@ -110,7 +109,7 @@ writeResult()
 function FILES_FOR_PARSE() {
 
     const htmlFilePaths = [
-        './fileForParse/YSS/24-04.html', //! имя файла
+        './fileForParse/YSS/25-01.html', //! имя файла
 
         // Add more file paths as needed
     ];
@@ -184,17 +183,16 @@ function PARSE(htmlFile) {
         }
     }
 
-    console.log("state", state)
+
 
 
     //TODO 3. Удаление всех p до первого урока
     const delPreviousLessonText = (html) => {
         const p = html.querySelector(parsePatternsSS.all)
-        // console.log('p', p)
+
 
         if (p.classList.contains(parsePatternsSS.weekNumber)) {
-            console.log('inner', p.innerText)
-            console.info('все объекты "p" до первого урока удалены')
+
             return 'все объекты удалены'
         } else {
             p.remove()
@@ -208,12 +206,6 @@ function PARSE(htmlFile) {
 
         arr[arr.length - 1].remove()
     }
-
-    // console.log('weeksContentArr.lenght', html.querySelectorAll(parsePatternsSS.all).length)
-    // delPreviousLessonText(html)
-    // console.log('weeksContentArr.lenght', html.querySelectorAll(parsePatternsSS.all).length)
-    // delAfterLastLesson(html)
-    // console.log('weeksContentArr.lenght', html.querySelectorAll(parsePatternsSS.all).length)
 
     //TODO 4. Обработка уроков
     let curLessonNumber = 1
@@ -232,15 +224,22 @@ function PARSE(htmlFile) {
 
             // СОХРАНЯЕМ номер недели для дальнейшего доступа к объекту по номеру урока
             if (p.classList.contains(parsePatternsSS.weekNumber)) {
-                curLessonNumber = p.innerText.match(/\d{1,2}/)[0]
-                islessonNumber = true
+                const a = p.innerText.match(/\d{1,2}/)
+                if (a) {
+                    curLessonNumber = p.innerText.match(/\d{1,2}/)[0]
+                    islessonNumber = true
+                } else {
+                    console.log('p.innerText', p.innerText)
+                    console.log('curLessonNumber', curLessonNumber)
+                    console.log('p.classList', p.classList)
+                }
+
 
             }
 
             // СОХРАНИЯЕМ название недели
             if (p.classList.contains(parsePatternsSS.weekName)) {
-                console.log('curLessonNumber', curLessonNumber)
-                console.log('state[curLessonNumber]', state[curLessonNumber])
+
                 state[curLessonNumber].lessonName = delArtefacts(p.innerText)
                 islessonName = true
             }

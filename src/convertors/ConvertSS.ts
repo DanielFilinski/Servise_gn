@@ -17,6 +17,7 @@ export const convertResultSS = (data: TOldParseResult): TParseResult[] => {
                 id: i,
                 date: getDate(key),
                 name: day.lessonName,
+                bookNumber: 1,
                 lessonNumber: +day.lessonNumber,
                 isFirstLesson: day.isFirstLesson ? day.isFirstLesson : undefined,
                 content: convertContentSS(day.arrEl)

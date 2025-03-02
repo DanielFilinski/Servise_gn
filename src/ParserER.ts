@@ -181,7 +181,7 @@ function getMeinText(html, el) {
 
 function getAllMainText(html, arr) {
     let el = html.querySelector(`${parsePatterns.memoryVerse} + p`)
-    // console.log('el', el)  
+    // console.log('el', el)
     let text = null
 
     //    console.log('el.classList', el.classList)
@@ -190,7 +190,7 @@ function getAllMainText(html, arr) {
 
             text = delArtefacts(el.innerText)
 
-            arr.push(text + "\n")
+            arr.push(text + "\n\n")
 
             el.remove()
 
