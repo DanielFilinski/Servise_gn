@@ -190,7 +190,7 @@ function getAllMainText(html, arr) {
 
             text = delArtefacts(el.innerText)
 
-            arr.push(text + "\n\n")
+            arr.push(text)
 
             el.remove()
 
