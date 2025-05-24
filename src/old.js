@@ -1298,3 +1298,254 @@ function getDataFirstLesson(html, lessonNumber) {
     el.remove()
     return date
 }
+
+
+export function PARSE_BIBLE_REFERENCES(string) {
+
+    let text = string
+    // Быт. 1
+    // Быт. 1:2
+    // Быт. 1:2-3  
+    // Быт. 1:2, 3   
+    // знак ; - конец ссылки главы
+    // знак ) - конец вставки ссылки в тексте
+    // знак . - конец группы ссылок
+
+    // 'Иез. 8:16; 20:1–20; 1 Фес. 4:16, 17; Откр. 12:9; 16:13, 14; 18:4, 5; 20. Основные отрывки: Откр. 14:9–11; 13:15–17. Дополнительные Откр. 12:9 отрывки: Мф. 27:45–50; Лк. 5:18–26; Еф. 2:8–10; Откр. 7:2, 3; 5; 14:4, 12. Прочитайте Откр 12: 9. Кого, согласно Откр. 12:9 и Откр. 12:10 этому стиху, обманывает Откр. 12:9 (обольщает) сатана ? Прочитайте Притч. 14: 12. Какое'
+
+    arrBiblebook.forEach((item, index) => {
+
+        // if (item === "Еф." || item === "Флм.") {
+        //     debugger
+        // }
+
+        console.log('=============================================================================')
+        console.log('=================================', item, '===================================')
+        console.log('=============================================================================')
+
+        // let reg = new RegExp(`(${item})`,"gmi");
+        // let resReg = text.match(reg)
+        // console.log('resReg', resReg)
+
+        // reg = new RegExp(item);
+        // resReg = text.match(reg)
+        // console.log('resReg', resReg)
+        // console.log('text', text)
+        // console.log('item = ', item)
+
+        let resStr = text.indexOf(item)
+        let length = item.length
+
+        // if (text.includes('Но их положение до обращения ко Христу в дейст') && item === 'Кол.') {
+        //     debugger
+        // }
+
+        while (resStr >= 0) {
+
+            resStr = text.indexOf(item)
+            length = item.length
+
+            const BOOK_ARR = []
+            let originalStringArr = []
+
+            originalStringArr[0] = item
+
+            console.log('начало буква =>', text.at(resStr), 'индекс =>', resStr)
+            console.log('resStr', resStr)
+            console.log('length', length)
+
+            let arr = []
+
+            for (let i = 0; i < 500; i++) {
+                let letter = text.at(resStr + length + i)
+                console.log('letter', letter)
+                arr.push(letter)
+                originalStringArr.push(letter)
+
+                //|| letter === '.'
+
+                if (letter === ';') {
+
+                    //1: если после ; идёт книга без цифры, то  k = 1 => пробел 2 => Первую букву книги
+                    //2: если после ; идёт книга с цифрой, то  k = 1 => пробел 2 => цыфру книги 3 => пробел 4 => Первую букву книги
+                    //3: если после ; идёт продолжение, то  k = 1 => пробел 2 => цыфру главы 3 => пробел 4 => Первую букву книги
+
+                    let bookWithNumber = text.at(resStr + length + i + 2)
+                    console.log('resStr + length + n', resStr + length + i + 2)
+
+                    let bookWithoutNumber = text.at(resStr + length + i + 4)
+                    console.log('resStr + length + n', resStr + length + i + 4)
+
+                    if (!bookWithNumber || !bookWithoutNumber) {
+                        debugger
+                    }
+
+                    console.log('bookWithNumber', bookWithNumber)
+                    console.log('bookWithoutNumber', bookWithoutNumber)
+
+
+                    let reg = /[а-яА-Я]/i
+
+                    if (reg.test(bookWithNumber) || reg.test(bookWithoutNumber)) {
+
+                        console.log('arr', arr)
+                        BOOK_ARR.push([item, ...arr.slice(0, -1)])
+                        arr = []
+                        console.log('конец =>', text.at(resStr + i + length), 'индекс =>', resStr + i + length)
+
+                        break
+
+                    } else {
+
+                        console.log('arr', arr)
+                        BOOK_ARR.push([item, ...arr.slice(0, -1)])
+                        arr = []
+                    }
+
+
+                }
+
+                if (letter === '.') {
+
+                    BOOK_ARR.push([item, ...arr.slice(0, -1)])
+                    arr = []
+                    console.log('конец =>', text.at(resStr + i + length), 'индекс =>', resStr + i + length)
+                    break
+                }
+                if (letter === ')') {
+                    BOOK_ARR.push([item, ...arr.slice(0, -1)])
+                    // originalStringArr = originalStringArr.slice(0, -1)
+                    arr = []
+                    console.log('конец =>', text.at(resStr + i + length), 'индекс =>', resStr + i + length)
+                    break
+                }
+
+
+
+                if (letter === ' ') {
+
+                    //Следующую букву после пробела
+                    let str = text.at(resStr + length + i + 1)
+                    console.log(' ПРОБЕЛ resStr + length + i + 1', resStr + length + i + 1)
+
+                    // let bookWithoutNumber = text.at(resStr + length + i + 4)
+                    // console.log('resStr + length + n', resStr + length + i + 4)
+
+                    console.log('str', str)
+
+                    let reg = /[а-яА-Я]/i
+                    let regAnd = /и/
+                    if (reg.test(str) || regAnd.test(str)) {
+
+                        console.log('arr', arr)
+
+                        // Добавляет название книги, и все свойства массива arr кроме последнего
+                        BOOK_ARR.push([item, ...arr.slice(0, - 1)])
+
+                        // Удаляет последнее свойство массива в этом случае пробел
+                        originalStringArr = originalStringArr.slice(0, -1)
+                        console.log('BOOK_ARR', BOOK_ARR)
+                        arr = []
+                        console.log('конец =>', text.at(resStr + i + length), 'индекс =>', resStr + i + length)
+
+                        break
+                    }
+                }
+
+                if (text.length === resStr + length + i) {
+                    BOOK_ARR.push([item, ...arr.slice(0, -1)])
+                    arr = []
+                    console.log('конец =>', text.at(resStr + i + length), 'индекс =>', resStr + i + length)
+                    break
+                }
+            }
+
+
+            const BOOK_ARR_PARSED = []
+
+            BOOK_ARR.forEach((item, index) => {
+                BOOK_ARR[index] = item.join('')
+            })
+
+            console.log('BOOK_ARR', BOOK_ARR)
+
+            BOOK_ARR_PARSED[0] = originalStringArr.join('')
+            // .split("").reverse().join("")
+
+            BOOK_ARR.forEach((item, index) => {
+
+
+                // разбивает строку на массив по первому пробелу
+                let arrName = [item.split(' ', 1).toString(), item.split(' ').slice(1).join(' ')] // разделяеть на две части Откр. 16:13, 14 => Откр. и 16:13, 14
+                console.log('arrName', arrName)
+
+                //если первый символ цыфра как 1 Фес. 1:1 то разделение по второму пробелу  
+                // console.log('first', Boolean())
+                // console.log('first', String(str.at(0)))
+                // console.log('first', str.at(0))
+                // console.log('first', +str.at(0))
+                // console.log('first', typeof str.at(0))
+                // console.log('first', typeof +str.at(0))
+
+                if (Number(item.at(0))) {
+                    const arr = item.split(' ');
+                    arrName = [arr.slice(0, 2).join(' '), arr.slice(2).join(' ')];
+                } else {
+                    arrName = [item.split(' ', 1).toString(), item.split(' ').slice(1).join(' ')] // разделяеть на две части Откр. 16:13, 14 => Откр. и 16:13, 14
+
+                }
+
+                // удаляет точку в конце названия книги если она есть
+                arrName[0] = arrName[0].replace('.', '')
+
+                const bookName = arrName[0]
+
+                //переворачивает название книги 
+                // .split("").reverse().join("")
+
+                let chapter = null
+                let verses = null
+
+                // разбивает 4:1-2 на массив по ":" если ":" нету возвращаюсь просто главу
+                if (arrName[1].indexOf(":") >= 0) {
+
+                    const arrChapter = arrName[1].split(":")
+                    chapter = [arrChapter[0]]
+                    verses = arrChapter[1]
+                } else {
+                    // если ":" нету Но есть "," значит глав указано несколько
+                    if (arrName[1].indexOf(",") >= 0) {
+                        chapter = [arrName[1]]
+                    } else {
+                        chapter = arrName[1].split(',')
+                    }
+                }
+
+                BOOK_ARR_PARSED.push({ bookName: bookName, chapter: chapter, verses: verses })
+
+            })
+
+
+            const jsonObj = JSON.stringify(BOOK_ARR_PARSED)
+
+            console.log('originalStringArr', originalStringArr)
+            console.log('originalStringArr', originalStringArr.join(''))
+            console.log('BOOK_ARR_PARSED', BOOK_ARR_PARSED)
+            console.log('BOOK_ARR_PARSED JSON', jsonObj.split("").reverse().join(""))
+
+            console.log('есть ли в тексте', text.indexOf(originalStringArr.join('')))
+            text = text.replace(originalStringArr.join(''), `#${jsonObj.split("").reverse().join("")}#`)
+
+            // let a = jsonObj.split("").reverse().join("")
+            // let b = JSON.parse(a.split("").reverse().join(""))
+            // console.log('bbbbbbbbb', b[0])
+            // console.log('bbbbbbbbb', b[1].bookName)
+
+            console.log('text', text)
+        }
+
+
+    })
+
+    return text
+}

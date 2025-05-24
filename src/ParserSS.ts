@@ -2,7 +2,7 @@ import fs from 'fs';
 import { parse } from 'node-html-parser';
 import { compareAsc, format } from "date-fns";
 import { testingParseBibleVerseSS, testingEmptyStringsSS } from './Tests.js';
-import { PARSE_BIBLE_REFERENCES, creatArrParsText, findsBibleLink } from './Service.js';
+import { creatArrParsText, findsBibleLink } from './Service.js';
 import { convertResultSS } from './convertors/ConvertSS.js';
 
 
