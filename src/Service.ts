@@ -22,8 +22,11 @@ function parseBibleReference(text: string) {
     const bookName = text.match(/\d?\s?[а-яА-Я]+\.\s/gi)?.[0]?.slice(0, -2)?.trim() || '';
     const withoutName = text.replace(/\d?\s?[а-яА-Я]+\.\s/gi, '').trim();
     
-    // Разбиваем на отдельные ссылки по точке с запятой
-    const references = withoutName.split(';').map(ref => ref.trim()).filter(Boolean);
+    // Разбиваем на отдельные ссылки по точке с запятой и союзу "и"
+    const references = withoutName
+        .split(/[;и]/)
+        .map(ref => ref.trim())
+        .filter(Boolean);
     
     const result = [];
     
@@ -71,9 +74,9 @@ function formatBibleLink(match: string) {
 
 export const findsBibleLink = (text: string) => {
     const bibleNames = arrBiblebook.join('|');
-    // Регулярное выражение для поиска библейских ссылок
+    // Регулярное выражение для поиска библейских ссылок, включая союз "и"
     const regex = new RegExp(
-        `(${bibleNames})\\.\\s*([\\d,\\s,:;–\\-]+)(?=(\\s\\d\\s[а-яА-Я])|(\\s[а-яА-Я])|\\)|\\.|\\?|$)`,
+        `(${bibleNames})\\.\\s*([\\d,\\s,:;–\\-]+(?:\\s+и\\s+[\\d,\\s,:;–\\-]+)*)(?=(\\s\\d\\s[а-яА-Я])|(\\s[а-яА-Я])|\\)|\\.|\\?|$)`,
         'g'
     );
     
