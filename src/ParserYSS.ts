@@ -1,7 +1,7 @@
 import fs from 'fs';
 import { parse } from 'node-html-parser';
 import { testingParseBibleVerseYSS, testingEmptyStringsYSS } from './Tests.js';
-import { PARSE_BIBLE_REFERENCES, creatArrParsText, findsBibleLink } from './Service.js';
+import { creatArrParsText, findsBibleLink } from './Service.js';
 import { convertResultSS } from './convertors/ConvertSS.js';
 import { convertResultYSS } from './convertors/ConvertYSS.js';
 

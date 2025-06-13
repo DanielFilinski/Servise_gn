@@ -173,7 +173,6 @@ function getMeinText(html, el) {
     getAllMainText(html, arr)
 
     let text = arr.join('')
-    // text = PARSE_BIBLE_REFERENCES(text)
 
     el.remove()
     return text
