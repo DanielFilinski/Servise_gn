@@ -18,6 +18,15 @@ const oneChapterBooks = [640, 700, 710, 720]
 // \s(\d+:\d+(?:–\d+)?(?:,\s*\d+(?:–\d+)?)*(?:;\s*\d+:\d+(?:–\d+)?(?:,\s*\d+(?:–\d+)?))*)\b
 
 
+function normalizeSpaces(text: string): string {
+    return text
+        .replace(/\s+/g, ' ') // Заменяем множественные пробелы на один
+        .replace(/\s*([,;])\s*/g, '$1') // Убираем пробелы вокруг запятых и точек с запятой
+        .replace(/\s*–\s*/g, '–') // Убираем пробелы вокруг тире
+        .replace(/([,;])(\d)/g, '$1 $2') // Добавляем пробел после запятой/точки с запятой перед цифрой
+        .trim();
+}
+
 function parseBibleReference(text: string) {
     const bookName = text.match(/\d?\s?[а-яА-Я]+\.\s/gi)?.[0]?.slice(0, -2)?.trim() || '';
     const withoutName = text.replace(/\d?\s?[а-яА-Я]+\.\s/gi, '').trim();
@@ -40,7 +49,7 @@ function parseBibleReference(text: string) {
             result.push({
                 bookName,
                 chapter: ['1'],
-                verses: ref
+                verses: normalizeSpaces(ref)
             });
             continue;
         }
@@ -50,8 +59,8 @@ function parseBibleReference(text: string) {
             const [chapter, verses] = ref.split(':').map(s => s.trim());
             result.push({
                 bookName,
-                chapter: [chapter],
-                verses
+                chapter: [normalizeSpaces(chapter)],
+                verses: verses ? normalizeSpaces(verses) : null
             });
             continue;
         }
@@ -59,7 +68,7 @@ function parseBibleReference(text: string) {
         // Если только главы
         result.push({
             bookName,
-            chapter: ref.split(',').map(s => s.trim()),
+            chapter: ref.split(',').map(s => normalizeSpaces(s)),
             verses: null
         });
     }
