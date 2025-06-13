@@ -19,77 +19,109 @@ const oneChapterBooks = [640, 700, 710, 720]
 
 
 function normalizeSpaces(text: string): string {
-    return text
+    console.log('normalizeSpaces input:', text);
+    const result = text
         .replace(/\s+/g, ' ') // Заменяем множественные пробелы на один
         .replace(/\s*([,;])\s*/g, '$1') // Убираем пробелы вокруг запятых и точек с запятой
         .replace(/\s*–\s*/g, '–') // Убираем пробелы вокруг тире
         .replace(/([,;])(\d)/g, '$1 $2') // Добавляем пробел после запятой/точки с запятой перед цифрой
         .trim();
+    console.log('normalizeSpaces output:', result);
+    return result;
 }
 
 function parseBibleReference(text: string) {
+    console.log('parseBibleReference input:', text);
     const bookName = text.match(/\d?\s?[а-яА-Я]+\.\s/gi)?.[0]?.slice(0, -2)?.trim() || '';
-    const withoutName = text.replace(/\d?\s?[а-яА-Я]+\.\s/gi, '').trim();
+    console.log('Found bookName:', bookName);
     
-    // Разбиваем на отдельные ссылки по точке с запятой и союзу "и"
+    const withoutName = text.replace(/\d?\s?[а-яА-Я]+\.\s/gi, '').trim();
+    console.log('Text without book name:', withoutName);
+    
     const references = withoutName
         .split(/[;и]/)
         .map(ref => ref.trim())
         .filter(Boolean);
+    console.log('Split references:', references);
     
     const result = [];
     
     for (const ref of references) {
-        // Проверяем, является ли книга одноглавной
+        console.log('Processing reference:', ref);
         const bookNumber = booksNameNumber[bookName as keyof typeof booksNameNumber];
         const isOneChapterBook = oneChapterBooks.indexOf(bookNumber) !== -1;
+        console.log('Book number:', bookNumber, 'Is one chapter book:', isOneChapterBook);
         
-        // Если это одноглавная книга и нет двоеточия, добавляем главу 1
         if (isOneChapterBook && !ref.includes(':')) {
-            result.push({
+            const parsedRef = {
                 bookName,
                 chapter: ['1'],
                 verses: normalizeSpaces(ref)
-            });
+            };
+            console.log('One chapter book parsed:', parsedRef);
+            result.push(parsedRef);
             continue;
         }
         
-        // Обработка обычных ссылок
         if (ref.includes(':')) {
             const [chapter, verses] = ref.split(':').map(s => s.trim());
-            result.push({
+            const parsedRef = {
                 bookName,
                 chapter: [normalizeSpaces(chapter)],
                 verses: verses ? normalizeSpaces(verses) : null
-            });
+            };
+            console.log('Regular reference parsed:', parsedRef);
+            result.push(parsedRef);
             continue;
         }
         
-        // Если только главы
-        result.push({
+        const parsedRef = {
             bookName,
             chapter: ref.split(',').map(s => normalizeSpaces(s)),
             verses: null
-        });
+        };
+        console.log('Chapters only parsed:', parsedRef);
+        result.push(parsedRef);
     }
     
+    console.log('Final parseBibleReference result:', result);
     return result;
 }
 
 function formatBibleLink(match: string) {
+    console.log('formatBibleLink input:', match);
     const references = parseBibleReference(match);
-    return `#["${match}",${references.map(ref => JSON.stringify(ref)).join(', ')}]#`;
+    const result = `#["${match}",${references.map(ref => JSON.stringify(ref)).join(', ')}]#`;
+    console.log('formatBibleLink output:', result);
+    return result;
 }
 
 export const findsBibleLink = (text: string) => {
+    console.log('findsBibleLink input:', text);
     const bibleNames = arrBiblebook.join('|');
-    // Регулярное выражение для поиска библейских ссылок, включая союз "и"
+    
     const regex = new RegExp(
-        `(${bibleNames})\\.\\s*([\\d,\\s,:;–\\-]+(?:\\s+и\\s+[\\d,\\s,:;–\\-]+)*)(?=(\\s\\d\\s[а-яА-Я])|(\\s[а-яА-Я])|\\)|\\.|\\?|$)`,
+        `(${bibleNames})\\.\\s*([\\d,\\s,:;–\\-]+(?:\\s+и\\s+[\\d,\\s,:;–\\-]+)*)(?=(?:\\s*[;.])|(?:\\s+[а-яА-Я])|$)`,
         'g'
     );
     
-    return text.replace(regex, formatBibleLink);
+    // Добавляем тестовый код для отладки
+    const testString = "Текст Пс. 72: 23-26; 2 Кор. 6:16;1 Кор 1:4 далее";
+    console.log('Testing regex on:', testString);
+    let match;
+    while ((match = regex.exec(testString)) !== null) {
+        console.log('Found match:', {
+            fullMatch: match[0],
+            bookName: match[1],
+            reference: match[2],
+            position: match.index,
+            nextChar: testString[match.index + match[0].length]
+        });
+    }
+    
+    const result = text.replace(regex, formatBibleLink);
+    console.log('findsBibleLink output:', result);
+    return result;
 };
 
 
