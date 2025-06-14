@@ -100,24 +100,57 @@ export const findsBibleLink = (text: string) => {
     console.log('findsBibleLink input:', text);
     const bibleNames = arrBiblebook.join('|');
     
-    const regex = new RegExp(
-        `(${bibleNames})\\.\\s*([\\d,\\s,:;–\\-]+(?:\\s+и\\s+[\\d,\\s,:;–\\-]+)*)(?=(?:\\s*[;.])|(?:\\s+[а-яА-Я])|$)`,
-        'g'
-    );
+    //? 1. Паттерн для названия книги (включая цифру в начале, если есть)
+    const bookPattern = `(\\d\\s*)?(${bibleNames})\\.\\s*`;
     
-    // Добавляем тестовый код для отладки
-    const testString = "Текст Пс. 72: 23-26; 2 Кор. 6:16;1 Кор 1:4 далее";
-    console.log('Testing regex on:', testString);
-    let match;
-    while ((match = regex.exec(testString)) !== null) {
-        console.log('Found match:', {
-            fullMatch: match[0],
-            bookName: match[1],
-            reference: match[2],
-            position: match.index,
-            nextChar: testString[match.index + match[0].length]
-        });
-    }
+    //? 2. Паттерны для главы и стихов
+    // Паттерн для главы
+    const chapterPattern = `\\d+`;
+
+    // Паттерн для диапазона стихов (например: 23-26)
+    const verseRangePattern = `\\d+\\s*[–-]\\s*\\d+`;
+
+    // Паттерн для одиночного стиха
+    const singleVersePattern = `\\d+`;
+
+    // Паттерн для группы стихов (например: 23-26, 15-18)
+    const verseGroupPattern = `(?:${verseRangePattern}|${singleVersePattern})(?:\\s*,\\s*(?:${verseRangePattern}|${singleVersePattern}))*`;
+
+    // Паттерн для главы и стихов (например: 72: 23-26, 15-18)
+    const chapterVersePattern = `${chapterPattern}(?:\\s*:\\s*${verseGroupPattern})?`;
+    
+    //? 3. Паттерны для продолжения через точку с запятой и "и"
+    // Паттерн для продолжения через точку с запятой
+    const semicolonPattern = `(?:\\s*;\\s*${chapterPattern}(?:\\s*:\\s*${verseGroupPattern})?)*`;    
+    
+    // Паттерн для продолжения через "и"
+    const andPattern = `(?:\\s+и\\s+${chapterPattern}(?:\\s*:\\s*${verseGroupPattern})?)*`;
+    
+    //? 4. Паттерны для окончания ссылки
+    // Паттерн для окончания точкой с запятой
+    const endSemicolonPattern = `\\s*;`;
+    
+    // Паттерн для окончания точкой
+    const endDotPattern = `\\s*\\.`;
+    
+    // Паттерн для окончания русским текстом
+    const endRussianTextPattern = `\\s+[а-яА-Я]`;
+    
+    // Паттерн для окончания строки
+    const endOfLinePattern = `$`;
+    
+    // Собираем все части вместе
+    const endPattern = `(?=${endSemicolonPattern}|${endDotPattern}|${endRussianTextPattern}|${endOfLinePattern})`;
+    
+    // Собираем все части вместе
+    const regex = new RegExp(
+        `${bookPattern}(${chapterVersePattern}${semicolonPattern}${andPattern})${endPattern}`,
+        'g'
+    );    
+
+    console.log('Regex pattern:', regex);
+    const matches = text.match(regex);
+    console.log('Matches:', matches);
     
     const result = text.replace(regex, formatBibleLink);
     console.log('findsBibleLink output:', result);
