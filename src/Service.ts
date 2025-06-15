@@ -121,10 +121,10 @@ export const findsBibleLink = (text: string) => {
     
     //? 3. Паттерны для продолжения через точку с запятой и "и"
     // Паттерн для продолжения через точку с запятой
-    const semicolonPattern = `(?:\\s*;\\s*${chapterPattern}(?:\\s*:\\s*${verseGroupPattern})?)*`;    
+    const semicolonPattern = `(?:\\s*;\\s*(?!${bibleNames})${chapterPattern}(?:\\s*:\\s*${verseGroupPattern})?)*`;    
     
     // Паттерн для продолжения через "и"
-    const andPattern = `(?:\\s+и\\s+${chapterPattern}(?:\\s*:\\s*${verseGroupPattern})?)*`;
+    const andPattern = `(?:\\s+и\\s+(?!${bibleNames})${chapterPattern}(?:\\s*:\\s*${verseGroupPattern})?)*`;
     
     //? 4. Паттерны для окончания ссылки
     // Паттерн для окончания точкой с запятой
@@ -134,7 +134,7 @@ export const findsBibleLink = (text: string) => {
     const endDotPattern = `\\s*\\.`;
     
     // Паттерн для окончания русским текстом
-    const endRussianTextPattern = `\\s+[а-яА-Я]`;
+    const endRussianTextPattern = `\\d?\\s[а-яА-Я]`;
     
     // Паттерн для окончания строки
     const endOfLinePattern = `$`;
