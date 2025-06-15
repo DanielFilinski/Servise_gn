@@ -136,11 +136,14 @@ export const findsBibleLink = (text: string) => {
     // Паттерн для окончания русским текстом
     const endRussianTextPattern = `\\d?\\s[а-яА-Я]`;
     
+    // Паттерн для окончания скобкой
+    const endBracketPattern = `\\s*\\)`;
+    
     // Паттерн для окончания строки
     const endOfLinePattern = `$`;
     
     // Собираем все части вместе
-    const endPattern = `(?=${endSemicolonPattern}|${endDotPattern}|${endRussianTextPattern}|${endOfLinePattern})`;
+    const endPattern = `(?=${endSemicolonPattern}|${endDotPattern}|${endRussianTextPattern}|${endBracketPattern}|${endOfLinePattern})`;
     
     // Собираем все части вместе
     const regex = new RegExp(
