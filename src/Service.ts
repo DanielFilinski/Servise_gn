@@ -18,51 +18,48 @@ const oneChapterBooks = [640, 700, 710, 720]
 // \s(\d+:\d+(?:–\d+)?(?:,\s*\d+(?:–\d+)?)*(?:;\s*\d+:\d+(?:–\d+)?(?:,\s*\d+(?:–\d+)?))*)\b
 
 
+// Нормализация пробелов в тексте
 function normalizeSpaces(text: string): string {
-    console.log('normalizeSpaces input:', text);
-    const result = text
+    return text
         .replace(/\s+/g, ' ') // Заменяем множественные пробелы на один
         .replace(/\s*([,;])\s*/g, '$1') // Убираем пробелы вокруг запятых и точек с запятой
         .replace(/\s*–\s*/g, '–') // Убираем пробелы вокруг тире
         .replace(/([,;])(\d)/g, '$1 $2') // Добавляем пробел после запятой/точки с запятой перед цифрой
         .trim();
-    console.log('normalizeSpaces output:', result);
-    return result;
 }
 
+// Парсинг библейской ссылки
 function parseBibleReference(text: string) {
-    console.log('parseBibleReference input:', text);
+    // Извлекаем название книги
     const bookName = text.match(/\d?\s?[а-яА-Я]+\.\s/gi)?.[0]?.slice(0, -2)?.trim() || '';
-    console.log('Found bookName:', bookName);
     
+    // Получаем текст без названия книги
     const withoutName = text.replace(/\d?\s?[а-яА-Я]+\.\s/gi, '').trim();
-    console.log('Text without book name:', withoutName);
     
+    // Разбиваем на отдельные ссылки
     const references = withoutName
         .split(/[;и]/)
         .map(ref => ref.trim())
         .filter(Boolean);
-    console.log('Split references:', references);
     
     const result = [];
     
     for (const ref of references) {
-        console.log('Processing reference:', ref);
         const bookNumber = booksNameNumber[bookName as keyof typeof booksNameNumber];
         const isOneChapterBook = oneChapterBooks.indexOf(bookNumber) !== -1;
-        console.log('Book number:', bookNumber, 'Is one chapter book:', isOneChapterBook);
         
+        // Обработка книг с одной главой
         if (isOneChapterBook && !ref.includes(':')) {
             const parsedRef = {
                 bookName,
                 chapter: ['1'],
                 verses: normalizeSpaces(ref)
             };
-            console.log('One chapter book parsed:', parsedRef);
             result.push(parsedRef);
             continue;
         }
         
+        // Обработка ссылок с указанием стихов
         if (ref.includes(':')) {
             const [chapter, verses] = ref.split(':').map(s => s.trim());
             const parsedRef = {
@@ -70,42 +67,58 @@ function parseBibleReference(text: string) {
                 chapter: [normalizeSpaces(chapter)],
                 verses: verses ? normalizeSpaces(verses) : null
             };
-            console.log('Regular reference parsed:', parsedRef);
             result.push(parsedRef);
             continue;
         }
         
+        // Обработка ссылок только с главами
+        const chapters = ref.split(',').map(s => s.trim());
+        const expandedChapters: string[] = [];
+        
+        for (const chapter of chapters) {
+            if (chapter.includes('-')) {
+                // Обработка диапазона глав (например: 3-5)
+                const [start, end] = chapter.split('-').map(n => parseInt(n.trim()));
+                for (let i = start; i <= end; i++) {
+                    expandedChapters.push(i.toString());
+                }
+            } else {
+                expandedChapters.push(normalizeSpaces(chapter));
+            }
+        }
+        
         const parsedRef = {
             bookName,
-            chapter: ref.split(',').map(s => normalizeSpaces(s)),
+            chapter: expandedChapters,
             verses: null
         };
-        console.log('Chapters only parsed:', parsedRef);
         result.push(parsedRef);
     }
     
-    console.log('Final parseBibleReference result:', result);
     return result;
 }
 
 function formatBibleLink(match: string) {
-    console.log('formatBibleLink input:', match);
     const references = parseBibleReference(match);
-    const result = `#["${match}",${references.map(ref => JSON.stringify(ref)).join(', ')}]#`;
-    console.log('formatBibleLink output:', result);
-    return result;
+    return `#["${match}",${references.map(ref => JSON.stringify(ref)).join(', ')}]#`;
 }
 
+// Поиск библейских ссылок в тексте
 export const findsBibleLink = (text: string) => {
-    console.log('findsBibleLink input:', text);
     const bibleNames = arrBiblebook.join('|');
     
     //? 1. Паттерн для названия книги (включая цифру в начале, если есть)
     const bookPattern = `(\\d\\s*)?(${bibleNames})\\.\\s*`;
     
     //? 2. Паттерны для главы и стихов
-    // Паттерн для главы
-    const chapterPattern = `\\d+`;
+    // Паттерн для одиночной главы
+    const singleChapterPattern = `\\d+`;
+
+    // Паттерн для диапазона глав (например: 3-5)
+    const chapterRangePattern = `\\d+\\s*[–-]\\s*\\d+`;
+
+    // Паттерн для группы глав (например: 3, 4-6, 8)
+    const chapterGroupPattern = `(?:${singleChapterPattern}|${chapterRangePattern})(?:\\s*,\\s*(?:${singleChapterPattern}|${chapterRangePattern}))*`;
 
     // Паттерн для диапазона стихов (например: 23-26)
     const verseRangePattern = `\\d+\\s*[–-]\\s*\\d+`;
@@ -117,14 +130,14 @@ export const findsBibleLink = (text: string) => {
     const verseGroupPattern = `(?:${verseRangePattern}|${singleVersePattern})(?:\\s*,\\s*(?:${verseRangePattern}|${singleVersePattern}))*`;
 
     // Паттерн для главы и стихов (например: 72: 23-26, 15-18)
-    const chapterVersePattern = `${chapterPattern}(?:\\s*:\\s*${verseGroupPattern})?`;
+    const chapterVersePattern = `${chapterGroupPattern}(?:\\s*:\\s*${verseGroupPattern})?`;
     
     //? 3. Паттерны для продолжения через точку с запятой и "и"
     // Паттерн для продолжения через точку с запятой
-    const semicolonPattern = `(?:\\s*;\\s*(?!${bibleNames})${chapterPattern}(?:\\s*:\\s*${verseGroupPattern})?)*`;    
+    const semicolonPattern = `(?:\\s*;\\s*(?!${bibleNames})${chapterGroupPattern}(?:\\s*:\\s*${verseGroupPattern})?)*`;    
     
     // Паттерн для продолжения через "и"
-    const andPattern = `(?:\\s+и\\s+(?!${bibleNames})${chapterPattern}(?:\\s*:\\s*${verseGroupPattern})?)*`;
+    const andPattern = `(?:\\s+и\\s+(?!${bibleNames})${chapterGroupPattern}(?:\\s*:\\s*${verseGroupPattern})?)*`;
     
     //? 4. Паттерны для окончания ссылки
     // Паттерн для окончания точкой с запятой
