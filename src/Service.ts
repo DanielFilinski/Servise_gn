@@ -150,7 +150,7 @@ export const findsBibleLink = (text: string) => {
     const endRussianTextPattern = `\\d?\\s[а-яА-Я]`;
     
     // Паттерн для окончания скобкой
-    const endBracketPattern = `\\s*\\)`;
+    const endBracketPattern = `\\s*[\\(\\)]`;
     
     // Паттерн для окончания строки
     const endOfLinePattern = `$`;
