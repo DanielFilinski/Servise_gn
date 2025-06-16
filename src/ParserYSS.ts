@@ -109,7 +109,9 @@ writeResult()
 function FILES_FOR_PARSE() {
 
     const htmlFilePaths = [
-        './fileForParse/YSS/25-03.html', //! имя файла
+        // './fileForParse/YSS/25-03.html', //! имя файла
+        './fileForParse/YSS/25-02.html', //! имя файла
+        
 
         // Add more file paths as needed
     ];

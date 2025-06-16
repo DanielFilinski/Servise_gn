@@ -146,6 +146,12 @@ export const findsBibleLink = (text: string) => {
     // Паттерн для окончания точкой
     const endDotPattern = `\\s*\\.`;
     
+    // Паттерн для окончания запятой
+    const endCommaPattern = `\\s*,`;
+    
+    // Паттерн для окончания знаком вопроса
+    const endQuestionPattern = `\\s*\\?`;
+    
     // Паттерн для окончания русским текстом
     const endRussianTextPattern = `\\d?\\s[а-яА-Я]`;
     
@@ -156,7 +162,7 @@ export const findsBibleLink = (text: string) => {
     const endOfLinePattern = `$`;
     
     // Собираем все части вместе
-    const endPattern = `(?=${endSemicolonPattern}|${endDotPattern}|${endRussianTextPattern}|${endBracketPattern}|${endOfLinePattern})`;
+    const endPattern = `(?=${endSemicolonPattern}|${endDotPattern}|${endCommaPattern}|${endQuestionPattern}|${endRussianTextPattern}|${endBracketPattern}|${endOfLinePattern})`;
     
     // Собираем все части вместе
     const regex = new RegExp(
