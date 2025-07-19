@@ -2,7 +2,7 @@ import fs from 'fs';
 import { parse } from 'node-html-parser';
 import { compareAsc, format } from "date-fns";
 import { testingParseBibleVerseSS, testingEmptyStringsSS } from './Tests.js';
-import { creatArrParsText, findsBibleLink } from './Service.js';
+import { creatArrParsText, findNestedLinks, findsBibleLink } from './Service.js';
 import { convertResultSS } from './convertors/ConvertSS.js';
 
 
@@ -129,41 +129,41 @@ writeResult()
 
 function FILES_FOR_PARSE() {
 
-    const htmlFilePaths = [
-        './fileForParse/SS/2025-02/L01.html',
-        './fileForParse/SS/2025-02/L02.html',
-        './fileForParse/SS/2025-02/L03.html',
-        './fileForParse/SS/2025-02/L04.html',
-        './fileForParse/SS/2025-02/L05.html',
-        './fileForParse/SS/2025-02/L06.html',
-        './fileForParse/SS/2025-02/L07.html',
-        './fileForParse/SS/2025-02/L08.html',
-        './fileForParse/SS/2025-02/L09.html',
-        './fileForParse/SS/2025-02/L10.html',
-        './fileForParse/SS/2025-02/L11.html',
-        './fileForParse/SS/2025-02/L12.html',
-        './fileForParse/SS/2025-02/L13.html',
-
-        // Add more file paths as needed
-    ];
-
     // const htmlFilePaths = [
-    //     './fileForParse/SS/L01.html',
-    //     './fileForParse/SS/L02.html',
-    //     './fileForParse/SS/L03.html',
-    //     './fileForParse/SS/L04.html',
-    //     './fileForParse/SS/L05.html',
-    //     './fileForParse/SS/L06.html',
-    //     './fileForParse/SS/L07.html',
-    //     './fileForParse/SS/L08.html',
-    //     './fileForParse/SS/L09.html',
-    //     './fileForParse/SS/L10.html',
-    //     './fileForParse/SS/L11.html',
-    //     './fileForParse/SS/L12.html',
-    //     './fileForParse/SS/L13.html',
+    //     './fileForParse/SS/2025-02/L01.html',
+    //     './fileForParse/SS/2025-02/L02.html',
+    //     './fileForParse/SS/2025-02/L03.html',
+    //     './fileForParse/SS/2025-02/L04.html',
+    //     './fileForParse/SS/2025-02/L05.html',
+    //     './fileForParse/SS/2025-02/L06.html',
+    //     './fileForParse/SS/2025-02/L07.html',
+    //     './fileForParse/SS/2025-02/L08.html',
+    //     './fileForParse/SS/2025-02/L09.html',
+    //     './fileForParse/SS/2025-02/L10.html',
+    //     './fileForParse/SS/2025-02/L11.html',
+    //     './fileForParse/SS/2025-02/L12.html',
+    //     './fileForParse/SS/2025-02/L13.html',
 
     //     // Add more file paths as needed
     // ];
+
+    const htmlFilePaths = [
+        './fileForParse/SS/L01.html',
+        './fileForParse/SS/L02.html',
+        './fileForParse/SS/L03.html',
+        './fileForParse/SS/L04.html',
+        './fileForParse/SS/L05.html',
+        './fileForParse/SS/L06.html',
+        './fileForParse/SS/L07.html',
+        './fileForParse/SS/L08.html',
+        './fileForParse/SS/L09.html',
+        './fileForParse/SS/L10.html',
+        './fileForParse/SS/L11.html',
+        './fileForParse/SS/L12.html',
+        './fileForParse/SS/L13.html',
+
+        // Add more file paths as needed
+    ];
 
 
     const mergeHtmlFiles = (filePaths, outputPath) => {
@@ -615,7 +615,9 @@ function writeResult() {
     console.log("================================")
     testingParseBibleVerseSS(partition)
     // testingEmptyStringsSS(partition)
+    
     const RESULT = JSON.stringify(convertResultSS(partition), null, 2)
+    findNestedLinks(JSON.parse(RESULT))
     const jsonString = JSON.stringify(partition, null, 2);
     fs.writeFileSync('./ResultParse/SS/SS.json', jsonString, 'utf-8');
     fs.writeFileSync('./ResultParse/SS/SS+.json', RESULT, 'utf-8');

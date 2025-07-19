@@ -182,7 +182,34 @@ export const findsBibleLink = (text: string) => {
 
 
 
+export const findNestedLinks = (contents: any[]): void => {
+    console.log("===== start findNestedLinks =======")
+    let allLinks: { parentId: number; linkText: string }[] = [];
+    // Извлечение всех ссылок
+    contents.forEach(content => {
+      content.content.forEach(subContent => {
+        if (subContent.links) {
+          allLinks = []  
+          subContent.links.forEach(link => {
+            allLinks.push({ parentId: subContent.id, linkText: link.text });
+          });
+          // Проверка вложенности ссылок
+          for (let i = 0; i < allLinks.length; i++) {
+            for (let j = 0; j < allLinks.length; j++) {
+                if (i !== j && allLinks[j].linkText.includes(allLinks[i].linkText)) {
+                    console.log(
+                    `Link date:"${content.date}", "${allLinks[i].linkText}" is nested within link "${allLinks[j].linkText}" (lesson: ${content.lessonNumber})`
+                    );
+                }
+            }
+          }
+        }
+      });
+    });
 
+    console.log("===== finish findNestedLinks =======")
+    
+  };
 
 
 

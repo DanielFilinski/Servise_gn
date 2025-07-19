@@ -9,15 +9,15 @@ export const convertResultSS = (data: TOldParseResult): TParseResult[] => {
 
     arr.forEach((lesson: TOldParse) => {
         Object.keys(lesson).forEach(key => {
-            console.log('key', key)
+            // console.log('key', key)
             const day = lesson[key]
-            console.log('day.', day.lessonName)
+            // console.log('day.', day.lessonName)
 
             const data: TParseResult = {
                 id: i,
                 date: getDate(key),
                 name: day.lessonName,
-                bookNumber: 1,
+                bookNumber: 2, //! номер книги
                 lessonNumber: +day.lessonNumber,
                 isFirstLesson: day.isFirstLesson ? day.isFirstLesson : undefined,
                 content: convertContentSS(day.arrEl)
@@ -64,7 +64,7 @@ function convertContentSS(data: TOldContent[]): TContent[] {
 }
 
 function getDate(dateString: string) {
-    console.log('dateString', dateString)
+    // console.log('dateString', dateString)
     // // Разбор строки в объект Date
     // const parsedDate = parseISO(dateString);
     // console.log('parsedDate', parsedDate)
