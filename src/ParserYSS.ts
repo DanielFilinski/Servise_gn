@@ -51,7 +51,7 @@ const parsePatternsSS = {
 
 }
 
-const dateFirstWeek = '2025-06-28' //! дата первого урока
+const dateFirstWeek = '2025-09-27' //! дата первого урока
 const datesArr = []
 
 
@@ -109,7 +109,7 @@ writeResult()
 function FILES_FOR_PARSE() {
 
     const htmlFilePaths = [
-        './fileForParse/YSS/25-03.html', //! имя файла
+        './fileForParse/YSS/25-04.html', //! имя файла
         // './fileForParse/YSS/25-02.html', //! имя файла
         
 
