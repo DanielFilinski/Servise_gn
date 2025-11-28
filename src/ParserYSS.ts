@@ -51,7 +51,7 @@ const parsePatternsSS = {
 
 }
 
-const dateFirstWeek = '2025-09-27' //! дата первого урока
+const dateFirstWeek = '2025-12-27' //! дата первого урока
 const datesArr = []
 
 

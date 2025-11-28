@@ -613,6 +613,8 @@ function writeResult() {
     console.log("================================")
     console.log("start testing")
     console.log("================================")
+    
+    // Существующие тесты
     testingParseBibleVerseSS(partition)
     // testingEmptyStringsSS(partition)
     
@@ -624,4 +626,5 @@ function writeResult() {
     console.log("================================")
     console.log("finish 2.0")
     console.log("================================")
-} 1
+    console.log("\n💡 Для валидации библейских ссылок запустите: npm run validate\n")
+}

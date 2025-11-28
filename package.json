@@ -24,6 +24,8 @@
     "db": "node dist/db/SQLite.js",
     "hm": "node dist/hymn/hymn.js",
     "all": "npm run ss & npm run mr & npm run er & npm run yss",
+    "validate": "node dist/ValidatorSS.js",
+    "apply": "node dist/ValidatorSS.js apply",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

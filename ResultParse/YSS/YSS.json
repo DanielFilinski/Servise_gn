@@ -1,7 +1,7 @@
 {
   "1": {
-    "dateStart": "2025-09-27",
-    "dateEnd": "2025-10-03",
+    "dateStart": "2025-12-27",
+    "dateEnd": "2026-01-02",
     "lessonName": "Обетования завета",
     "lessonNumber": 1,
     "arrEl": [
@@ -1021,8 +1021,8 @@
     ]
   },
   "2": {
-    "dateStart": "2025-10-04",
-    "dateEnd": "2025-10-10",
+    "dateStart": "2026-01-03",
+    "dateEnd": "2026-01-09",
     "lessonName": "Уроки лидерства",
     "lessonNumber": 2,
     "arrEl": [
@@ -2026,8 +2026,8 @@
     ]
   },
   "3": {
-    "dateStart": "2025-10-11",
-    "dateEnd": "2025-10-17",
+    "dateStart": "2026-01-10",
+    "dateEnd": "2026-01-16",
     "lessonName": "Время перехода",
     "lessonNumber": 3,
     "arrEl": [
@@ -3018,8 +3018,8 @@
     ]
   },
   "4": {
-    "dateStart": "2025-10-18",
-    "dateEnd": "2025-10-24",
+    "dateStart": "2026-01-17",
+    "dateEnd": "2026-01-23",
     "lessonName": "Переход через Иордан",
     "lessonNumber": 4,
     "arrEl": [
@@ -4082,8 +4082,8 @@
     ]
   },
   "5": {
-    "dateStart": "2025-10-25",
-    "dateEnd": "2025-10-31",
+    "dateStart": "2026-01-24",
+    "dateEnd": "2026-01-30",
     "lessonName": "Иерихон",
     "lessonNumber": 5,
     "arrEl": [
@@ -5134,8 +5134,8 @@
     ]
   },
   "6": {
-    "dateStart": "2025-11-01",
-    "dateEnd": "2025-11-07",
+    "dateStart": "2026-01-31",
+    "dateEnd": "2026-02-06",
     "lessonName": "Разгромный провал",
     "lessonNumber": 6,
     "arrEl": [
@@ -6131,8 +6131,8 @@
     ]
   },
   "7": {
-    "dateStart": "2025-11-08",
-    "dateEnd": "2025-11-14",
+    "dateStart": "2026-02-07",
+    "dateEnd": "2026-02-13",
     "lessonName": "Смертоносный обман",
     "lessonNumber": 7,
     "arrEl": [
@@ -7144,8 +7144,8 @@
     ]
   },
   "8": {
-    "dateStart": "2025-11-15",
-    "dateEnd": "2025-11-21",
+    "dateStart": "2026-02-14",
+    "dateEnd": "2026-02-20",
     "lessonName": "День, когда солнце остановилось",
     "lessonNumber": 8,
     "arrEl": [
@@ -8162,8 +8162,8 @@
     ]
   },
   "9": {
-    "dateStart": "2025-11-22",
-    "dateEnd": "2025-11-28",
+    "dateStart": "2026-02-21",
+    "dateEnd": "2026-02-27",
     "lessonName": "Наследие Халева",
     "lessonNumber": 9,
     "arrEl": [
@@ -9072,8 +9072,8 @@
     ]
   },
   "10": {
-    "dateStart": "2025-11-29",
-    "dateEnd": "2025-12-05",
+    "dateStart": "2026-02-28",
+    "dateEnd": "2026-03-06",
     "lessonName": "Место для убежища",
     "lessonNumber": 10,
     "arrEl": [
@@ -10067,8 +10067,8 @@
     ]
   },
   "11": {
-    "dateStart": "2025-12-06",
-    "dateEnd": "2025-12-12",
+    "dateStart": "2026-03-07",
+    "dateEnd": "2026-03-13",
     "lessonName": "Подтверждение завета",
     "lessonNumber": 11,
     "arrEl": [
@@ -11000,8 +11000,8 @@
     ]
   },
   "12": {
-    "dateStart": "2025-12-13",
-    "dateEnd": "2025-12-19",
+    "dateStart": "2026-03-14",
+    "dateEnd": "2026-03-20",
     "lessonName": "Порочный круг",
     "lessonNumber": 12,
     "arrEl": [
@@ -12022,8 +12022,8 @@
     ]
   },
   "13": {
-    "dateStart": "2025-12-20",
-    "dateEnd": "2025-12-26",
+    "dateStart": "2026-03-21",
+    "dateEnd": "2026-03-27",
     "lessonName": "Справедливость и милосердие в период завоеваний",
     "lessonNumber": 13,
     "arrEl": [
