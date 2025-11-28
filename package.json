@@ -26,6 +26,9 @@
     "all": "npm run ss & npm run mr & npm run er & npm run yss",
     "validate": "node dist/ValidatorSS.js",
     "apply": "node dist/ValidatorSS.js apply",
+    "bible:fix": "python3 BibleRefsFixer/bible_refs_fixer.py --mode interactive --input ResultParse/SS/SS+.json --books-mapping BibleRefsFixer/bible_books_mapping.json --history BibleRefsFixer/bible_refs_history.json",
+    "bible:auto": "python3 BibleRefsFixer/bible_refs_fixer.py --mode auto --input ResultParse/SS/SS+.json --books-mapping BibleRefsFixer/bible_books_mapping.json --history BibleRefsFixer/bible_refs_history.json",
+    "bible:history": "cat BibleRefsFixer/bible_refs_history.json | python3 -m json.tool",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

@@ -1,0 +1,427 @@
+[
+  {
+    "lesson_id": 10,
+    "lesson_name": "Стойте так в Господе",
+    "block_id": 6,
+    "block_type": "question",
+    "text": "• Лк. 24:39 ",
+    "suggested_links": [
+      {
+        "text": "Лк. 24:39",
+        "data": [
+          {
+            "bookNumber": 490,
+            "chapter": [
+              24
+            ],
+            "verses": [
+              39
+            ]
+          }
+        ]
+      }
+    ],
+    "status": "confirmed",
+    "timestamp": "2025-11-28T13:07:51.086685"
+  },
+  {
+    "lesson_id": 11,
+    "lesson_name": "Глава Тела (церкви)",
+    "block_id": 4,
+    "block_type": "question",
+    "text": "•Исх. 18:25 — «Выбрал Моисей из всего Израиля способных людей и поставил их начальниками народа, тыс...",
+    "suggested_links": [
+      {
+        "text": "Исх. 18:25",
+        "data": [
+          {
+            "bookNumber": 20,
+            "chapter": [
+              18
+            ],
+            "verses": [
+              25
+            ]
+          }
+        ]
+      }
+    ],
+    "status": "confirmed",
+    "timestamp": "2025-11-28T13:12:27.947871"
+  },
+  {
+    "lesson_id": 11,
+    "lesson_name": "Глава Тела (церкви)",
+    "block_id": 5,
+    "block_type": "question",
+    "text": "•Числ. 31:26 — «начальники племен общества» (букв. «главы». — Прим. пер.)",
+    "suggested_links": [
+      {
+        "text": "Числ. 31:26",
+        "data": [
+          {
+            "bookNumber": 40,
+            "chapter": [
+              31
+            ],
+            "verses": [
+              26
+            ]
+          }
+        ]
+      }
+    ],
+    "status": "confirmed",
+    "timestamp": "2025-11-28T13:12:27.954152"
+  },
+  {
+    "lesson_id": 11,
+    "lesson_name": "Глава Тела (церкви)",
+    "block_id": 6,
+    "block_type": "question",
+    "text": "•Втор. 28:13 — Бог сделает Израиль «главою, а не хвостом», если будет повиновение Ему.",
+    "suggested_links": [
+      {
+        "text": "Втор. 28:13",
+        "data": [
+          {
+            "bookNumber": 50,
+            "chapter": [
+              28
+            ],
+            "verses": [
+              13
+            ]
+          }
+        ]
+      }
+    ],
+    "status": "confirmed",
+    "timestamp": "2025-11-28T13:12:27.954587"
+  },
+  {
+    "lesson_id": 45,
+    "lesson_name": "«Стойте так в Господе»",
+    "block_id": 6,
+    "block_type": "question",
+    "text": "• Лк. 24:39 ",
+    "suggested_links": [
+      {
+        "text": "Лк. 24:39",
+        "data": [
+          {
+            "bookNumber": 490,
+            "chapter": [
+              24
+            ],
+            "verses": [
+              39
+            ]
+          }
+        ]
+      }
+    ],
+    "status": "confirmed",
+    "timestamp": "2025-11-28T13:18:33.950719"
+  },
+  {
+    "lesson_id": 53,
+    "lesson_name": "Глава Тела (церкви)",
+    "block_id": 4,
+    "block_type": "question",
+    "text": "•Исх. 18:25 — «Выбрал Моисей из всего Израиля способных людей и поставил их начальниками народа, тыс...",
+    "suggested_links": [
+      {
+        "text": "Исх. 18:25",
+        "data": [
+          {
+            "bookNumber": 20,
+            "chapter": [
+              18
+            ],
+            "verses": [
+              25
+            ]
+          }
+        ]
+      }
+    ],
+    "status": "confirmed",
+    "timestamp": "2025-11-28T13:18:39.810484"
+  },
+  {
+    "lesson_id": 53,
+    "lesson_name": "Глава Тела (церкви)",
+    "block_id": 5,
+    "block_type": "question",
+    "text": "•Числ. 31:26 — «начальники племен общества» (букв. «главы». — Прим. пер.)",
+    "suggested_links": [
+      {
+        "text": "Числ. 31:26",
+        "data": [
+          {
+            "bookNumber": 40,
+            "chapter": [
+              31
+            ],
+            "verses": [
+              26
+            ]
+          }
+        ]
+      }
+    ],
+    "status": "confirmed",
+    "timestamp": "2025-11-28T13:18:44.932465"
+  },
+  {
+    "lesson_id": 53,
+    "lesson_name": "Глава Тела (церкви)",
+    "block_id": 6,
+    "block_type": "question",
+    "text": "•Втор. 28:13 — Бог сделает Израиль «главою, а не хвостом», если будет повиновение Ему.",
+    "suggested_links": [
+      {
+        "text": "Втор. 28:13",
+        "data": [
+          {
+            "bookNumber": 50,
+            "chapter": [
+              28
+            ],
+            "verses": [
+              13
+            ]
+          }
+        ]
+      }
+    ],
+    "status": "confirmed",
+    "timestamp": "2025-11-28T13:18:48.790835"
+  },
+  {
+    "lesson_id": 53,
+    "lesson_name": "Глава Тела (церкви)",
+    "block_id": 7,
+    "block_type": "question",
+    "text": "•Ис. 7:8 — «Ибо глава Сирии — Дамаск, и глава Дамаска — Рецин».",
+    "suggested_links": [
+      {
+        "text": "Ис. 7:8",
+        "data": [
+          {
+            "bookNumber": 290,
+            "chapter": [
+              7
+            ],
+            "verses": [
+              8
+            ]
+          }
+        ]
+      }
+    ],
+    "status": "confirmed",
+    "timestamp": "2025-11-28T13:18:51.295295"
+  },
+  {
+    "lesson_id": 53,
+    "lesson_name": "Глава Тела (церкви)",
+    "block_id": 8,
+    "block_type": "question",
+    "text": "•Ос. 1:11 — «И соберутся сыны Иудины и сыны Израилевы вместе, и поставят себе одну главу».",
+    "suggested_links": [
+      {
+        "text": "Ос. 1:11",
+        "data": [
+          {
+            "bookNumber": 350,
+            "chapter": [
+              1
+            ],
+            "verses": [
+              11
+            ]
+          }
+        ]
+      }
+    ],
+    "status": "confirmed",
+    "timestamp": "2025-11-28T13:18:54.699837"
+  },
+  {
+    "lesson_id": 53,
+    "lesson_name": "Глава Тела (церкви)",
+    "block_id": 9,
+    "block_type": "question",
+    "text": "•Мих. 3:9 — «главы дома Иаковлева и князья дома Израилева».",
+    "suggested_links": [
+      {
+        "text": "Мих. 3:9",
+        "data": [
+          {
+            "bookNumber": 400,
+            "chapter": [
+              3
+            ],
+            "verses": [
+              9
+            ]
+          }
+        ]
+      }
+    ],
+    "status": "confirmed",
+    "timestamp": "2025-11-28T13:19:00.140423"
+  },
+  {
+    "lesson_id": 53,
+    "lesson_name": "Глава Тела (церкви)",
+    "block_id": 10,
+    "block_type": "question",
+    "text": "•1 Кор. 11:3 — «Всякому мужу глава — Христос».",
+    "suggested_links": [
+      {
+        "text": "1 Кор. 11:3",
+        "data": [
+          {
+            "bookNumber": 530,
+            "chapter": [
+              11
+            ],
+            "verses": [
+              3
+            ]
+          }
+        ]
+      }
+    ],
+    "status": "confirmed",
+    "timestamp": "2025-11-28T13:19:02.613952"
+  },
+  {
+    "lesson_id": 54,
+    "lesson_name": "Начаток, Первенец из мертвых",
+    "block_id": 2,
+    "block_type": "mainText",
+    "text": "В еврейском языке слова «голова» (рош) и «начало» (реши́т) тесно связаны. Первое употребление слова ...",
+    "suggested_links": [
+      {
+        "text": "Быт. 1:1",
+        "data": [
+          {
+            "bookNumber": 10,
+            "chapter": [
+              1
+            ],
+            "verses": [
+              1
+            ]
+          }
+        ]
+      }
+    ],
+    "status": "confirmed",
+    "timestamp": "2025-11-28T13:19:07.813039"
+  },
+  {
+    "lesson_id": 54,
+    "lesson_name": "Начаток, Первенец из мертвых",
+    "block_id": 3,
+    "block_type": "mainText",
+    "text": "Греческое слово архэ́, переведенное как «начаток», также имеет широкий спектр значений, включая «нач...",
+    "suggested_links": [
+      {
+        "text": "Кол. 1:18",
+        "data": [
+          {
+            "bookNumber": 580,
+            "chapter": [
+              1
+            ],
+            "verses": [
+              18
+            ]
+          }
+        ]
+      }
+    ],
+    "status": "confirmed",
+    "timestamp": "2025-11-28T13:19:10.558587"
+  },
+  {
+    "lesson_id": 76,
+    "lesson_name": "Жить новой жизнью",
+    "block_id": 4,
+    "block_type": "mainText",
+    "text": "Но значение имеет не только музыка. Павел использует специфическую терминологию как здесь, так и в Е...",
+    "suggested_links": [
+      {
+        "text": "Еф. 5:19",
+        "data": [
+          {
+            "bookNumber": 560,
+            "chapter": [
+              5
+            ],
+            "verses": [
+              19
+            ]
+          }
+        ]
+      }
+    ],
+    "status": "confirmed",
+    "timestamp": "2025-11-28T13:19:12.141202"
+  },
+  {
+    "lesson_id": 80,
+    "lesson_name": "Родители и дети",
+    "block_id": 3,
+    "block_type": "question",
+    "text": "1. Кол. 3:20 ",
+    "suggested_links": [
+      {
+        "text": "Кол. 3:20",
+        "data": [
+          {
+            "bookNumber": 580,
+            "chapter": [
+              3
+            ],
+            "verses": [
+              20
+            ]
+          }
+        ]
+      }
+    ],
+    "status": "confirmed",
+    "timestamp": "2025-11-28T13:19:14.354011"
+  },
+  {
+    "lesson_id": 80,
+    "lesson_name": "Родители и дети",
+    "block_id": 4,
+    "block_type": "question",
+    "text": "2. Притч. 22:6 ",
+    "suggested_links": [
+      {
+        "text": "Притч. 22:6",
+        "data": [
+          {
+            "bookNumber": 240,
+            "chapter": [
+              22
+            ],
+            "verses": [
+              6
+            ]
+          }
+        ]
+      }
+    ],
+    "status": "confirmed",
+    "timestamp": "2025-11-28T13:19:15.941629"
+  }
+]
