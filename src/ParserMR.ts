@@ -18,6 +18,7 @@ const parsePatterns = {
 }
 
 const htmlFilePaths = [
+    //! имя файла
     './fileForParse/MR/2026.html',
 ];
 

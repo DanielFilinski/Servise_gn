@@ -18,7 +18,8 @@ const parsePatterns = {
 }
 
 const htmlFilePaths = [
-    './fileForParse/ER/2025.html',
+    //! имя файла
+    './fileForParse/ER/2026.html',
 ];
 
 
@@ -138,7 +139,7 @@ function getDateReading(html) {
     let el = html.querySelector(`.${parsePatterns.date[0]}`)
     let text = el.innerText
     //! Парсим строку в объект Date, добавляя год "2024"
-    const parsedDate = dateParser(`${text} 2025`, 'd MMMM yyyy', new Date(), { locale: ru });
+    const parsedDate = dateParser(`${text} 2026`, 'd MMMM yyyy', new Date(), { locale: ru });
 
     el.remove()
     // Форматируем объект Date в строку "yyyy-MM-dd"
