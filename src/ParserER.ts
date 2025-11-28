@@ -11,10 +11,10 @@ const parsePatterns = {
     all: "p",
     delete: ['&#160;', '\n', '\t'], // массив элементов которые необходимо удалить из текста
     delUnnecessaryEl: "", // удаление пустых елементов которые мешают парсерингу
-    date: ['Headers_Date'], // дата урока ...далее преобразовывается из например 17 июня => 2023-06-17
-    lessonName: ".Headers_DAYName",
-    memoryVerse: ".Headers_BibleText", //
-    meinText: [".основной-абзац", ".Headers_DropCap"],
+    date: ['дата_-left', 'дата_-right'], // дата урока ...далее преобразовывается из например 17 июня => 2023-06-17
+    lessonName: ".заголовок",
+    memoryVerse: "._стих", //
+    meinText: [".Основной"],
 }
 
 const htmlFilePaths = [
@@ -136,12 +136,30 @@ function delUnnecessary(html) {
 }
 
 function getDateReading(html) {
-    let el = html.querySelector(`.${parsePatterns.date[0]}`)
-    let text = el.innerText
-    //! Парсим строку в объект Date, добавляя год "2024"
-    const parsedDate = dateParser(`${text} 2026`, 'd MMMM yyyy', new Date(), { locale: ru });
+    let el = html.querySelector(`.${parsePatterns.date[0]}, .${parsePatterns.date[1]}`)
+    if (!el) {
+        throw new Error('Не найдена дата в HTML')
+    }
+    let text = el.innerText.trim()
+    //! Парсим строку в объект Date, добавляя год "2026"
+    // Пробуем разные форматы даты
+    let parsedDate
+    try {
+        parsedDate = dateParser(`${text} 2026`, 'd MMMM yyyy', new Date(), { locale: ru });
+    } catch (e) {
+        try {
+            parsedDate = dateParser(`${text} 2026`, 'dd MMMM yyyy', new Date(), { locale: ru });
+        } catch (e2) {
+            console.error('Ошибка парсинга даты:', text, e2)
+            throw e2
+        }
+    }
 
     el.remove()
+    // Проверяем, что дата валидна
+    if (isNaN(parsedDate.getTime())) {
+        throw new Error(`Невалидная дата после парсинга: "${text} 2026"`)
+    }
     // Форматируем объект Date в строку "yyyy-MM-dd"
     let date = format(parsedDate, 'yyyy-MM-dd');
 
@@ -186,7 +204,7 @@ function getAllMainText(html, arr) {
 
     //    console.log('el.classList', el.classList)
     if (el) {
-        if (!el.classList.contains(parsePatterns.date[0])) {
+        if (!el.classList.contains(parsePatterns.date[0]) && !el.classList.contains(parsePatterns.date[1])) {
 
             text = delArtefacts(el.innerText)
 
