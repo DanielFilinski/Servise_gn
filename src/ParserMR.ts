@@ -186,8 +186,19 @@ function getAllMainText(html, arr) {
 
     //    console.log('el.classList', el.classList)
     if (el) {
-        if (!el.classList.contains(parsePatterns.date[0])) {
-
+        // Проверяем, что это не дата
+        if (el.classList.contains(parsePatterns.date[0])) {
+            return "finish"
+        }
+        
+        // Проверяем, что это нужный класс параграфа (основной-абзац или Headers_DropCap)
+        // parsePatterns.meinText содержит селекторы с точкой, убираем её при проверке
+        const allowedClasses = parsePatterns.meinText.map(className => className.replace('.', ''))
+        const isMainText = allowedClasses.some(className => 
+            el.classList.contains(className)
+        )
+        
+        if (isMainText) {
             text = delArtefacts(el.innerText)
 
             arr.push(text)
@@ -196,6 +207,7 @@ function getAllMainText(html, arr) {
 
             return getAllMainText(html, arr)
         } else {
+            // Встретили параграф с другим классом (например, "Для-дальнейшего-размышления")
             return "finish"
         }
     } else {

@@ -127,25 +127,7 @@ writeResult()
 
 
 
-function FILES_FOR_PARSE() {
-
-    // const htmlFilePaths = [
-    //     './fileForParse/SS/2025-02/L01.html',
-    //     './fileForParse/SS/2025-02/L02.html',
-    //     './fileForParse/SS/2025-02/L03.html',
-    //     './fileForParse/SS/2025-02/L04.html',
-    //     './fileForParse/SS/2025-02/L05.html',
-    //     './fileForParse/SS/2025-02/L06.html',
-    //     './fileForParse/SS/2025-02/L07.html',
-    //     './fileForParse/SS/2025-02/L08.html',
-    //     './fileForParse/SS/2025-02/L09.html',
-    //     './fileForParse/SS/2025-02/L10.html',
-    //     './fileForParse/SS/2025-02/L11.html',
-    //     './fileForParse/SS/2025-02/L12.html',
-    //     './fileForParse/SS/2025-02/L13.html',
-
-    //     // Add more file paths as needed
-    // ];
+function FILES_FOR_PARSE() {  
 
     const htmlFilePaths = [
         './fileForParse/SS/L01.html',
@@ -562,7 +544,7 @@ function convertDate(string) {
     }
 
     // Создадим и вернем отформатированную строку даты "YYYY-MM-DD"
-    return `2025-${monthNumber}-${day.padStart(2, '0')}`;
+    return `2026-${monthNumber}-${day.padStart(2, '0')}`;
 }
 
 
@@ -591,7 +573,7 @@ function getDate(dayMonth, i) {
     const monthIndex = monthNames.indexOf(dayMonth.split(" ")[1]);
     let str = `${monthIndex + 1}`
     const m = str.padStart(2, '0')
-    const currentYear = 2025
+    const currentYear = 2026
     console.log('currentYear}-${m}-${+day + i}', `${currentYear}-${m}-${+day + i}`)
     const date = new Date(`${currentYear}-${m}-${+day}`);
     date.setDate(date.getDate() + i);

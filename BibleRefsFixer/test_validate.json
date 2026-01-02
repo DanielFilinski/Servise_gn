@@ -1,0 +1,67 @@
+[
+    {
+        "id": 1,
+        "date": "2025-01-01 00:00:00.000",
+        "name": "Тестовый урок",
+        "bookNumber": 1,
+        "lessonNumber": 1,
+        "content": [
+            {
+                "id": 1,
+                "type": "mainVerses",
+                "text": "Основные отрывки: Флп. 1:1–3; 4:4; Кол. 1:1, 2; 4:9.",
+                "links": [
+                    {
+                        "text": "Флп. 1:1–3; 4:4",
+                        "data": [
+                            {
+                                "bookNumber": 570,
+                                "chapter": [
+                                    1
+                                ],
+                                "verses": [
+                                    1,
+                                    2,
+                                    3
+                                ]
+                            },
+                            {
+                                "bookNumber": 570,
+                                "chapter": [
+                                    4
+                                ],
+                                "verses": [
+                                    4
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "text": "Кол. 1:1, 2; 4:9",
+                        "data": [
+                            {
+                                "bookNumber": 580,
+                                "chapter": [
+                                    1
+                                ],
+                                "verses": [
+                                    1,
+                                    2
+                                ]
+                            },
+                            {
+                                "bookNumber": 580,
+                                "chapter": [
+                                    4
+                                ],
+                                "verses": [
+                                    9
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]

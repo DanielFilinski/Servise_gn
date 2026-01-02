@@ -423,5 +423,505 @@
     ],
     "status": "confirmed",
     "timestamp": "2025-11-28T13:19:15.941629"
+  },
+  {
+    "lesson_id": 1,
+    "lesson_name": "Тестовый урок",
+    "block_id": 1,
+    "block_type": "mainVerses",
+    "text": "Основные отрывки: Флп. 1:1–3; 4:4; Кол. 1:1, 2; 4:9.",
+    "suggested_links": [
+      {
+        "text": "Кол. 1:1",
+        "data": [
+          {
+            "bookNumber": 580,
+            "chapter": [
+              1
+            ],
+            "verses": [
+              1
+            ]
+          }
+        ]
+      }
+    ],
+    "status": "confirmed",
+    "timestamp": "2025-11-28T13:45:20.936660"
+  },
+  {
+    "lesson_id": 1,
+    "lesson_name": "Страдающий, но не покинутый Богом",
+    "block_id": 2,
+    "block_type": "mainVerses",
+    "text": "Основные отрывки: Флп. 1:1–3; 4:4; Кол. 1:1, 2; 4:9.",
+    "suggested_links": [
+      {
+        "text": "Кол. 1:1",
+        "data": [
+          {
+            "bookNumber": 580,
+            "chapter": [
+              1
+            ],
+            "verses": [
+              1
+            ]
+          }
+        ]
+      }
+    ],
+    "status": "confirmed",
+    "timestamp": "2025-11-28T14:05:39.464044"
+  },
+  {
+    "lesson_id": 1,
+    "lesson_name": "Страдающий, но не покинутый Богом",
+    "block_id": 3,
+    "block_type": "AdditionalVerses",
+    "text": "Дополнительные тексты: Деян. 9:16; 2 Кор. 4:7–12; 6:3–7; Еф. 3:1; Флм. 1, 10–12, 15, 16.",
+    "suggested_links": [],
+    "status": "rejected",
+    "timestamp": "2025-11-28T14:06:15.295508"
+  },
+  {
+    "lesson_id": 2,
+    "lesson_name": "Павел — узник Иисуса Христа",
+    "block_id": 1,
+    "block_type": "mainText",
+    "text": "Послания к филиппийцам и колоссянам, а также к ефесянам и Филимону известны как «тюремные послания»,...",
+    "suggested_links": [
+      {
+        "text": "Деян. 28:16",
+        "data": [
+          {
+            "bookNumber": 510,
+            "chapter": [
+              28
+            ],
+            "verses": [
+              16
+            ]
+          }
+        ]
+      }
+    ],
+    "status": "confirmed",
+    "timestamp": "2025-11-28T14:06:40.012465"
+  },
+  {
+    "lesson_id": 2,
+    "lesson_name": "Павел — узник Иисуса Христа",
+    "block_id": 1,
+    "block_type": "mainText",
+    "text": "Послания к филиппийцам и колоссянам, а также к ефесянам и Филимону известны как «тюремные послания»,...",
+    "suggested_links": [
+      {
+        "text": "Деян. 28:16, 30",
+        "data": [
+          {
+            "bookNumber": 510,
+            "chapter": [
+              28
+            ],
+            "verses": [
+              16
+            ]
+          }
+        ]
+      }
+    ],
+    "status": "confirmed",
+    "timestamp": "2025-11-28T14:07:04.132258"
+  },
+  {
+    "lesson_id": 2,
+    "lesson_name": "Павел — узник Иисуса Христа",
+    "block_id": 2,
+    "block_type": "question",
+    "text": "Прочитайте Еф. 3:1 и Флм. 1. Как вы думаете, почему Павел называет себя «узником Иисуса Христа», а н...",
+    "suggested_links": [],
+    "status": "rejected",
+    "timestamp": "2025-11-28T14:07:04.135367"
+  },
+  {
+    "lesson_id": 5,
+    "lesson_name": "Павел и Колоссы",
+    "block_id": 4,
+    "block_type": "question",
+    "text": "Согласно Кол. 4:9 Онисим был одним из помощников Павла в служении в Колоссах. Прочитайте Флм. 10–12,...",
+    "suggested_links": [],
+    "status": "rejected",
+    "timestamp": "2025-11-28T14:08:42.875378"
+  },
+  {
+    "lesson_id": 5,
+    "lesson_name": "Павел и Колоссы",
+    "block_id": 5,
+    "block_type": "mainText",
+    "text": "Павел обращается к Филимону по поводу его беглого раба Онисима, который встретился с апостолом в Рим...",
+    "suggested_links": [],
+    "status": "rejected",
+    "timestamp": "2025-11-28T14:08:42.879361"
+  },
+  {
+    "lesson_id": 6,
+    "lesson_name": "Церкви в Филиппах и Колоссах",
+    "block_id": 2,
+    "block_type": "mainText",
+    "text": "Павел в своих приветствиях обычно обращается к христианам как к «святым». Через крещение они были от...",
+    "suggested_links": [],
+    "status": "rejected",
+    "timestamp": "2025-11-28T14:08:42.880845"
+  },
+  {
+    "lesson_id": 6,
+    "lesson_name": "Церкви в Филиппах и Колоссах",
+    "block_id": 4,
+    "block_type": "mainText",
+    "text": "Интересно сравнить приветствия в этих двух посланиях. В Послании к филиппийцам Павел конкретно упоми...",
+    "suggested_links": [],
+    "status": "rejected",
+    "timestamp": "2025-11-28T14:08:42.881987"
+  },
+  {
+    "lesson_id": 6,
+    "lesson_name": "Церкви в Филиппах и Колоссах",
+    "block_id": 6,
+    "block_type": "mainText",
+    "text": "Нам известно, что Павел иногда использовал литературных помощников при написании своих посланий. Тим...",
+    "suggested_links": [],
+    "status": "rejected",
+    "timestamp": "2025-11-28T14:08:42.883095"
+  },
+  {
+    "lesson_id": 8,
+    "lesson_name": "Основания для благодарности и молитвы",
+    "block_id": 3,
+    "block_type": "AdditionalVerses",
+    "text": "Дополнительные тексты: Пс. 118:105; Ис. 30:21; Иер. 17:9; 1 Кор. 13:1–8; 1 Петр. 1:4.",
+    "suggested_links": [],
+    "status": "rejected",
+    "timestamp": "2025-11-28T14:08:42.884265"
+  },
+  {
+    "lesson_id": 12,
+    "lesson_name": "Плод Евангелия",
+    "block_id": 6,
+    "block_type": "mainText",
+    "text": "В своей благодарственной молитве Павел выделяет три великие христианские добродетели, которые он упо...",
+    "suggested_links": [],
+    "status": "rejected",
+    "timestamp": "2025-11-28T14:08:42.887043"
+  },
+  {
+    "lesson_id": 12,
+    "lesson_name": "Плод Евангелия",
+    "block_id": 9,
+    "block_type": "mainText",
+    "text": "Удивительно, как быстро распространялась эта весть. Примерно через тридцать лет после воскресения Хр...",
+    "suggested_links": [],
+    "status": "rejected",
+    "timestamp": "2025-11-28T14:08:42.888547"
+  },
+  {
+    "lesson_id": 20,
+    "lesson_name": "Единые и бесстрашные",
+    "block_id": 3,
+    "block_type": "mainText",
+    "text": "Наше единство имеет решающее значение для выполнения миссии, которую Бог возложил на Свой народ в по...",
+    "suggested_links": [],
+    "status": "rejected",
+    "timestamp": "2025-11-28T14:08:42.895004"
+  },
+  {
+    "lesson_id": 27,
+    "lesson_name": "Тайна благочестия",
+    "block_id": 4,
+    "block_type": "mainText",
+    "text": "В гимне Христу из Послания к филиппийцам (Флп. 2) апостол раскрывает эту тайну более подробно, чем г...",
+    "suggested_links": [],
+    "status": "rejected",
+    "timestamp": "2025-11-28T14:08:42.901880"
+  },
+  {
+    "lesson_id": 32,
+    "lesson_name": "Жертва живая",
+    "block_id": 5,
+    "block_type": "mainText",
+    "text": "Что это означает на практике? Ранние христиане, включая верующих в Филиппах (Флп. 1:27–29), активно ...",
+    "suggested_links": [],
+    "status": "rejected",
+    "timestamp": "2025-11-28T14:08:42.905340"
+  },
+  {
+    "lesson_id": 32,
+    "lesson_name": "Жертва живая",
+    "block_id": 5,
+    "block_type": "mainText",
+    "text": "Что это означает на практике? Ранние христиане, включая верующих в Филиппах (Флп. 1:27–29), активно ...",
+    "suggested_links": [],
+    "status": "rejected",
+    "timestamp": "2025-11-28T14:08:42.906165"
+  },
+  {
+    "lesson_id": 34,
+    "lesson_name": "«Почтиайте таких, как он» (ИПБ)",
+    "block_id": 4,
+    "block_type": "mainText",
+    "text": "Возможно, из-за проблем в Филиппах (см. Урок 4) Павел «почел нужным» отправить Епафродита обратно ра...",
+    "suggested_links": [],
+    "status": "rejected",
+    "timestamp": "2025-11-28T14:08:42.909600"
+  },
+  {
+    "lesson_id": 37,
+    "lesson_name": "Радуясь о Господе",
+    "block_id": 4,
+    "block_type": "mainText",
+    "text": "Нечестивых или нерелигиозных людей в Израиле иногда называли «псами» (Флп. 3:2; сравните Пс. 21:16; ...",
+    "suggested_links": [],
+    "status": "rejected",
+    "timestamp": "2025-11-28T14:08:42.911393"
+  },
+  {
+    "lesson_id": 38,
+    "lesson_name": "Прошлая жизнь Павла",
+    "block_id": 1,
+    "block_type": "mainText",
+    "text": "Новообращенные христиане часто размышляют о своей жизни до и после принятия Иисуса, как это делает П...",
+    "suggested_links": [],
+    "status": "rejected",
+    "timestamp": "2025-11-28T14:08:42.913296"
+  },
+  {
+    "lesson_id": 39,
+    "lesson_name": "Прибыль и убыток",
+    "block_id": 4,
+    "block_type": "mainText",
+    "text": "В мире иудаизма Павел был восходящей звездой, пока, ослепнув при виде прославленного Иисуса на дорог...",
+    "suggested_links": [],
+    "status": "rejected",
+    "timestamp": "2025-11-28T14:08:42.915015"
+  },
+  {
+    "lesson_id": 39,
+    "lesson_name": "Прибыль и убыток",
+    "block_id": 5,
+    "block_type": "question",
+    "text": "В Ин. 9 рассказывается о человеке, который был слеп, а потом увидел Иисуса. Иисус сказал, что пришел...",
+    "suggested_links": [],
+    "status": "rejected",
+    "timestamp": "2025-11-28T14:08:42.915869"
+  },
+  {
+    "lesson_id": 46,
+    "lesson_name": "«Мир Божий»",
+    "block_id": 3,
+    "block_type": "mainText",
+    "text": "Сколько раз вы переживали стресс из-за пустяков, которые исчезали так же быстро, как и появились? Ии...",
+    "suggested_links": [],
+    "status": "rejected",
+    "timestamp": "2025-11-28T14:08:42.919645"
+  },
+  {
+    "lesson_id": 47,
+    "lesson_name": "О том помышляйте",
+    "block_id": 5,
+    "block_type": "question",
+    "text": "1.Истинно. Не случайно список начинается с важнейшей библейской добродетели — истины, которую часто ...",
+    "suggested_links": [],
+    "status": "rejected",
+    "timestamp": "2025-11-28T14:08:42.921405"
+  },
+  {
+    "lesson_id": 48,
+    "lesson_name": "Ключи к довольству",
+    "block_id": 7,
+    "block_type": "question",
+    "text": "• «Все заботы ваши возложите на Него, ибо Он печется о вас» (1 Петр. 5:7).",
+    "suggested_links": [],
+    "status": "rejected",
+    "timestamp": "2025-11-28T14:08:42.924380"
+  },
+  {
+    "lesson_id": 54,
+    "lesson_name": "Начаток, Первенец из мертвых",
+    "block_id": 4,
+    "block_type": "mainText",
+    "text": "Но Павел идет дальше. Он называет Христа не просто «начатком», но и «первенцем из мертвых». Почему? ...",
+    "suggested_links": [],
+    "status": "rejected",
+    "timestamp": "2025-11-28T14:08:42.932051"
+  },
+  {
+    "lesson_id": 61,
+    "lesson_name": "Тайна, сокрытая от веков, раскрыта",
+    "block_id": 2,
+    "block_type": "mainText",
+    "text": "В другом месте Павел говорит о «тайне Божией», которая является вечным замыслом Бога, предназначенны...",
+    "suggested_links": [],
+    "status": "rejected",
+    "timestamp": "2025-11-28T14:08:42.936289"
+  },
+  {
+    "lesson_id": 61,
+    "lesson_name": "Тайна, сокрытая от веков, раскрыта",
+    "block_id": 2,
+    "block_type": "mainText",
+    "text": "В другом месте Павел говорит о «тайне Божией», которая является вечным замыслом Бога, предназначенны...",
+    "suggested_links": [],
+    "status": "rejected",
+    "timestamp": "2025-11-28T14:08:42.937054"
+  },
+  {
+    "lesson_id": 64,
+    "lesson_name": "Совершенство во Христе",
+    "block_id": 2,
+    "block_type": "mainVerses",
+    "text": "Основной отрывок: Кол. 2.",
+    "suggested_links": [],
+    "status": "rejected",
+    "timestamp": "2025-11-28T14:08:42.949185"
+  },
+  {
+    "lesson_id": 64,
+    "lesson_name": "Совершенство во Христе",
+    "block_id": 3,
+    "block_type": "AdditionalVerses",
+    "text": "Дополнительные тексты: Ис. 61:3; Мф. 3:10; Лк. 8:11–15; Ин. 1:1; 1 Петр. 3:22; 1 Кор. 3:6; Евр. 1:3;...",
+    "suggested_links": [],
+    "status": "rejected",
+    "timestamp": "2025-11-28T14:08:42.980239"
+  },
+  {
+    "lesson_id": 65,
+    "lesson_name": "Премудрость и ведение Бога",
+    "block_id": 6,
+    "block_type": "mainText",
+    "text": "Однако Павел тщательно следил за поддержанием порядка в церкви, предписывая благопристойность в бого...",
+    "suggested_links": [],
+    "status": "rejected",
+    "timestamp": "2025-11-28T14:08:43.011324"
+  },
+  {
+    "lesson_id": 65,
+    "lesson_name": "Премудрость и ведение Бога",
+    "block_id": 6,
+    "block_type": "mainText",
+    "text": "Однако Павел тщательно следил за поддержанием порядка в церкви, предписывая благопристойность в бого...",
+    "suggested_links": [],
+    "status": "rejected",
+    "timestamp": "2025-11-28T14:08:43.012233"
+  },
+  {
+    "lesson_id": 65,
+    "lesson_name": "Премудрость и ведение Бога",
+    "block_id": 6,
+    "block_type": "mainText",
+    "text": "Однако Павел тщательно следил за поддержанием порядка в церкви, предписывая благопристойность в бого...",
+    "suggested_links": [],
+    "status": "rejected",
+    "timestamp": "2025-11-28T14:08:43.013422"
+  },
+  {
+    "lesson_id": 69,
+    "lesson_name": "Заповеди человеческие",
+    "block_id": 4,
+    "block_type": "mainText",
+    "text": "В конце концов, мы ожидаем «нового неба и новой земли, на которых обитает правда» (2 Петр. 3:13), а ...",
+    "suggested_links": [],
+    "status": "rejected",
+    "timestamp": "2025-11-28T14:08:43.016001"
+  },
+  {
+    "lesson_id": 70,
+    "lesson_name": "Для дальнейшего исследования",
+    "block_id": 4,
+    "block_type": "question",
+    "text": "1.Что означает, что во Христе «обитает вся полнота Божества телесно» и Он «есть глава всякого началь...",
+    "suggested_links": [],
+    "status": "rejected",
+    "timestamp": "2025-11-28T14:08:43.017635"
+  },
+  {
+    "lesson_id": 71,
+    "lesson_name": "Жить со Христом",
+    "block_id": 6,
+    "block_type": "mainText",
+    "text": "Часто можно услышать совет: «Не витай в облаках, будь практичнее, иначе не принесешь никакой пользы ...",
+    "suggested_links": [],
+    "status": "rejected",
+    "timestamp": "2025-11-28T14:08:43.018708"
+  },
+  {
+    "lesson_id": 72,
+    "lesson_name": "Размышляя о небесном",
+    "block_id": 4,
+    "block_type": "mainText",
+    "text": "Обратите внимание, что с самого начала Кол. 3 повторяется акцент на горнем, то есть на том, что нахо...",
+    "suggested_links": [],
+    "status": "rejected",
+    "timestamp": "2025-11-28T14:08:43.019809"
+  },
+  {
+    "lesson_id": 75,
+    "lesson_name": "Характер для новой жизни",
+    "block_id": 3,
+    "block_type": "mainText",
+    "text": "Подобно Израилю, призванному Богом быть Его особым народом и отражать Его характер, верующие в Иисус...",
+    "suggested_links": [],
+    "status": "rejected",
+    "timestamp": "2025-11-28T14:08:43.035708"
+  },
+  {
+    "lesson_id": 76,
+    "lesson_name": "Жить новой жизнью",
+    "block_id": 1,
+    "block_type": "mainText",
+    "text": "Забота Павла о мире и гармонии в церкви особенно ярко проявляется в последних стихах Кол. 3. Мы уже ...",
+    "suggested_links": [],
+    "status": "rejected",
+    "timestamp": "2025-11-28T14:08:43.039084"
+  },
+  {
+    "lesson_id": 81,
+    "lesson_name": "Отношения на работе",
+    "block_id": 4,
+    "block_type": "mainText",
+    "text": "Фактически в церкви, в отличие от общей ситуации в Римской империи, первым господином раба был Госпо...",
+    "suggested_links": [],
+    "status": "rejected",
+    "timestamp": "2025-11-28T14:08:43.048851"
+  },
+  {
+    "lesson_id": 83,
+    "lesson_name": "Ходить в мудрости",
+    "block_id": 4,
+    "block_type": "mainText",
+    "text": "К сожалению, порой мы, христиане, не ведем себя как христиане. Павел, ссылаясь на Ис. 52:5, указывае...",
+    "suggested_links": [],
+    "status": "rejected",
+    "timestamp": "2025-11-28T14:08:43.051108"
+  },
+  {
+    "lesson_id": 85,
+    "lesson_name": "Утвержденные в Боге",
+    "block_id": 3,
+    "block_type": "AdditionalVerses",
+    "text": "Дополнительные тексты: Мк. 13:32–37; 2 Петр. 3:10–14; Еф. 6:21; 1 Фес. 5:18; 2 Тим. 4:10, 11; Тит. 2...",
+    "suggested_links": [],
+    "status": "rejected",
+    "timestamp": "2025-11-28T14:08:43.052313"
+  },
+  {
+    "lesson_id": 89,
+    "lesson_name": "В мире, но не от мира",
+    "block_id": 6,
+    "block_type": "question",
+    "text": "3. 2 Петр. 3:10–14",
+    "suggested_links": [],
+    "status": "rejected",
+    "timestamp": "2025-11-28T14:08:43.057481"
   }
 ]
