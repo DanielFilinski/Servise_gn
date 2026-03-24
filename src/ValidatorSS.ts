@@ -45,6 +45,7 @@ interface Correction {
     info: IssueInfo;
     links: BibleLink[];
     autoApply: boolean;
+    ignore?: boolean; // если true — пропускать в будущих validate (ложное срабатывание)
 }
 
 interface CorrectionsData {
@@ -144,14 +145,17 @@ function looksLikeBibleReference(text: string): boolean {
 
 function extractPotentialReferences(text: string): string[] {
     const references: string[] = [];
-    const bookPattern = `(\\d\\s?)?(${BIBLE_BOOKS.join('|')})`;
-    const regex = new RegExp(`${bookPattern}\\.\\s*[\\d\\s:,;–-]+`, 'gi');
-    
+    // Сортировка по убыванию длины: "1 Ин" встаёт перед "Ин" — исключает ложные под-матчи
+    const sortedBooks = [...BIBLE_BOOKS].sort((a, b) => b.length - a.length);
+    // Negative lookbehind: не матчить если книга — часть слова (напр. "Капернаум" → "Наум")
+    const regex = new RegExp(
+        `(?<![а-яА-Яa-zA-Z])(${sortedBooks.join('|')})\\.\\s*[\\d\\s:,;–-]+`,
+        'gi'
+    );
     const matches = text.match(regex);
     if (matches) {
         references.push(...matches);
     }
-    
     return references;
 }
 
@@ -238,15 +242,28 @@ function validateLessons(lessons: LessonDay[], applyCorrections: boolean = true)
                 contentType: content.type
             };
             
+            // Проверка на игнорируемые позиции (ложные срабатывания, помеченные вручную)
+            const isIgnored = corrections.corrections.some(c =>
+                c.ignore === true && c.from === content.text
+            );
+            if (isIgnored) continue;
+
             // Проверка на автоисправления (только если включено)
             if (applyCorrections) {
-                const correction = corrections.corrections.find(c => 
+                // Сначала точное совпадение по ID + тексту
+                let correction = corrections.corrections.find(c =>
+                    c.autoApply &&
                     c.from === content.text &&
                     c.info.lessonId === lesson.id &&
-                    c.info.contentId === content.id &&
-                    c.autoApply
+                    c.info.contentId === content.id
                 );
-                
+                // Fallback: только по тексту (IDs могли смениться после повторного парсинга)
+                if (!correction) {
+                    correction = corrections.corrections.find(c =>
+                        c.autoApply && c.from === content.text
+                    );
+                }
+
                 if (correction) {
                     content.links = correction.links;
                     stats.autoFixed++;
@@ -415,11 +432,9 @@ export function validateOnly(): void {
     issues.forEach((issue, index) => {
         displayIssue(issue, index, issues.length);
         
-        // Проверяем, есть ли уже такое исправление
+        // Проверяем по тексту (не по ID — они могут меняться после повторного парсинга)
         const alreadyExists = existingCorrections.corrections.some(
-            c => c.from === issue.originalText && 
-                 c.info.lessonId === issue.info.lessonId && 
-                 c.info.contentId === issue.info.contentId
+            c => c.from === issue.originalText
         );
         
         if (!alreadyExists) {
@@ -484,18 +499,33 @@ export function applyCorrections(): void {
     
     // Применяем исправления
     let appliedCount = 0;
-    
+
     for (const correction of autoApplyCorrections) {
+        let applied = false;
+
+        // Первый проход: точное совпадение по ID + тексту
         for (const lesson of lessons) {
             if (lesson.id !== correction.info.lessonId) continue;
-            
             for (const content of lesson.content) {
                 if (content.id !== correction.info.contentId) continue;
-                
                 if (content.text === correction.from) {
                     content.links = correction.links;
                     appliedCount++;
+                    applied = true;
                     console.log(`✅ Применено: Урок ${lesson.lessonNumber}, Content ID ${content.id}`);
+                }
+            }
+        }
+
+        // Fallback: совпадение только по тексту (IDs могли смениться после повторного парсинга)
+        if (!applied) {
+            for (const lesson of lessons) {
+                for (const content of lesson.content) {
+                    if (content.text === correction.from) {
+                        content.links = correction.links;
+                        appliedCount++;
+                        console.log(`✅ Применено (по тексту): Урок ${lesson.lessonNumber}, Content ID ${content.id}`);
+                    }
                 }
             }
         }
@@ -525,33 +555,28 @@ export function applyCorrections(): void {
  * Создает шаблон исправления из проблемы
  */
 function createCorrectionTemplate(issue: ValidationIssue): Correction {
-    // Извлекаем потенциальные ссылки из текста
-    const potentialRefs = extractPotentialReferences(issue.originalText);
-    
-    // Создаем пример ссылки (первая найденная или пример)
-    const exampleLink: BibleLink = potentialRefs.length > 0
-        ? {
-            text: potentialRefs[0],
-            data: [{
-                bookNumber: 60, // Пример: Навин
-                chapter: [1],
-                verses: [7]
-            }]
-        }
-        : {
-            text: "Пример: Нав. 1:7",
-            data: [{
-                bookNumber: 60,
-                chapter: [1],
-                verses: [7]
-            }]
-        };
-    
+    let links: BibleLink[];
+
+    if (issue.currentLinks && issue.currentLinks.length > 0) {
+        // Использовать уже распознанные ссылки — пользователю нужно только добавить недостающие
+        links = issue.currentLinks;
+    } else {
+        // Нет ссылок: создать заглушки на основе потенциальных совпадений
+        const potentialRefs = extractPotentialReferences(issue.originalText);
+        links = potentialRefs.length > 0
+            ? potentialRefs.map(ref => ({
+                text: ref.trim(),
+                data: [{ bookNumber: 0, chapter: [0], verses: null }]
+              }))
+            : [{ text: "???", data: [{ bookNumber: 0, chapter: [0], verses: null }] }];
+    }
+
     return {
         from: issue.originalText,
         info: issue.info,
-        links: [exampleLink],
-        autoApply: false // По умолчанию false - требует ручной проверки
+        links,
+        autoApply: false,  // требует ручной проверки
+        ignore: false       // установить true чтобы подавить ложное срабатывание
     };
 }
 

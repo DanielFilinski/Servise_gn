@@ -1,6 +1,8 @@
 
+import type { TOldParseResult } from './types/parseResult.type.js'
+import type { TOldParseResult as TOldParseResultYSS } from './types/parseResultYSS.type.js'
 
-export function testingParseBibleVerseSS(OBJECT) {
+export function testingParseBibleVerseSS(OBJECT: TOldParseResult): void {
     // consts 
     let i = 0
     //? {
@@ -109,7 +111,7 @@ export function testingParseBibleVerseSS(OBJECT) {
                             console.log('ошибка № ', i)
                             i++
                             console.log('номер урока ', lessonNumber, 'дата урока ', date, 'индекс в массиве', indexT)
-                            console.log('сообщение ошибки ССЫЛКИ ', error.message)
+                            console.log('сообщение ошибки ССЫЛКИ: ' + error.message + ' | текст: ' + itemT.text)
                             console.log('===== до исправления', itemT.isLink, 'itemT.text', itemT.text)
 
                             delDontParseItem(itemT)
@@ -125,7 +127,7 @@ export function testingParseBibleVerseSS(OBJECT) {
                             console.log('ошибка № ', i)
                             i++
                             console.log('номер урока ', lessonNumber, 'дата урока ', date, 'индекс в массиве', indexT)
-                            console.log('сообщение ошибки НЕ ссылки (найдены знаки) ')
+                            console.log('сообщение ошибки НЕ ссылки (найдены знаки): "' + itemT.text + '"')
                             console.log('===== до исправления', itemT.isLink, 'itemT.text', itemT.text)
 
                             delDontParseItem(itemT)
@@ -186,7 +188,7 @@ export function testingParseBibleVerseSS(OBJECT) {
     }
 
 }
-export async function testingEmptyStringsSS(OBJECT) {
+export function testingEmptyStringsSS(OBJECT: TOldParseResult): void {
     // consts 
     let i = 0
     //? {
@@ -280,7 +282,7 @@ export async function testingEmptyStringsSS(OBJECT) {
                     //?  }
 
                     if (!itemT.isLink) {
-                        if (item.text === '') {
+                        if (itemT.text === '') {
                             console.log('ошибка № ', i)
                             i++
                             console.log('номер урока ', lessonNumber, 'дата урока ', date, 'индекс в массиве', indexT)
@@ -289,71 +291,20 @@ export async function testingEmptyStringsSS(OBJECT) {
                             delDontParseItem(itemT)
 
                             console.log('===== после исправления', itemT.isLink, 'itemT.text', itemT.text)
-
-
                         }
-
-                    } else {
-
-                        const isString = checkString(itemT.text)
-
-                        if (!isString) {
-                            console.log('ошибка № ', i)
-                            i++
-                            console.log('номер урока ', lessonNumber, 'дата урока ', date, 'индекс в массиве', indexT)
-                            console.log('сообщение ошибки НЕ ссылки ')
-                            console.log('===== до исправления', itemT.isLink, 'itemT.text', itemT.text)
-
-                            delDontParseItem(itemT)
-
-                            console.log('===== после исправления', itemT.isLink, 'itemT.text', itemT.text)
-
-                        }
-
-                        // создаём проверку НЕ содержит ли случайно строка(т.е когда isLink = false) 
-
-                        // if (itemT.text.includes("\\")) {
-                        //     console.log('ошибка № ', i)
-                        //     i++
-                        //     console.log('номер урока ', lessonNumber, 'дата урока ', date, 'индекс в массиве', indexT)
-                        //     console.log('сообщение ошибки TEКСТА ')
-                        //     console.log('===== до исправления', itemT.isLink, ' ', itemT.text)
-
-                        //     delDontParseItem(itemT, indexT, item.text)
-
-                        //     console.log('===== после исправления', itemT.isLink, ' ', itemT.text)
-                        // }
-
                     }
+                    // isLink-элементы проверяются в testingParseBibleVerseSS
                 })
 
             })
         })
     })
 
-    if (i = 0) {
+    if (i === 0) {
         console.log("Ошибок найдено не было")
-    }
-
-}
-
-async function isDel() {
-    console.log("Начало выполнения функции...");
-
-    // Запрос подтверждения
-    const answer = await confirm("Продолжить выполнение? (y/n): ");
-
-    if (answer.toLowerCase() === 'y') {
-        console.log("Пользователь подтвердил продолжение...");
-        // Тут логика, которая выполняется после подтверждения
-        return true
     } else {
-        console.log("Пользователь отменил действие.");
-        return false
+        console.log(`Найдено ошибок: ${i}`)
     }
-
-    console.log("Завершение работы функции.");
-
 
 }
 
@@ -384,7 +335,7 @@ function delDontParseItem(itemT) {
 
 
 
-export function testingParseBibleVerseYSS(OBJECT) {
+export function testingParseBibleVerseYSS(OBJECT: TOldParseResultYSS): void {
     // consts 
     let i = 0
     //? {
@@ -480,30 +431,21 @@ export function testingParseBibleVerseYSS(OBJECT) {
                         const chapter = dataArr[1].chapter
                         const verses = dataArr[1].verses
 
+                        if (typeof dataArr[0] !== "string") {
+                            throw Error("текст ссылки не являеться строкой")
+                        }
+
                     } catch (error) {
                         console.log('ошибка № ', i)
                         i++
                         console.log('номер урока ', lessonNumber, 'индекс в массиве', indexT)
-                        console.log('сообщение ошибки ССЫЛКИ ', error.message)
+                        console.log('сообщение ошибки ССЫЛКИ: ' + error.message + ' | текст: ' + itemT.text)
                         console.log('===== до исправления', itemT.isLink, ' ', itemT.text)
 
-                        delDontParseItem(itemT, indexT, item.text)
+                        delDontParseItem(itemT)
 
                         console.log('===== после исправления', itemT.isLink, ' ', itemT.text)
                     }
-                } else {
-                    // if (itemT.text.includes("\\")) {
-                    //     console.log('ошибка № ', i)
-                    //     i++
-                    //     console.log('номер урока ', lessonNumber, 'дата урока ', date, 'индекс в массиве', indexT)
-                    //     console.log('сообщение ошибки TEКСТА ')
-                    //     console.log('===== до исправления', itemT.isLink, ' ', itemT.text)
-
-                    //     delDontParseItem(itemT, indexT, item.text)
-
-                    //     console.log('===== после исправления', itemT.isLink, ' ', itemT.text)
-                    // }
-
                 }
             })
 
@@ -517,7 +459,7 @@ export function testingParseBibleVerseYSS(OBJECT) {
 
 }
 
-export function testingEmptyStringsYSS(OBJECT) {
+export function testingEmptyStringsYSS(OBJECT: TOldParseResultYSS): void {
     // consts 
     let i = 0
     //? {
@@ -607,43 +549,29 @@ export function testingEmptyStringsYSS(OBJECT) {
 
                 // ПРОВЕРЯЕМ только тексты не относящиеся к ссылкам
                 if (!itemT.isLink) {
-                    try {
-                        // ["Откр. 21:1–4",{bookName: "Откр" ,chapter:[21],verses:"1–4"}]
-                        const dataArr = JSON.parse(itemT.text)
-                        const bookName = dataArr[1].bookName
-                        const chapter = dataArr[1].chapter
-                        const verses = dataArr[1].verses
-
-                    } catch (error) {
+                    if (itemT.text === '') {
                         console.log('ошибка № ', i)
                         i++
                         console.log('номер урока ', lessonNumber, 'индекс в массиве', indexT)
-                        console.log('сообщение ошибки ССЫЛКИ ', error.message)
                         console.log('===== до исправления', itemT.isLink, ' ', itemT.text)
 
-                        delDontParseItem(itemT, indexT, item.text)
+                        delDontParseItem(itemT)
 
                         console.log('===== после исправления', itemT.isLink, ' ', itemT.text)
                     }
-                } else {
-                    // if (itemT.text.includes("\\")) {
-                    //     console.log('ошибка № ', i)
-                    //     i++
-                    //     console.log('номер урока ', lessonNumber, 'дата урока ', date, 'индекс в массиве', indexT)
-                    //     console.log('сообщение ошибки TEКСТА ')
-                    //     console.log('===== до исправления', itemT.isLink, ' ', itemT.text)
-
-                    //     delDontParseItem(itemT, indexT, item.text)
-
-                    //     console.log('===== после исправления', itemT.isLink, ' ', itemT.text)
-                    // }
-
                 }
+                // isLink-элементы проверяются в testingParseBibleVerseYSS
             })
 
         })
 
     })
+
+    if (i === 0) {
+        console.log('Ошибок найдено не было')
+    } else {
+        console.log(`Найдено ошибок: ${i}`)
+    }
 }
 
 export function testDateLines(date1Str: string, date2Str: string) {

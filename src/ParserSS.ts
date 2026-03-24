@@ -5,6 +5,21 @@ import { testingParseBibleVerseSS, testingEmptyStringsSS } from './Tests.js';
 import { creatArrParsText, findNestedLinks, findsBibleLink } from './Service.js';
 import { convertResultSS } from './convertors/ConvertSS.js';
 
+// CLI: npm run ss -- --input 2026-01
+const _cliArgs: string[] = process.argv.slice(2);
+const _inputIdx = _cliArgs.indexOf('--input');
+const _inputPeriod: string | null =
+    _cliArgs.find((a: string) => a.startsWith('--input='))?.split('=')[1]
+    ?? (_inputIdx !== -1 ? _cliArgs[_inputIdx + 1] : null);
+
+const [_parsedYear, _parsedMonth]: [number, number | null] = _inputPeriod
+    ? (_inputPeriod.split('-').map(Number) as [number, number])
+    : [new Date().getFullYear(), null];
+
+console.log(_inputPeriod
+    ? `📂 Input period: ${_inputPeriod}  (year=${_parsedYear}, month=${_parsedMonth})`
+    : `📂 No --input argument, reading from ./fileForParse/SS/`);
+
 
 
 const parsePatternsSS = {
@@ -104,7 +119,7 @@ function delArtefacts(str) {
                 strWithOut = strWithOut.replace(itemReg, '')
                 break;
             default:
-                alert("delArtefacts Нет таких значений");
+                console.warn(`delArtefacts: неизвестный индекс регулярного выражения ${index}`);
         }
     })
 
@@ -129,41 +144,13 @@ writeResult()
 
 function FILES_FOR_PARSE() {
 
-    // const htmlFilePaths = [
-    //     './fileForParse/SS/2025-02/L01.html',
-    //     './fileForParse/SS/2025-02/L02.html',
-    //     './fileForParse/SS/2025-02/L03.html',
-    //     './fileForParse/SS/2025-02/L04.html',
-    //     './fileForParse/SS/2025-02/L05.html',
-    //     './fileForParse/SS/2025-02/L06.html',
-    //     './fileForParse/SS/2025-02/L07.html',
-    //     './fileForParse/SS/2025-02/L08.html',
-    //     './fileForParse/SS/2025-02/L09.html',
-    //     './fileForParse/SS/2025-02/L10.html',
-    //     './fileForParse/SS/2025-02/L11.html',
-    //     './fileForParse/SS/2025-02/L12.html',
-    //     './fileForParse/SS/2025-02/L13.html',
+    const basePath = _inputPeriod
+        ? `./fileForParse/SS/${_inputPeriod}/`
+        : `./fileForParse/SS/`;
 
-    //     // Add more file paths as needed
-    // ];
-
-    const htmlFilePaths = [
-        './fileForParse/SS/L01.html',
-        './fileForParse/SS/L02.html',
-        './fileForParse/SS/L03.html',
-        './fileForParse/SS/L04.html',
-        './fileForParse/SS/L05.html',
-        './fileForParse/SS/L06.html',
-        './fileForParse/SS/L07.html',
-        './fileForParse/SS/L08.html',
-        './fileForParse/SS/L09.html',
-        './fileForParse/SS/L10.html',
-        './fileForParse/SS/L11.html',
-        './fileForParse/SS/L12.html',
-        './fileForParse/SS/L13.html',
-
-        // Add more file paths as needed
-    ];
+    const htmlFilePaths = ['L01','L02','L03','L04','L05','L06','L07','L08','L09','L10','L11','L12','L13']
+        .map(f => `${basePath}${f}.html`)
+        .filter(f => fs.existsSync(f));
 
 
     const mergeHtmlFiles = (filePaths, outputPath) => {
@@ -275,7 +262,7 @@ function PARSE(htmlFile) {
 
                 break;
             default:
-                alert("Неизвестный формат названия урока");
+                throw new Error("ParserSS: Неизвестный формат названия урока");
         }
 
 
@@ -288,7 +275,6 @@ function PARSE(htmlFile) {
 
         console.log('strRangeDateArr', strRangeDateArr)
 
-        debugger
 
         // находит абсолютно все "p" и вложенные тоже
         const arrWeekAll = weekContent.querySelectorAll(parsePatternsSS.weekAll)
@@ -561,8 +547,13 @@ function convertDate(string) {
         console.log('first')
     }
 
+    // Определяем год: при переходе дек→янв (period=YYYY-01, месяц=декабрь) берём год-1
+    const monthNum = parseInt(monthNumber, 10);
+    let year = _parsedYear;
+    if (_parsedMonth === 1 && monthNum === 12) year = _parsedYear - 1;
+
     // Создадим и вернем отформатированную строку даты "YYYY-MM-DD"
-    return `2025-${monthNumber}-${day.padStart(2, '0')}`;
+    return `${year}-${monthNumber}-${day.padStart(2, '0')}`;
 }
 
 
@@ -591,8 +582,9 @@ function getDate(dayMonth, i) {
     const monthIndex = monthNames.indexOf(dayMonth.split(" ")[1]);
     let str = `${monthIndex + 1}`
     const m = str.padStart(2, '0')
-    const currentYear = 2025
-    console.log('currentYear}-${m}-${+day + i}', `${currentYear}-${m}-${+day + i}`)
+    // Определяем год: при переходе дек→янв (period=YYYY-01, месяц=декабрь) берём год-1
+    let currentYear = _parsedYear;
+    if (_parsedMonth === 1 && monthIndex === 11) currentYear = _parsedYear - 1;
     const date = new Date(`${currentYear}-${m}-${+day}`);
     date.setDate(date.getDate() + i);
 
@@ -621,8 +613,13 @@ function writeResult() {
     const RESULT = JSON.stringify(convertResultSS(partition), null, 2)
     findNestedLinks(JSON.parse(RESULT))
     const jsonString = JSON.stringify(partition, null, 2);
-    fs.writeFileSync('./ResultParse/SS/SS.json', jsonString, 'utf-8');
-    fs.writeFileSync('./ResultParse/SS/SS+.json', RESULT, 'utf-8');
+
+    const suffix = _inputPeriod ? _inputPeriod.replace('-', '_') : 'current';
+    const outRaw  = `./ResultParse/SS/SS(${suffix}).json`;
+    const outPlus = `./ResultParse/SS/SS+(${suffix}).json`;
+    fs.writeFileSync(outRaw,  jsonString, 'utf-8');
+    fs.writeFileSync(outPlus, RESULT,     'utf-8');
+    console.log(`✓ Записано: ${outPlus}`);
     console.log("================================")
     console.log("finish 2.0")
     console.log("================================")

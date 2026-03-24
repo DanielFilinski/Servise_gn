@@ -30,8 +30,8 @@ import { convertResultYSS } from './convertors/ConvertYSS.js';
 // }
 
 const parsePatternsSS = {
-    weekNumber: "Headers_WEEK_NUM",
-    weekName: "Headers_WEEK_Название-урока",
+    weekNumber: "Неделя",
+    weekName: "Название-урока",
     endBlock: "Текстовый-фрейм",
 
 
@@ -41,17 +41,18 @@ const parsePatternsSS = {
     delete: ['&#160;', '\n', '\t', '&#9;', '#', '&', '•'], // массив элементов которые необходимо удалить из текста , '\t', '\n'
 
     arrAnalisisClassList: [
-        { pattern: "Headers_Subheading-1", style: "subTitle" },
-        { pattern: "Lists_Bullet-List", style: "lists" },
+        { pattern: "Подзаголовок", style: "subTitle" },
+        { pattern: "Пункт", style: "lists" },
+        { pattern: "Подпункт", style: "lists" },
         { pattern: "основной-абзац", style: "mainText" },
-        { pattern: "Headers_Tasks-heading", style: "section" },
         { pattern: "РАЗДЕЛ_лев", style: "section" },
-        { pattern: "Headers_WEEK_Библейский-текст", style: "verseBible" },
+        { pattern: "РАЗДЕЛ_прав", style: "section" },
+        { pattern: "Библейский-текст", style: "verseBible" },
     ],
 
 }
 
-const dateFirstWeek = '2025-12-27' //! дата первого урока
+const dateFirstWeek = '2026-03-28' //! дата первого урока
 const datesArr = []
 
 
@@ -109,7 +110,7 @@ writeResult()
 function FILES_FOR_PARSE() {
 
     const htmlFilePaths = [
-        './fileForParse/YSS/26-01.html', //! имя файла
+        './fileForParse/YSS/26-02.html', //! имя файла
         // './fileForParse/YSS/25-02.html', //! имя файла
         
 
