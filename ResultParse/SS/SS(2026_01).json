@@ -695,7 +695,7 @@
         }
       ]
     },
-    "2025-01-01": {
+    "2026-01-01": {
       "lessonNumber": "1",
       "lessonName": "Церкви в Филиппах и Колоссах",
       "isFirstLesson": false,
@@ -860,7 +860,7 @@
         }
       ]
     },
-    "2025-01-02": {
+    "2026-01-02": {
       "lessonNumber": "1",
       "lessonName": "Для дальнейшего исследования",
       "isFirstLesson": false,
@@ -931,7 +931,7 @@
     }
   },
   "2": {
-    "2025-01-03": {
+    "2026-01-03": {
       "lessonNumber": "2",
       "lessonName": "Основания для благодарности и молитвы",
       "isFirstLesson": true,
@@ -1091,7 +1091,7 @@
         }
       ]
     },
-    "2025-01-04": {
+    "2026-01-04": {
       "lessonNumber": "2",
       "lessonName": "Евангельское общение",
       "isFirstLesson": false,
@@ -1232,7 +1232,7 @@
         }
       ]
     },
-    "2025-01-05": {
+    "2026-01-05": {
       "lessonNumber": "2",
       "lessonName": "Молитвенные просьбы Павла",
       "isFirstLesson": false,
@@ -1375,7 +1375,7 @@
         }
       ]
     },
-    "2025-01-06": {
+    "2026-01-06": {
       "lessonNumber": "2",
       "lessonName": "Применение духовной проницательности",
       "isFirstLesson": false,
@@ -1468,7 +1468,7 @@
         }
       ]
     },
-    "2025-01-07": {
+    "2026-01-07": {
       "lessonNumber": "2",
       "lessonName": "Плод Евангелия",
       "isFirstLesson": false,
@@ -1709,7 +1709,7 @@
         }
       ]
     },
-    "2025-01-08": {
+    "2026-01-08": {
       "lessonNumber": "2",
       "lessonName": "Сила молитвы",
       "isFirstLesson": false,
@@ -1960,7 +1960,7 @@
         }
       ]
     },
-    "2025-01-09": {
+    "2026-01-09": {
       "lessonNumber": "2",
       "lessonName": "Для дальнейшего исследования",
       "isFirstLesson": false,
@@ -2056,7 +2056,7 @@
     }
   },
   "3": {
-    "2025-01-10": {
+    "2026-01-10": {
       "lessonNumber": "3",
       "lessonName": "Жизнь и смерть",
       "isFirstLesson": true,
@@ -2239,7 +2239,7 @@
         }
       ]
     },
-    "2025-01-11": {
+    "2026-01-11": {
       "lessonNumber": "3",
       "lessonName": "«Возвеличится Христос»",
       "isFirstLesson": false,
@@ -2363,7 +2363,7 @@
         }
       ]
     },
-    "2025-01-12": {
+    "2026-01-12": {
       "lessonNumber": "3",
       "lessonName": "Смерть — приобретение",
       "isFirstLesson": false,
@@ -2457,7 +2457,7 @@
         }
       ]
     },
-    "2025-01-13": {
+    "2026-01-13": {
       "lessonNumber": "3",
       "lessonName": "«Умереть и быть со Христом»",
       "isFirstLesson": false,
@@ -2591,7 +2591,7 @@
         }
       ]
     },
-    "2025-01-14": {
+    "2026-01-14": {
       "lessonNumber": "3",
       "lessonName": "Стойте твердо в единстве",
       "isFirstLesson": false,
@@ -2736,7 +2736,7 @@
         }
       ]
     },
-    "2025-01-15": {
+    "2026-01-15": {
       "lessonNumber": "3",
       "lessonName": "Единые и бесстрашные",
       "isFirstLesson": false,
@@ -2910,7 +2910,7 @@
         }
       ]
     },
-    "2025-01-16": {
+    "2026-01-16": {
       "lessonNumber": "3",
       "lessonName": "Для дальнейшего исследования",
       "isFirstLesson": false,
@@ -2973,7 +2973,7 @@
     }
   },
   "4": {
-    "2025-01-17": {
+    "2026-01-17": {
       "lessonNumber": "4",
       "lessonName": "Единство, достигаемое смирением",
       "isFirstLesson": true,
@@ -3116,7 +3116,7 @@
         }
       ]
     },
-    "2025-01-18": {
+    "2026-01-18": {
       "lessonNumber": "4",
       "lessonName": "Разделение в Филиппах",
       "isFirstLesson": false,
@@ -3334,7 +3334,7 @@
         }
       ]
     },
-    "2025-01-19": {
+    "2026-01-19": {
       "lessonNumber": "4",
       "lessonName": "Источник единства",
       "isFirstLesson": false,
@@ -3443,7 +3443,7 @@
         }
       ]
     },
-    "2025-01-20": {
+    "2026-01-20": {
       "lessonNumber": "4",
       "lessonName": "Обновление ума",
       "isFirstLesson": false,
@@ -3577,7 +3577,7 @@
         }
       ]
     },
-    "2025-01-21": {
+    "2026-01-21": {
       "lessonNumber": "4",
       "lessonName": "Ум Христов",
       "isFirstLesson": false,
@@ -3719,7 +3719,7 @@
         }
       ]
     },
-    "2025-01-22": {
+    "2026-01-22": {
       "lessonNumber": "4",
       "lessonName": "Тайна благочестия",
       "isFirstLesson": false,
@@ -3935,7 +3935,7 @@
         }
       ]
     },
-    "2025-01-23": {
+    "2026-01-23": {
       "lessonNumber": "4",
       "lessonName": "Для дальнейшего исследования",
       "isFirstLesson": false,
@@ -4022,7 +4022,7 @@
     }
   },
   "5": {
-    "2025-01-24": {
+    "2026-01-24": {
       "lessonNumber": "5",
       "lessonName": "Светильник, сияющий в темном месте",
       "isFirstLesson": true,
@@ -4197,7 +4197,7 @@
         }
       ]
     },
-    "2025-01-25": {
+    "2026-01-25": {
       "lessonNumber": "5",
       "lessonName": "Совершая свое спасение",
       "isFirstLesson": false,
@@ -4324,7 +4324,7 @@
         }
       ]
     },
-    "2025-01-26": {
+    "2026-01-26": {
       "lessonNumber": "5",
       "lessonName": "Свет во тьме",
       "isFirstLesson": false,
@@ -4492,7 +4492,7 @@
         }
       ]
     },
-    "2025-01-27": {
+    "2026-01-27": {
       "lessonNumber": "5",
       "lessonName": "Жертва живая",
       "isFirstLesson": false,
@@ -4730,7 +4730,7 @@
         }
       ]
     },
-    "2025-01-28": {
+    "2026-01-28": {
       "lessonNumber": "5",
       "lessonName": "Проверенный характер",
       "isFirstLesson": false,
@@ -4894,7 +4894,7 @@
         }
       ]
     },
-    "2025-01-29": {
+    "2026-01-29": {
       "lessonNumber": "5",
       "lessonName": "«Почтиайте таких, как он» (ИПБ)",
       "isFirstLesson": false,
@@ -5018,7 +5018,7 @@
         }
       ]
     },
-    "2025-01-30": {
+    "2026-01-30": {
       "lessonNumber": "5",
       "lessonName": "Для дальнейшего исследования",
       "isFirstLesson": false,
@@ -5121,7 +5121,7 @@
     }
   },
   "6": {
-    "2025-01-31": {
+    "2026-01-31": {
       "lessonNumber": "6",
       "lessonName": "Наше упование только на Христа",
       "isFirstLesson": true,
@@ -5288,7 +5288,7 @@
         }
       ]
     },
-    "2025-02-01": {
+    "2026-02-01": {
       "lessonNumber": "6",
       "lessonName": "Радуясь о Господе",
       "isFirstLesson": false,
@@ -5494,7 +5494,7 @@
         }
       ]
     },
-    "2025-02-02": {
+    "2026-02-02": {
       "lessonNumber": "6",
       "lessonName": "Прошлая жизнь Павла",
       "isFirstLesson": false,
@@ -5619,7 +5619,7 @@
         }
       ]
     },
-    "2025-02-03": {
+    "2026-02-03": {
       "lessonNumber": "6",
       "lessonName": "Прибыль и убыток",
       "isFirstLesson": false,
@@ -5737,7 +5737,7 @@
         }
       ]
     },
-    "2025-02-04": {
+    "2026-02-04": {
       "lessonNumber": "6",
       "lessonName": "Найтись во Христе",
       "isFirstLesson": false,
@@ -5931,7 +5931,7 @@
         }
       ]
     },
-    "2025-02-05": {
+    "2026-02-05": {
       "lessonNumber": "6",
       "lessonName": "Стремясь к цели",
       "isFirstLesson": false,
@@ -6074,7 +6074,7 @@
         }
       ]
     },
-    "2025-02-06": {
+    "2026-02-06": {
       "lessonNumber": "6",
       "lessonName": "Для дальнейшего исследования",
       "isFirstLesson": false,
@@ -6162,7 +6162,7 @@
     }
   },
   "7": {
-    "2025-02-07": {
+    "2026-02-07": {
       "lessonNumber": "7",
       "lessonName": "«Наше жительство — на небесах»",
       "isFirstLesson": true,
@@ -6313,7 +6313,7 @@
         }
       ]
     },
-    "2025-02-08": {
+    "2026-02-08": {
       "lessonNumber": "7",
       "lessonName": "Примеры для подражания",
       "isFirstLesson": false,
@@ -6432,7 +6432,7 @@
         }
       ]
     },
-    "2025-02-09": {
+    "2026-02-09": {
       "lessonNumber": "7",
       "lessonName": "«Стойте так в Господе»",
       "isFirstLesson": false,
@@ -6506,11 +6506,11 @@
             },
             {
               "isLink": true,
-              "text": "[\"Иов. 19:25\",{\"bookName\":\"Иов\",\"chapter\":[\"19\"],\"verses\":\"25\"}]"
+              "text": "[\"Иов. 19:25, 26\",{\"bookName\":\"Иов\",\"chapter\":[\"19\"],\"verses\":\"25, 26\"}]"
             },
             {
               "isLink": false,
-              "text": ", 26 "
+              "text": " "
             }
           ]
         },
@@ -6519,7 +6519,15 @@
           "text": [
             {
               "isLink": false,
-              "text": "• Лк. 24:39 "
+              "text": "• "
+            },
+            {
+              "isLink": true,
+              "text": "[\"Лк. 24:39\",{\"bookName\":\"Лк\",\"chapter\":[\"24\"],\"verses\":\"39\"}]"
+            },
+            {
+              "isLink": false,
+              "text": " "
             }
           ]
         },
@@ -6603,7 +6611,7 @@
         }
       ]
     },
-    "2025-02-10": {
+    "2026-02-10": {
       "lessonNumber": "7",
       "lessonName": "«Мир Божий»",
       "isFirstLesson": false,
@@ -6789,7 +6797,7 @@
             },
             {
               "isLink": true,
-              "text": "[\"Ин.14:27\",{\"bookName\":\"\",\"chapter\":[\"Ин.14\"],\"verses\":\"27\"}]"
+              "text": "[\"Ин.14:27\",{\"bookName\":\"Ин\",\"chapter\":[\"14\"],\"verses\":\"27\"}]"
             },
             {
               "isLink": false,
@@ -6841,7 +6849,7 @@
         }
       ]
     },
-    "2025-02-11": {
+    "2026-02-11": {
       "lessonNumber": "7",
       "lessonName": "О том помышляйте",
       "isFirstLesson": false,
@@ -7124,7 +7132,7 @@
         }
       ]
     },
-    "2025-02-12": {
+    "2026-02-12": {
       "lessonNumber": "7",
       "lessonName": "Ключи к довольству",
       "isFirstLesson": false,
@@ -7464,7 +7472,7 @@
         }
       ]
     },
-    "2025-02-13": {
+    "2026-02-13": {
       "lessonNumber": "7",
       "lessonName": "Для дальнейшего исследования",
       "isFirstLesson": false,
@@ -7562,7 +7570,7 @@
     }
   },
   "8": {
-    "2025-02-14": {
+    "2026-02-14": {
       "lessonNumber": "8",
       "lessonName": "Превосходство Христа",
       "isFirstLesson": true,
@@ -7744,7 +7752,7 @@
         }
       ]
     },
-    "2025-02-15": {
+    "2026-02-15": {
       "lessonNumber": "8",
       "lessonName": "Образ Бога невидимого",
       "isFirstLesson": false,
@@ -8001,7 +8009,7 @@
         }
       ]
     },
-    "2025-02-16": {
+    "2026-02-16": {
       "lessonNumber": "8",
       "lessonName": "Первенец творения",
       "isFirstLesson": false,
@@ -8215,7 +8223,7 @@
         }
       ]
     },
-    "2025-02-17": {
+    "2026-02-17": {
       "lessonNumber": "8",
       "lessonName": "Глава Тела (церкви)",
       "isFirstLesson": false,
@@ -8396,7 +8404,7 @@
         }
       ]
     },
-    "2025-02-18": {
+    "2026-02-18": {
       "lessonNumber": "8",
       "lessonName": "Начаток, Первенец из мертвых",
       "isFirstLesson": false,
@@ -8544,7 +8552,7 @@
         }
       ]
     },
-    "2025-02-19": {
+    "2026-02-19": {
       "lessonNumber": "8",
       "lessonName": "Примирить все Собою",
       "isFirstLesson": false,
@@ -8661,7 +8669,7 @@
         }
       ]
     },
-    "2025-02-20": {
+    "2026-02-20": {
       "lessonNumber": "8",
       "lessonName": "Для дальнейшего исследования",
       "isFirstLesson": false,
@@ -8741,7 +8749,7 @@
     }
   },
   "9": {
-    "2025-02-21": {
+    "2026-02-21": {
       "lessonNumber": "9",
       "lessonName": "Примирение и надежда",
       "isFirstLesson": true,
@@ -8868,7 +8876,7 @@
         }
       ]
     },
-    "2025-02-22": {
+    "2026-02-22": {
       "lessonNumber": "9",
       "lessonName": "Отчужденные и враги",
       "isFirstLesson": false,
@@ -9046,7 +9054,7 @@
         }
       ]
     },
-    "2025-02-23": {
+    "2026-02-23": {
       "lessonNumber": "9",
       "lessonName": "Пребывая в вере",
       "isFirstLesson": false,
@@ -9219,7 +9227,7 @@
         }
       ]
     },
-    "2025-02-24": {
+    "2026-02-24": {
       "lessonNumber": "9",
       "lessonName": "Вечный Божий план",
       "isFirstLesson": false,
@@ -9368,7 +9376,7 @@
         }
       ]
     },
-    "2025-02-25": {
+    "2026-02-25": {
       "lessonNumber": "9",
       "lessonName": "Тайна, сокрытая от веков, раскрыта",
       "isFirstLesson": false,
@@ -9568,7 +9576,7 @@
         }
       ]
     },
-    "2025-02-26": {
+    "2026-02-26": {
       "lessonNumber": "9",
       "lessonName": "Сила Евангелия",
       "isFirstLesson": false,
@@ -9758,7 +9766,7 @@
         }
       ]
     },
-    "2025-02-27": {
+    "2026-02-27": {
       "lessonNumber": "9",
       "lessonName": "Для дальнейшего исследования",
       "isFirstLesson": false,
@@ -9855,7 +9863,7 @@
     }
   },
   "10": {
-    "2025-02-28": {
+    "2026-02-28": {
       "lessonNumber": "10",
       "lessonName": "Совершенство во Христе",
       "isFirstLesson": true,
@@ -10081,7 +10089,7 @@
         }
       ]
     },
-    "2025-03-01": {
+    "2026-03-01": {
       "lessonNumber": "10",
       "lessonName": "Премудрость и ведение Бога",
       "isFirstLesson": false,
@@ -10288,7 +10296,7 @@
         }
       ]
     },
-    "2025-03-02": {
+    "2026-03-02": {
       "lessonNumber": "10",
       "lessonName": "Укорененные и утвержденные во Христе",
       "isFirstLesson": false,
@@ -10471,7 +10479,7 @@
         }
       ]
     },
-    "2025-03-03": {
+    "2026-03-03": {
       "lessonNumber": "10",
       "lessonName": "Пригвожденное ко кресту",
       "isFirstLesson": false,
@@ -10709,7 +10717,7 @@
         }
       ]
     },
-    "2025-03-04": {
+    "2026-03-04": {
       "lessonNumber": "10",
       "lessonName": "Тень или реальность?",
       "isFirstLesson": false,
@@ -10901,7 +10909,7 @@
         }
       ]
     },
-    "2025-03-05": {
+    "2026-03-05": {
       "lessonNumber": "10",
       "lessonName": "Заповеди человеческие",
       "isFirstLesson": false,
@@ -11019,7 +11027,7 @@
         }
       ]
     },
-    "2025-03-06": {
+    "2026-03-06": {
       "lessonNumber": "10",
       "lessonName": "Для дальнейшего исследования",
       "isFirstLesson": false,
@@ -11131,7 +11139,7 @@
     }
   },
   "11": {
-    "2025-03-07": {
+    "2026-03-07": {
       "lessonNumber": "11",
       "lessonName": "Жить со Христом",
       "isFirstLesson": true,
@@ -11284,7 +11292,7 @@
         }
       ]
     },
-    "2025-03-08": {
+    "2026-03-08": {
       "lessonNumber": "11",
       "lessonName": "Размышляя о небесном",
       "isFirstLesson": false,
@@ -11427,7 +11435,7 @@
         }
       ]
     },
-    "2025-03-09": {
+    "2026-03-09": {
       "lessonNumber": "11",
       "lessonName": "Размышляя о земном",
       "isFirstLesson": false,
@@ -11561,7 +11569,7 @@
         }
       ]
     },
-    "2025-03-10": {
+    "2026-03-10": {
       "lessonNumber": "11",
       "lessonName": "Обновление в познании",
       "isFirstLesson": false,
@@ -11767,7 +11775,7 @@
         }
       ]
     },
-    "2025-03-11": {
+    "2026-03-11": {
       "lessonNumber": "11",
       "lessonName": "Характер для новой жизни",
       "isFirstLesson": false,
@@ -11932,7 +11940,7 @@
         }
       ]
     },
-    "2025-03-12": {
+    "2026-03-12": {
       "lessonNumber": "11",
       "lessonName": "Жить новой жизнью",
       "isFirstLesson": false,
@@ -12068,7 +12076,7 @@
         }
       ]
     },
-    "2025-03-13": {
+    "2026-03-13": {
       "lessonNumber": "11",
       "lessonName": "Для дальнейшего исследования",
       "isFirstLesson": false,
@@ -12174,7 +12182,7 @@
     }
   },
   "12": {
-    "2025-03-14": {
+    "2026-03-14": {
       "lessonNumber": "12",
       "lessonName": "Жить в любви друг ко другу",
       "isFirstLesson": true,
@@ -12293,7 +12301,7 @@
         }
       ]
     },
-    "2025-03-15": {
+    "2026-03-15": {
       "lessonNumber": "12",
       "lessonName": "Мужья и жены",
       "isFirstLesson": false,
@@ -12411,7 +12419,7 @@
         }
       ]
     },
-    "2025-03-16": {
+    "2026-03-16": {
       "lessonNumber": "12",
       "lessonName": "Родители и дети",
       "isFirstLesson": false,
@@ -12447,7 +12455,15 @@
           "text": [
             {
               "isLink": false,
-              "text": "1. Кол. 3:20 "
+              "text": "1. "
+            },
+            {
+              "isLink": true,
+              "text": "[\"Кол. 3:20\",{\"bookName\":\"Кол\",\"chapter\":[\"3\"],\"verses\":\"20\"}]"
+            },
+            {
+              "isLink": false,
+              "text": " "
             }
           ]
         },
@@ -12456,7 +12472,15 @@
           "text": [
             {
               "isLink": false,
-              "text": "2. Притч. 22:6 "
+              "text": "2. "
+            },
+            {
+              "isLink": true,
+              "text": "[\"Притч. 22:6\",{\"bookName\":\"Притч\",\"chapter\":[\"22\"],\"verses\":\"6\"}]"
+            },
+            {
+              "isLink": false,
+              "text": " "
             }
           ]
         },
@@ -12536,7 +12560,7 @@
         }
       ]
     },
-    "2025-03-17": {
+    "2026-03-17": {
       "lessonNumber": "12",
       "lessonName": "Отношения на работе",
       "isFirstLesson": false,
@@ -12653,7 +12677,7 @@
         }
       ]
     },
-    "2025-03-18": {
+    "2026-03-18": {
       "lessonNumber": "12",
       "lessonName": "Молитва",
       "isFirstLesson": false,
@@ -12815,7 +12839,7 @@
         }
       ]
     },
-    "2025-03-19": {
+    "2026-03-19": {
       "lessonNumber": "12",
       "lessonName": "Ходить в мудрости",
       "isFirstLesson": false,
@@ -12959,7 +12983,7 @@
         }
       ]
     },
-    "2025-03-20": {
+    "2026-03-20": {
       "lessonNumber": "12",
       "lessonName": "Для дальнейшего исследования",
       "isFirstLesson": false,
@@ -13031,7 +13055,7 @@
     }
   },
   "13": {
-    "2025-03-21": {
+    "2026-03-21": {
       "lessonNumber": "13",
       "lessonName": "Утвержденные в Боге",
       "isFirstLesson": true,
@@ -13182,7 +13206,7 @@
         }
       ]
     },
-    "2025-03-22": {
+    "2026-03-22": {
       "lessonNumber": "13",
       "lessonName": "Наставления о проповеди Евангелия",
       "isFirstLesson": false,
@@ -13300,7 +13324,7 @@
         }
       ]
     },
-    "2025-03-23": {
+    "2026-03-23": {
       "lessonNumber": "13",
       "lessonName": "Единство церкви",
       "isFirstLesson": false,
@@ -13409,7 +13433,7 @@
         }
       ]
     },
-    "2025-03-24": {
+    "2026-03-24": {
       "lessonNumber": "13",
       "lessonName": "Пребывать совершенными и исполненными всем",
       "isFirstLesson": false,
@@ -13592,7 +13616,7 @@
         }
       ]
     },
-    "2025-03-25": {
+    "2026-03-25": {
       "lessonNumber": "13",
       "lessonName": "В мире, но не от мира",
       "isFirstLesson": false,
@@ -13745,7 +13769,7 @@
         }
       ]
     },
-    "2025-03-26": {
+    "2026-03-26": {
       "lessonNumber": "13",
       "lessonName": "Весть к Лаодикии",
       "isFirstLesson": false,
@@ -13920,7 +13944,7 @@
         }
       ]
     },
-    "2025-03-27": {
+    "2026-03-27": {
       "lessonNumber": "13",
       "lessonName": "Для дальнейшего исследования",
       "isFirstLesson": false,
