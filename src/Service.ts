@@ -159,7 +159,7 @@ export const findsBibleLink = (text: string) => {
     const endBracketPattern = `\\s*[\\(\\)]`;
     
     // Паттерн для окончания строки
-    const endOfLinePattern = `$`;
+    const endOfLinePattern = `\\s*$`;
     
     // Собираем все части вместе
     const endPattern = `(?=${endSemicolonPattern}|${endDotPattern}|${endCommaPattern}|${endQuestionPattern}|${endRussianTextPattern}|${endBracketPattern}|${endOfLinePattern})`;
