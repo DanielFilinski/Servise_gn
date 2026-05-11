@@ -1,11 +1,11 @@
 {
   "dependencies": {
-    "axios": "^1.7.7",
+    "axios": "^1.16.0",
     "date-fns": "^3.6.0",
-    "epub2": "^3.0.1",
+    "epub2": "^3.0.2",
     "epubjs": "^0.3.93",
     "express": "^4.18.2",
-    "form-data": "^4.0.0",
+    "form-data": "^4.0.5",
     "fs": "^0.0.1-security",
     "lodash": "^4.17.21",
     "node-html-parser": "^6.1.5",
@@ -34,6 +34,7 @@
     "bible:validate": "python3 BibleRefsFixer/bible_refs_validator.py --mode interactive --input ResultParse/SS/SS+.json --books-mapping BibleRefsFixer/bible_books_mapping.json --history BibleRefsFixer/bible_refs_history.json",
     "bible:history": "cat BibleRefsFixer/bible_refs_history.json | python3 -m json.tool",
     "egw:import": "node dist/egw-importer/import-book.js",
+    "egw:update-titles": "node dist/egw-importer/update-chapter-titles.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -41,6 +42,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^20.19.37",
+    "tsx": "^4.21.0",
     "typescript": "^5.6.2"
   }
 }

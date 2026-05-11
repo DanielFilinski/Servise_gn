@@ -1,10 +1,10 @@
+import { createRequire } from 'module'
 import * as fs from 'fs'
 import * as path from 'path'
 import { parse } from 'node-html-parser'
 
-// epub2 is a CommonJS package: npm install epub2
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const EPub = require('epub2')
+const require = createRequire(import.meta.url)
+const EPub = require('epub2').EPub
 
 export type ParsedChapter = {
   orderIndex: number
@@ -72,7 +72,9 @@ export async function parseEpub(filePath: string): Promise<ParsedBook> {
 
     if (contentText.length < 50) continue
 
-    const tocEntry = epub.toc.find((t: any) => t.id === item.id)
+    const tocEntry =
+      epub.toc.find((t: any) => t.id === item.id) ??
+      epub.toc.find((t: any) => t.href && item.href && t.href.split('#')[0] === item.href.split('#')[0])
     const title = tocEntry?.title?.trim() || undefined
 
     chapters.push({ orderIndex: orderIndex++, title, contentHtml, contentText })

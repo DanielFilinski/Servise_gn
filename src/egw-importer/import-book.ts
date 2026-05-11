@@ -33,7 +33,7 @@ function parseArgs(): {
 
 async function main() {
   const { file, title, category, sort } = parseArgs()
-  const api = axios.create({ baseURL: API_BASE_URL, timeout: 30000 })
+  const api = axios.create({ baseURL: API_BASE_URL, timeout: 120000 })
 
   console.log(`\n📖 Парсинг EPUB: ${file}`)
   const parsed = await parseEpub(file)
@@ -64,7 +64,7 @@ async function main() {
   }
 
   console.log('\n📝 Загрузка глав...')
-  const BATCH_SIZE = 20
+  const BATCH_SIZE = 3
   let uploaded = 0
 
   for (let i = 0; i < parsed.chapters.length; i += BATCH_SIZE) {
