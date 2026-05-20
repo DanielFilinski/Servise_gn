@@ -21,7 +21,7 @@ export async function uploadCover(
     contentType: 'image/jpeg',
   })
 
-  const uploadUrl = `${apiBaseUrl}/images/upload-egw-cover/${bookId}`
+  const uploadUrl = `${apiBaseUrl}/egw-books/${bookId}/cover`
   const coverUrl = await new Promise<string>((resolve, reject) => {
     const req = (uploadUrl.startsWith('https') ? https : http).request(
       uploadUrl,
