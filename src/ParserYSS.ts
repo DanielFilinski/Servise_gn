@@ -30,8 +30,8 @@ import { convertResultYSS } from './convertors/ConvertYSS.js';
 // }
 
 const parsePatternsSS = {
-    weekNumber: "Неделя",
-    weekName: "Название-урока",
+    weekNumber: "Headers_WEEK_NUM",
+    weekName: "Headers_WEEK_Название-урока",
     endBlock: "Текстовый-фрейм",
 
 
@@ -41,18 +41,19 @@ const parsePatternsSS = {
     delete: ['&#160;', '\n', '\t', '&#9;', '#', '&', '•'], // массив элементов которые необходимо удалить из текста , '\t', '\n'
 
     arrAnalisisClassList: [
-        { pattern: "Подзаголовок", style: "subTitle" },
-        { pattern: "Пункт", style: "lists" },
-        { pattern: "Подпункт", style: "lists" },
+        { pattern: "Headers_Subheading-1", style: "subTitle" },
+        { pattern: "Headers_Subheading-2", style: "subTitle" },
+        { pattern: "Lists_Bullet-List", style: "lists" },
+        { pattern: "Lists_Bullet-List-L2", style: "lists" },
         { pattern: "основной-абзац", style: "mainText" },
-        { pattern: "РАЗДЕЛ_лев", style: "section" },
-        { pattern: "РАЗДЕЛ_прав", style: "section" },
-        { pattern: "Библейский-текст", style: "verseBible" },
+        { pattern: "Headers_Tasks-heading", style: "section" },
+        { pattern: "Pray_response", style: "pray" },
+        { pattern: "Headers_WEEK_Библейский-текст", style: "verseBible" },
     ],
 
 }
 
-const dateFirstWeek = '2026-03-28' //! дата первого урока
+const dateFirstWeek = '2026-06-28' //! дата первого урока
 const datesArr = []
 
 
@@ -110,7 +111,7 @@ writeResult()
 function FILES_FOR_PARSE() {
 
     const htmlFilePaths = [
-        './fileForParse/YSS/26-02.html', //! имя файла
+        './fileForParse/YSS/26-03.html', //! имя файла
         // './fileForParse/YSS/25-02.html', //! имя файла
         
 
@@ -203,11 +204,15 @@ function PARSE(htmlFile) {
         }
     }
 
-    //TODO 3.1 Удаление всех p после последнего урока
+    //TODO 3.1 Удаление служебных текстовых фреймов (вступление/TOC сверху, колофон снизу).
+    // Основной фрейм с уроками содержит номера недель — его сохраняем, остальные удаляем.
     const delAfterLastLesson = (html) => {
         const arr = html.querySelectorAll(`.${parsePatternsSS.endBlock}`)
-
-        arr[arr.length - 1].remove()
+        arr.forEach((el) => {
+            if (!el.querySelector(`.${parsePatternsSS.weekNumber}`)) {
+                el.remove()
+            }
+        })
     }
 
     //TODO 4. Обработка уроков
@@ -271,6 +276,8 @@ function PARSE(htmlFile) {
 
     }
 
+    delPreviousLessonText(html)
+    delAfterLastLesson(html)
     parsing(html)
 
 }
