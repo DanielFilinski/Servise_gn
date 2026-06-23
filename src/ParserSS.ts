@@ -127,6 +127,34 @@ function delArtefacts(str) {
 }
 
 
+// Очищает текст одной ячейки таблицы: убирает &#160;, переносы строк, схлопывает пробелы
+function cleanCellText(rawInnerText) {
+    return delArtefacts(rawInnerText).replace(/\s+/g, ' ').trim()
+}
+
+// Склеивает HTML-таблицу в один читаемый текстовый блок.
+// Первая строка (заголовки thead) идёт без маркера, строки тела — с маркером «• ».
+// Ячейки внутри строки разделяются « | ». Библейские ссылки в тексте
+// распознаются позже в analysisText, поэтому здесь ничего особого не нужно.
+function tableToText(tableEl) {
+    const rows = tableEl.querySelectorAll('tr')
+    const lines = []
+
+    rows.forEach((tr) => {
+        const cells = tr
+            .querySelectorAll('th, td')
+            .map((cell) => cleanCellText(cell.innerText))
+            .filter((text) => text.length > 0)
+
+        if (cells.length === 0) return
+
+        const isHeaderRow = !!tr.closest('thead')
+        const prefix = isHeaderRow ? '' : '• '
+        lines.push(prefix + cells.join(' | '))
+    })
+
+    return lines.join('\n')
+}
 
 
 
@@ -310,7 +338,10 @@ function PARSE(htmlFile) {
 
         let wasLesson = false
 
-        // удаляет точку из класса 
+        // таблицы, уже собранные в один mainText (чтобы не дублировать по ячейкам)
+        const processedTables = new Set()
+
+        // удаляет точку из класса
         const classFirstLesson = parsePatternsSS.selectFirstLessonDate.replace(".", "")
         const classOtherLesson = parsePatternsSS.selectOtherLesson.replace(".", "")
         const otherLessonName = parsePatternsSS.otherLessonName.replace(".", "")
@@ -374,8 +405,30 @@ function PARSE(htmlFile) {
                 partition[curLessonNumber][dateFirstLesson].lessonName = text
             }
 
-            // обрабатывает сам контент каждого дня  
+            // обрабатывает сам контент каждого дня
             if (!isFirstLesson && !isOtherLesson && wasLesson) {
+
+                // Таблицы контента: собираем всю таблицу в ОДИН mainText,
+                // а не выводим каждую ячейку отдельной строкой.
+                // Заголовочную таблицу урока (Header-of-Lesson) не трогаем —
+                // её ячейки обрабатываются спецлогикой выше.
+                const tableEl = itemContent.closest('table')
+                if (tableEl && !tableEl.classList.contains('Header-of-Lesson')) {
+                    if (!processedTables.has(tableEl)) {
+                        processedTables.add(tableEl)
+
+                        const tableText = tableToText(tableEl)
+                        if (tableText) {
+                            partition[curLessonNumber][dateFirstLesson].arrEl.push({
+                                style: 'mainText',
+                                text: analysisText(tableText),
+                            })
+                        }
+                    }
+                    // ячейки таблицы по отдельности не обрабатываем
+                    return
+                }
+
                 let str = itemContent.innerText
 
                 const reg = /[a-zA-Zа-яА-Я0-9]+/gi

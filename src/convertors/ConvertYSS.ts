@@ -127,12 +127,17 @@ function getVerses(data: string | null): number[] | null {
         // Check for a range (e.g., "15–20")
         if (range.includes('–')) {
             const [start, end] = range.split('–').map(Number); // Split into start and end, convert to numbers
-            for (let i = start; i <= end; i++) {
-                verses.push(i); // Add all numbers in the range
+            if (Number.isFinite(start) && Number.isFinite(end)) {
+                for (let i = start; i <= end; i++) {
+                    verses.push(i); // Add all numbers in the range
+                }
+            } else if (Number.isFinite(start)) {
+                verses.push(start); // Подстраховка от NaN: берём стартовый стих
             }
         } else {
             // Otherwise, just add the single number
-            verses.push(Number(range));
+            const n = Number(range);
+            if (Number.isFinite(n)) verses.push(n);
         }
     }
 

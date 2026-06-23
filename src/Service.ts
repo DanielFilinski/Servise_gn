@@ -28,73 +28,78 @@ function normalizeSpaces(text: string): string {
         .trim();
 }
 
+// Анкорим межглавный диапазон стихов на начальный стих: "19–7:9" -> "19", "43–12:33" -> "43".
+// Обычные диапазоны/перечни ("9–11", "37, 40") не трогаем.
+function anchorVerses(verses: string): string {
+    const m = verses.match(/^\s*(\d+)\s*[–-]\s*\d+\s*:\s*\d+/);
+    return m ? m[1] : verses;
+}
+
 // Парсинг библейской ссылки
 function parseBibleReference(text: string) {
-    // Извлекаем название книги
-    const bookName = text.match(/\d?\s?[а-яА-Я]+\.\s*/gi)?.[0]?.replace(/\.\s*$/, '')?.trim() || '';
+    // Извлекаем название книги ТОЛЬКО из начала строки (точка опциональна: "1 Кор" и "1 Кор.").
+    // Якорь ^ важен: глобальный replace срезал бы связку "и" (кириллическую) внутри "25 и 27".
+    const rawBook = text.match(/^\s*\d?\s?[а-яА-Я]+\.?\s*/i)?.[0] ?? '';
+    const bookName = rawBook.replace(/\.\s*$/, '').trim();
 
     // Получаем текст без названия книги
-    const withoutName = text.replace(/\d?\s?[а-яА-Я]+\.\s*/gi, '').trim();
-    
-    // Разбиваем на отдельные ссылки
-    const references = withoutName
-        .split(/[;и]/)
-        .map(ref => ref.trim())
-        .filter(Boolean);
-    
+    const withoutName = text.slice(rawBook.length).trim();
+
+    const bookNumber = booksNameNumber[bookName as keyof typeof booksNameNumber];
+    const isOneChapterBook = oneChapterBooks.indexOf(bookNumber) !== -1;
+
     const result = [];
-    
-    for (const ref of references) {
-        const bookNumber = booksNameNumber[bookName as keyof typeof booksNameNumber];
-        const isOneChapterBook = oneChapterBooks.indexOf(bookNumber) !== -1;
-        
-        // Обработка книг с одной главой
-        if (isOneChapterBook && !ref.includes(':')) {
-            const parsedRef = {
-                bookName,
-                chapter: ['1'],
-                verses: normalizeSpaces(ref)
-            };
-            result.push(parsedRef);
-            continue;
-        }
-        
-        // Обработка ссылок с указанием стихов
-        if (ref.includes(':')) {
-            const [chapter, verses] = ref.split(':').map(s => s.trim());
-            const parsedRef = {
-                bookName,
-                chapter: [normalizeSpaces(chapter)],
-                verses: verses ? normalizeSpaces(verses) : null
-            };
-            result.push(parsedRef);
-            continue;
-        }
-        
-        // Обработка ссылок только с главами
-        const chapters = ref.split(',').map(s => s.trim());
-        const expandedChapters: string[] = [];
-        
-        for (const chapter of chapters) {
-            if (chapter.includes('-') || chapter.includes('–')) {
-                // Обработка диапазона глав (например: 3-5 или 37–39)
-                const [start, end] = chapter.split(/[-–]/).map(n => parseInt(n.trim()));
-                for (let i = start; i <= end; i++) {
-                    expandedChapters.push(i.toString());
-                }
-            } else {
-                expandedChapters.push(normalizeSpaces(chapter));
+
+    // Верхний уровень: ";" = новая ссылка уровня главы (напр. "18:4, 5; 20" -> гл. 20).
+    const segments = withoutName.split(';').map(s => s.trim()).filter(Boolean);
+
+    for (const segment of segments) {
+        // Внутри сегмента: "и" — продолжение с учётом контекста главы.
+        const andParts = segment.split(/\s+и\s+/).map(s => s.trim()).filter(Boolean);
+        // Глава предыдущей части, если у неё были стихи (для разрешения "1:25 и 27" -> стихи гл. 1).
+        let prevChapter: string | null = null;
+
+        andParts.forEach((part, idx) => {
+            // Книга с одной главой без двоеточия: голые числа -> стихи главы "1".
+            if (isOneChapterBook && !part.includes(':')) {
+                result.push({ bookName, chapter: ['1'], verses: normalizeSpaces(part) });
+                prevChapter = null;
+                return;
             }
-        }
-        
-        const parsedRef = {
-            bookName,
-            chapter: expandedChapters,
-            verses: null
-        };
-        result.push(parsedRef);
+
+            // Часть со стихами "глава:стих" (делим по ПЕРВОМУ ":", чтобы учесть межглавный хвост).
+            if (part.includes(':')) {
+                const ci = part.indexOf(':');
+                const chapter = normalizeSpaces(part.slice(0, ci).trim());
+                const versesRaw = part.slice(ci + 1).trim();
+                const verses = versesRaw ? normalizeSpaces(anchorVerses(versesRaw)) : null;
+                result.push({ bookName, chapter: [chapter], verses });
+                prevChapter = chapter;
+                return;
+            }
+
+            // Голые числа после "и" при наличии prevChapter -> стихи той же главы (баг "25 и 27").
+            if (idx > 0 && prevChapter !== null) {
+                result.push({ bookName, chapter: [prevChapter], verses: normalizeSpaces(part) });
+                return;
+            }
+
+            // Иначе — это главы (с разворотом диапазонов, напр. "3-5" -> 3,4,5).
+            const chapters = part.split(',').map(s => s.trim());
+            const expandedChapters: string[] = [];
+            for (const chapter of chapters) {
+                if (chapter.includes('-') || chapter.includes('–')) {
+                    const [start, end] = chapter.split(/[-–]/).map(n => parseInt(n.trim()));
+                    for (let i = start; i <= end; i++) expandedChapters.push(i.toString());
+                } else {
+                    expandedChapters.push(normalizeSpaces(chapter));
+                }
+            }
+            result.push({ bookName, chapter: expandedChapters, verses: null });
+            prevChapter = null;
+        });
     }
-    
+
     return result;
 }
 
@@ -107,8 +112,8 @@ function formatBibleLink(match: string) {
 export const findsBibleLink = (text: string) => {
     const bibleNames = arrBiblebook.join('|');
     
-    //? 1. Паттерн для названия книги (включая цифру в начале, если есть)
-    const bookPattern = `(\\d\\s*)?(${bibleNames})\\.\\s*`;
+    //? 1. Паттерн для названия книги (включая цифру в начале, если есть). Точка опциональна ("1 Кор" / "1 Кор.").
+    const bookPattern = `(\\d\\s*)?(${bibleNames})\\.?\\s*`;
     
     //? 2. Паттерны для главы и стихов
     // Паттерн для одиночной главы
@@ -129,15 +134,19 @@ export const findsBibleLink = (text: string) => {
     // Паттерн для группы стихов (например: 23-26, 15-18)
     const verseGroupPattern = `(?:${verseRangePattern}|${singleVersePattern})(?:\\s*,\\s*(?:${verseRangePattern}|${singleVersePattern}))*`;
 
-    // Паттерн для главы и стихов (например: 72: 23-26, 15-18)
-    const chapterVersePattern = `${chapterGroupPattern}(?:\\s*:\\s*${verseGroupPattern})?`;
+    // Паттерн для межглавного диапазона стихов (например: 19–7:9 в "1 Кор. 6:19–7:9").
+    // Пробуется ПЕРВЫМ в альтернации, иначе verseGroupPattern жадно съест "19–7" и хвост ":9" потеряется.
+    const crossChapterVersesPattern = `\\d+\\s*[–-]\\s*\\d+\\s*:\\s*\\d+`;
+
+    // Паттерн для главы и стихов (например: 72: 23-26, 15-18; либо межглавный 6:19–7:9)
+    const chapterVersePattern = `${chapterGroupPattern}(?:\\s*:\\s*(?:${crossChapterVersesPattern}|${verseGroupPattern}))?`;
     
     //? 3. Паттерны для продолжения через точку с запятой и "и"
     // Паттерн для продолжения через точку с запятой
-    const semicolonPattern = `(?:\\s*;\\s*(?!${bibleNames})${chapterGroupPattern}(?:\\s*:\\s*${verseGroupPattern})?)*`;    
-    
+    const semicolonPattern = `(?:\\s*;\\s*(?!${bibleNames})${chapterGroupPattern}(?:\\s*:\\s*(?:${crossChapterVersesPattern}|${verseGroupPattern}))?)*`;
+
     // Паттерн для продолжения через "и"
-    const andPattern = `(?:\\s+и\\s+(?!${bibleNames})${chapterGroupPattern}(?:\\s*:\\s*${verseGroupPattern})?)*`;
+    const andPattern = `(?:\\s+и\\s+(?!${bibleNames})${chapterGroupPattern}(?:\\s*:\\s*(?:${crossChapterVersesPattern}|${verseGroupPattern}))?)*`;
     
     //? 4. Паттерны для окончания ссылки
     // Паттерн для окончания точкой с запятой
@@ -157,18 +166,30 @@ export const findsBibleLink = (text: string) => {
     
     // Паттерн для окончания скобкой
     const endBracketPattern = `\\s*[\\(\\)]`;
-    
+
+    // Паттерн для окончания тире (em-dash U+2014 — отличен от диапазонного en-dash "–" U+2013)
+    const endDashPattern = `\\s*—`;
+
+    // Паттерн для окончания двоеточием (напр. "Мк. 12:28–31: соединяет")
+    const endColonPattern = `\\s*:`;
+
     // Паттерн для окончания строки
     const endOfLinePattern = `\\s*$`;
-    
+
+    // Паттерн для окончания переносом строки (напр. ссылка в конце строки таблицы: "1 Кор. 1:18\n").
+    // Обычный текст идёт без внутренних переносов (они удаляются delArtefacts), поэтому
+    // правило влияет только на многострочные блоки вроде склеенных таблиц.
+    const endNewlinePattern = `[ \\t]*\\n`;
+
     // Собираем все части вместе
-    const endPattern = `(?=${endSemicolonPattern}|${endDotPattern}|${endCommaPattern}|${endQuestionPattern}|${endRussianTextPattern}|${endBracketPattern}|${endOfLinePattern})`;
-    
-    // Собираем все части вместе
+    const endPattern = `(?=${endSemicolonPattern}|${endDotPattern}|${endCommaPattern}|${endQuestionPattern}|${endRussianTextPattern}|${endBracketPattern}|${endDashPattern}|${endColonPattern}|${endNewlinePattern}|${endOfLinePattern})`;
+
+    // Собираем все части вместе. Lookbehind не даёт аббревиатуре книги цепляться к хвосту слова
+    // (важно, т.к. точка после книги стала опциональной).
     const regex = new RegExp(
-        `${bookPattern}(${chapterVersePattern}${semicolonPattern}${andPattern})${endPattern}`,
+        `(?<![а-яА-ЯёЁ])${bookPattern}(${chapterVersePattern}${semicolonPattern}${andPattern})${endPattern}`,
         'g'
-    );    
+    );
 
     console.log('Regex pattern:', regex);
     const matches = text.match(regex);
